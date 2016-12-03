@@ -7,7 +7,7 @@ let schema = new Schema({
   user: {
     auth: {}, // one to one
 
-    favoites: [{
+    favorites: [{
       yelpId: String,
       name: String,
       catergories: [String],
