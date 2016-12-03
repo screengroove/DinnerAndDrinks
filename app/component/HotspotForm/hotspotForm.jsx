@@ -19,13 +19,13 @@ export default class HotspotForm extends React.Component {
       description: description
     }
 
-    // axios.post('/api/hotspot/post', location)
-    //   .then((response) => {
-    //     console.log("Successful reponse: ", response)
-    //   })
-    //   .catch((error) => {
-    //     console.log("There has been a grave error")
-    //   })
+    axios.post('/api/hotspots', location)
+      .then((response) => {
+        console.log("Successful reponse: ", response)
+      })
+      .catch((error) => {
+        console.log("Error in axios hotspot form post: ", error)
+      })
 
   }
 

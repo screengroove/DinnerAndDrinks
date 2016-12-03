@@ -26795,13 +26795,11 @@
 	        description: description
 	      };
 
-	      // axios.post('/api/hotspot/post', location)
-	      //   .then((response) => {
-	      //     console.log("Successful reponse: ", response)
-	      //   })
-	      //   .catch((error) => {
-	      //     console.log("There has been a grave error")
-	      //   })
+	      _axios2.default.post('/api/hotspots', location).then(function (response) {
+	        console.log("Successful reponse: ", response);
+	      }).catch(function (error) {
+	        console.log("Error in axios hotspot form post: ", error);
+	      });
 	    }
 	  }, {
 	    key: 'render',
