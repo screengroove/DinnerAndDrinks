@@ -16,7 +16,7 @@ server.listen(port, () => {
 })
 
 //database connection
-mongoose.connect('localhost:', port)
+mongoose.connect('mongodb://rebels:sleber@ds119618.mlab.com:19618/recommendatordb')
 const db = mongoose.connection;
 db.once('open', () => {
   console.log("connected to database")
