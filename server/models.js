@@ -39,15 +39,15 @@ module.exports = {
     }
   },
   hotspots: {
-    get: () => {
-            /*
-             Interact with database
-             */
+    get: (req, res) => {
+
+
+
     },
-    post: () => {
-            /*
-             Interact with database
-             */
+    post: (req, res) => {
+
+        console.log(req.body)
+
     }
   }
 
