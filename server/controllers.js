@@ -40,6 +40,7 @@ module.exports = {
     },
     post: (req, res) => {
         models.hotspots.post(req.body)
+        res.send(req.body)
     }
   }
 

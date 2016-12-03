@@ -47,7 +47,7 @@ module.exports = {
     post: (req, res) => {
 
        console.log("this is working: ", req)
-
+       Rec.hotposts.save()
     }
   }
 
