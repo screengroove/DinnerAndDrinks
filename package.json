@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon ./server/server.js",
     "build": "webpack -w",
-    "test": "standard"
+    "test": "standard --fix"
   },
   "keywords": [],
   "author": "The R3bellion",
