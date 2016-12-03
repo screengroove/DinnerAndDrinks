@@ -8,7 +8,6 @@ module.exports = {
   yelpConsumerKey: '9JsyXXhj9pxI0wRtxIdb9Q',
   yelpConsumerSecret: '0D3FHzK5wuysal4WYZY3CeYEdR8',
   yelpToken: 'ivBw983_ASe9DysxtuqI7cxlrGBFOI4m',
-  yelpTokenSecret: 'k6QLpFpCtW0r3j_DsqJKEgqmI-Q',
-  yelp: yelp
+  yelpTokenSecret: 'k6QLpFpCtW0r3j_DsqJKEgqmI-Q'
 }
 
