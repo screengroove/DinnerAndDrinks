@@ -1,20 +1,20 @@
-import React, {Component} from 'react'
+import React from 'react'
 
-export default class SignUp extends Component {
-    constructor(props) {
-        super(props)
+export default class SignUp extends React.Component {
+  constructor (props) {
+    super(props)
 
-        this.state = {
+    this.state = {
 
-        }
     }
+  }
 
-    render () {
-        return (
-        <div>
-            <SignUp />
-        </div>
-        )
+  render () {
+    return (
+      <div>
+        <SignUp />
+      </div>
+    )
   }
 
 }

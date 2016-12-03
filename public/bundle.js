@@ -26566,7 +26566,7 @@
 
 	var _currentLocation2 = _interopRequireDefault(_currentLocation);
 
-	var _displayMap = __webpack_require__(239);
+	var _displayMap = __webpack_require__(238);
 
 	var _displayMap2 = _interopRequireDefault(_displayMap);
 
@@ -26696,8 +26696,7 @@
 	exports.default = CurrentLocation;
 
 /***/ },
-/* 238 */,
-/* 239 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
