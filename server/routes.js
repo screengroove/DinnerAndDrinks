@@ -20,6 +20,5 @@ router.post('/comments', controllers.comments.post)
 router.get('/hotspots', controllers.hotspots.get)
 router.post('/hotspots', controllers.hotspots.post)
 
-
 // export router for server.js
 module.exports = router

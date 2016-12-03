@@ -5,16 +5,16 @@ import MapView from './../../component/MapView/mapView.jsx'
 
 export default class MainPage extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
+  constructor (props) {
+    super(props)
+  }
 
-    render() {
-        return (
-            <div>
+  render () {
+    return (
+      <div>
                 Hello World...
                 <MapView />
-            </div>
-            )
-        }
+      </div>
+    )
+  }
 }

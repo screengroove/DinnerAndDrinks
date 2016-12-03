@@ -11,7 +11,7 @@ let port = process.env.PORT || 3000
 
 // web socket protocol on localhost on port 3000
 server.listen(port, () => {
-    console.log(`Listen to http://localhost:${port}`)
+  console.log(`Listen to http://localhost:${port}`)
 })
 
 // Middleware
@@ -25,12 +25,12 @@ app.get('/', (req, res) => { res.sendFile('index.html') })
 
 app.use('/api', routes) // when you add api routes in routes.js
 
-// Web socket on connection 
+// Web socket on connection
 io.on('connection', (socket) => {
-    io.emit('this', { will: 'be received by everyone' })
+  io.emit('this', { will: 'be received by everyone' })
 
     // disconnect the websocket when user leaves
-    socket.on('disconnect',  () => {
-        io.emit('user disconnected')
-    })
+  socket.on('disconnect', () => {
+    io.emit('user disconnected')
+  })
 })

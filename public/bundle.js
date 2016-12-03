@@ -58,9 +58,7 @@
 
 	var _reactRouter = __webpack_require__(178);
 
-	var _index = __webpack_require__(233);
-
-	var _index2 = _interopRequireDefault(_index);
+	__webpack_require__(233);
 
 	var _MasterPage = __webpack_require__(234);
 
@@ -84,30 +82,30 @@
 	// Main page to re-render routes is MasterPage
 	// IndexRoute is the component seen on that '/' route
 	var Root = function (_React$Component) {
-	    _inherits(Root, _React$Component);
+	  _inherits(Root, _React$Component);
 
-	    function Root() {
-	        _classCallCheck(this, Root);
+	  function Root() {
+	    _classCallCheck(this, Root);
 
-	        return _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).apply(this, arguments));
+	  }
+
+	  _createClass(Root, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactRouter.Router,
+	        { history: _reactRouter.browserHistory },
+	        _react2.default.createElement(
+	          _reactRouter.Route,
+	          { path: '/', component: _MasterPage2.default },
+	          _react2.default.createElement(_reactRouter.IndexRoute, { component: _MainPage2.default })
+	        )
+	      );
 	    }
+	  }]);
 
-	    _createClass(Root, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _reactRouter.Router,
-	                { history: _reactRouter.browserHistory },
-	                _react2.default.createElement(
-	                    _reactRouter.Route,
-	                    { path: '/', component: _MasterPage2.default },
-	                    _react2.default.createElement(_reactRouter.IndexRoute, { component: _MainPage2.default })
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Root;
+	  return Root;
 	}(_react2.default.Component);
 
 	// Rendering React to the index.html page
@@ -26440,7 +26438,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26467,26 +26465,26 @@
 
 
 	var MasterPage = function (_React$Component) {
-	    _inherits(MasterPage, _React$Component);
+	  _inherits(MasterPage, _React$Component);
 
-	    function MasterPage(props) {
-	        _classCallCheck(this, MasterPage);
+	  function MasterPage(props) {
+	    _classCallCheck(this, MasterPage);
 
-	        return _possibleConstructorReturn(this, (MasterPage.__proto__ || Object.getPrototypeOf(MasterPage)).call(this, props));
+	    return _possibleConstructorReturn(this, (MasterPage.__proto__ || Object.getPrototypeOf(MasterPage)).call(this, props));
+	  }
+
+	  _createClass(MasterPage, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.children
+	      );
 	    }
+	  }]);
 
-	    _createClass(MasterPage, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                this.props.children
-	            );
-	        }
-	    }]);
-
-	    return MasterPage;
+	  return MasterPage;
 	}(_react2.default.Component);
 
 	exports.default = MasterPage;
@@ -26498,7 +26496,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26523,27 +26521,27 @@
 
 
 	var MainPage = function (_React$Component) {
-	    _inherits(MainPage, _React$Component);
+	  _inherits(MainPage, _React$Component);
 
-	    function MainPage(props) {
-	        _classCallCheck(this, MainPage);
+	  function MainPage(props) {
+	    _classCallCheck(this, MainPage);
 
-	        return _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).call(this, props));
+	    return _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).call(this, props));
+	  }
+
+	  _createClass(MainPage, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'Hello World...',
+	        _react2.default.createElement(_mapView2.default, null)
+	      );
 	    }
+	  }]);
 
-	    _createClass(MainPage, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                'Hello World...',
-	                _react2.default.createElement(_mapView2.default, null)
-	            );
-	        }
-	    }]);
-
-	    return MainPage;
+	  return MainPage;
 	}(_react2.default.Component);
 
 	exports.default = MainPage;
@@ -26555,7 +26553,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26577,26 +26575,26 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var MapView = function (_React$Component) {
-	    _inherits(MapView, _React$Component);
+	  _inherits(MapView, _React$Component);
 
-	    function MapView() {
-	        _classCallCheck(this, MapView);
+	  function MapView() {
+	    _classCallCheck(this, MapView);
 
-	        return _possibleConstructorReturn(this, (MapView.__proto__ || Object.getPrototypeOf(MapView)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (MapView.__proto__ || Object.getPrototypeOf(MapView)).apply(this, arguments));
+	  }
+
+	  _createClass(MapView, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_currentLocation2.default, null)
+	      );
 	    }
+	  }]);
 
-	    _createClass(MapView, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(_currentLocation2.default, null)
-	            );
-	        }
-	    }]);
-
-	    return MapView;
+	  return MapView;
 	}(_react2.default.Component);
 
 	exports.default = MapView;
@@ -26608,7 +26606,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26626,68 +26624,68 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var CurrentLocation = function (_React$Component) {
-	    _inherits(CurrentLocation, _React$Component);
+	  _inherits(CurrentLocation, _React$Component);
 
-	    function CurrentLocation(props) {
-	        _classCallCheck(this, CurrentLocation);
+	  function CurrentLocation(props) {
+	    _classCallCheck(this, CurrentLocation);
 
-	        return _possibleConstructorReturn(this, (CurrentLocation.__proto__ || Object.getPrototypeOf(CurrentLocation)).call(this, props));
+	    return _possibleConstructorReturn(this, (CurrentLocation.__proto__ || Object.getPrototypeOf(CurrentLocation)).call(this, props));
+	  }
+
+	  _createClass(CurrentLocation, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      setTimeout(this.initMap.bind(this), 250); // on load this gets your current location
 	    }
 
-	    _createClass(CurrentLocation, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            setTimeout(this.initMap.bind(this), 250); // on load this gets your current location
-	        }
+	    // Google Api function
 
-	        // Google Api function
+	  }, {
+	    key: 'initMap',
+	    value: function initMap() {
+	      var map = new google.maps.Map(document.getElementById('map'), {
+	        center: { lat: -34.397, lng: 150.644 },
+	        zoom: 6
+	      });
+	      var infoWindow = new google.maps.InfoWindow({ map: map });
 
-	    }, {
-	        key: 'initMap',
-	        value: function initMap() {
-	            var map = new google.maps.Map(document.getElementById('map'), {
-	                center: { lat: -34.397, lng: 150.644 },
-	                zoom: 6
-	            });
-	            var infoWindow = new google.maps.InfoWindow({ map: map });
+	      // Try HTML5 geolocation.
+	      if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(function (position) {
+	          var pos = {
+	            lat: position.coords.latitude,
+	            lng: position.coords.longitude
+	          };
 
-	            // Try HTML5 geolocation.
-	            if (navigator.geolocation) {
-	                navigator.geolocation.getCurrentPosition(function (position) {
-	                    var pos = {
-	                        lat: position.coords.latitude,
-	                        lng: position.coords.longitude
-	                    };
+	          infoWindow.setPosition(pos);
+	          infoWindow.setContent('Location found.');
+	          map.setCenter(pos);
+	        }, function () {
+	          handleLocationError(true, infoWindow, map.getCenter());
+	        });
+	      } else {
+	        // Browser doesn't support Geolocation
+	        handleLocationError(false, infoWindow, map.getCenter());
+	      }
+	    }
 
-	                    infoWindow.setPosition(pos);
-	                    infoWindow.setContent('Location found.');
-	                    map.setCenter(pos);
-	                }, function () {
-	                    handleLocationError(true, infoWindow, map.getCenter());
-	                });
-	            } else {
-	                // Browser doesn't support Geolocation
-	                handleLocationError(false, infoWindow, map.getCenter());
-	            }
-	        }
+	    // Google Api function:
+	    //  Handles Location Errors
 
-	        // Google Api function:
-	        //  Handles Location Errors
+	  }, {
+	    key: 'handleLocationError',
+	    value: function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	      infoWindow.setPosition(pos);
+	      infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : 'Error: Your browser doesn\'t support geolocation.');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', { id: 'map' });
+	    }
+	  }]);
 
-	    }, {
-	        key: 'handleLocationError',
-	        value: function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-	            infoWindow.setPosition(pos);
-	            infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : 'Error: Your browser doesn\'t support geolocation.');
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement('div', { id: 'map' });
-	        }
-	    }]);
-
-	    return CurrentLocation;
+	  return CurrentLocation;
 	}(_react2.default.Component);
 
 	exports.default = CurrentLocation;
