@@ -1,5 +1,6 @@
 # Style Guide
 
+--> Follow Standard
 --> No Semi-Colons on JS and JSX files
 --> Parthenesis on render returns
 --> ES6: 
