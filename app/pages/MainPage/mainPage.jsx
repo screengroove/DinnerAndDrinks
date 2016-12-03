@@ -6,14 +6,14 @@ import Yelp from './../../../yelpData.js'
 import HotspotForm from './../../component/HotspotForm/hotspotForm.jsx'
 export default class MainPage extends React.Component {
 
-  practice() {
+  practice () {
     let yelp = new Yelp()
     let data
-    yelp.search({term: 'food', location:'Denmark'})
+    yelp.search({term: 'food', location: 'Denmark'})
       .then(res => {
         data = res
       })
-      return data
+    return data
   }
 
   render () {
@@ -21,8 +21,8 @@ export default class MainPage extends React.Component {
       <div>
           Hello World...
           <MapView />
-          { 
-            console.log(this.practice()) 
+        {
+            console.log(this.practice())
           }
         <HotspotForm />
       </div>

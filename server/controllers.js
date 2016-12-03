@@ -5,8 +5,8 @@ module.exports = {
     // Josh's endpoint is user
   auth: {
     get: (req, res) => {
-            models.auth.get()
-            .then(data=> {
+      models.auth.get()
+            .then(data => {
               res.send()
             })
     },
