@@ -26,9 +26,12 @@ let schema = new Schema({
       phone: String,
       rating: Number,
       image_url: String,
-      bussinessUrl: String
+      bussinessUrl: String,
+      lat: Number,
+      long: Number
     }] // one to many
   },
+
   comments: {
 
   },
