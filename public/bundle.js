@@ -26813,7 +26813,7 @@
 	        _react2.default.createElement(
 	          'button',
 	          { onClick: this.submitHotspotForm },
-	          'Click me'
+	          'Submit Form'
 	        )
 	      );
 	    }

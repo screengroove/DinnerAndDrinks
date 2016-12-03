@@ -36,7 +36,7 @@ export default class HotspotForm extends React.Component {
         <input placeholder="name" id="hotspotLocationName" />
         <input placeholder="address" id="hotspotAddress" />
         <textarea placeholder="description" id="hotspotDescription" />
-        <button onClick={this.submitHotspotForm}>Click me</button>
+        <button onClick={this.submitHotspotForm}>Submit Form</button>
       </div>
     )
   }
