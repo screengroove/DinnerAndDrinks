@@ -37,9 +37,7 @@ let schema = new Schema({
     date: Date,
     venue: String
   }],
-
   hotspots: [{
-
     name: String,
     address: String,
     latitude: Number,
@@ -47,7 +45,6 @@ let schema = new Schema({
     description: String,
     rating: Number,
     image: String
-
   }]
 })
 
