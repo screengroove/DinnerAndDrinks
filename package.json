@@ -19,6 +19,7 @@
     "babel-preset-react": "^6.16.0",
     "css-loader": "^0.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "material-ui": "^0.16.4",
     "mongoose": "^4.7.1",
     "node-sass": "^3.13.0",
     "nodemon": "^1.11.0",
