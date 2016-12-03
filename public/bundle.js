@@ -26785,15 +26785,23 @@
 	  _createClass(HotspotForm, [{
 	    key: 'submitHotspotForm',
 	    value: function submitHotspotForm() {
-	      var location = {};
+	      var name = document.getElementById('hotspotLocationName').value;
+	      var address = document.getElementById('hotspotAddress').value;
+	      var description = document.getElementById('hotspotDescription').value;
 
-	      _axios2.default.post('/api/hotspot/post', location).then(function (response) {
-	        console.log("Successful reponse: ", response);
-	      }).catch(function (error) {
-	        console.log("There has been a grave error");
-	      });
+	      var location = {
+	        name: name,
+	        address: address,
+	        description: description
+	      };
 
-	      console.log();
+	      // axios.post('/api/hotspot/post', location)
+	      //   .then((response) => {
+	      //     console.log("Successful reponse: ", response)
+	      //   })
+	      //   .catch((error) => {
+	      //     console.log("There has been a grave error")
+	      //   })
 	    }
 	  }, {
 	    key: 'render',
@@ -26801,7 +26809,9 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement('input', null),
+	        _react2.default.createElement('input', { placeholder: 'name', id: 'hotspotLocationName' }),
+	        _react2.default.createElement('input', { placeholder: 'address', id: 'hotspotAddress' }),
+	        _react2.default.createElement('textarea', { placeholder: 'description', id: 'hotspotDescription' }),
 	        _react2.default.createElement(
 	          'button',
 	          { onClick: this.submitHotspotForm },

@@ -9,26 +9,33 @@ export default class HotspotForm extends React.Component {
   }
 
   submitHotspotForm () {
-    let location = {
+    let name = document.getElementById('hotspotLocationName').value
+    let address = document.getElementById('hotspotAddress').value
+    let description = document.getElementById('hotspotDescription').value
 
+    let location = {
+      name: name,
+      address: address,
+      description: description
     }
 
-    axios.post('/api/hotspot/post', location)
-      .then((response) => {
-        console.log("Successful reponse: ", response)
-      })
-      .catch((error) => {
-        console.log("There has been a grave error")
-      })
+    // axios.post('/api/hotspot/post', location)
+    //   .then((response) => {
+    //     console.log("Successful reponse: ", response)
+    //   })
+    //   .catch((error) => {
+    //     console.log("There has been a grave error")
+    //   })
 
-    console.log()
   }
 
 
   render () {
     return(
       <div>
-        <input />
+        <input placeholder="name" id="hotspotLocationName" />
+        <input placeholder="address" id="hotspotAddress" />
+        <textarea placeholder="description" id="hotspotDescription" />
         <button onClick={this.submitHotspotForm}>Click me</button>
       </div>
     )
