@@ -1,6 +1,5 @@
 // Interact with database on the models functions here
-const Rec = require('../database/db')
-
+const Hotspot = require('../database/db').Hotspot
 module.exports = {
   auth: {
     get: (data) => {
@@ -48,7 +47,11 @@ module.exports = {
     },
     post: (req, res) => {
       console.log('this is working: ', req)
-      Rec.hotposts.save()
+      Hotspot.create(req, (err) => {
+        if (err) {
+          return err
+        }
+      })
     }
   }
 
