@@ -15,13 +15,12 @@ server.listen(port, () => {
   console.log(`Listen to http://localhost:${port}`)
 })
 
-//database connection
+// database connection
 mongoose.connect('mongodb://rebels:sleber@ds119618.mlab.com:19618/recommendatordb')
-const db = mongoose.connection;
+const db = mongoose.connection
 db.once('open', () => {
-  console.log("connected to database")
+  console.log('connected to database')
 })
-
 
 // Middleware
 // Body Parser, Morgan, and Public Compiled folder

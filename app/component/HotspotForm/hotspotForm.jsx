@@ -5,7 +5,6 @@ export default class HotspotForm extends React.Component {
 
   constructor (props) {
     super(props)
-
   }
 
   submitHotspotForm () {
@@ -21,21 +20,19 @@ export default class HotspotForm extends React.Component {
 
     axios.post('/api/hotspots', location)
       .then((response) => {
-        console.log("Successful reponse: ", response.data)
+        console.log('Successful reponse: ', response.data)
       })
       .catch((error) => {
-        console.log("Error in axios hotspot form post: ", error)
+        console.log('Error in axios hotspot form post: ', error)
       })
-
   }
 
-
   render () {
-    return(
+    return (
       <div>
-        <input placeholder="name" id="hotspotLocationName" />
-        <input placeholder="address" id="hotspotAddress" />
-        <textarea placeholder="description" id="hotspotDescription" />
+        <input placeholder='name' id='hotspotLocationName' />
+        <input placeholder='address' id='hotspotAddress' />
+        <textarea placeholder='description' id='hotspotDescription' />
         <button onClick={this.submitHotspotForm}>Submit Form</button>
       </div>
     )

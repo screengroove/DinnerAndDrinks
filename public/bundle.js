@@ -26796,9 +26796,9 @@
 	      };
 
 	      _axios2.default.post('/api/hotspots', location).then(function (response) {
-	        console.log("Successful reponse: ", response.data);
+	        console.log('Successful reponse: ', response.data);
 	      }).catch(function (error) {
-	        console.log("Error in axios hotspot form post: ", error);
+	        console.log('Error in axios hotspot form post: ', error);
 	      });
 	    }
 	  }, {

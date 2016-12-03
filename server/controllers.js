@@ -39,8 +39,8 @@ module.exports = {
                 models.user.get() */
     },
     post: (req, res) => {
-        models.hotspots.post(req.body)
-        res.send(req.body)
+      models.hotspots.post(req.body)
+      res.send(req.body)
     }
   }
 

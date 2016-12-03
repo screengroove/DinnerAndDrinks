@@ -10,7 +10,7 @@ export default class MainPage extends React.Component {
       <div>
           Hello World...
           <MapView />
-          <HotspotForm />
+        <HotspotForm />
       </div>
     )
   }
