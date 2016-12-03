@@ -26523,10 +26523,10 @@
 	var MainPage = function (_React$Component) {
 	  _inherits(MainPage, _React$Component);
 
-	  function MainPage(props) {
+	  function MainPage() {
 	    _classCallCheck(this, MainPage);
 
-	    return _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).call(this, props));
+	    return _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).apply(this, arguments));
 	  }
 
 	  _createClass(MainPage, [{
@@ -26566,6 +26566,10 @@
 
 	var _currentLocation2 = _interopRequireDefault(_currentLocation);
 
+	var _displayMap = __webpack_require__(239);
+
+	var _displayMap2 = _interopRequireDefault(_displayMap);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26589,7 +26593,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_currentLocation2.default, null)
+	        _react2.default.createElement(_currentLocation2.default, null),
+	        _react2.default.createElement(_displayMap2.default, null)
 	      );
 	    }
 	  }]);
@@ -26689,6 +26694,52 @@
 	}(_react2.default.Component);
 
 	exports.default = CurrentLocation;
+
+/***/ },
+/* 238 */,
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DisplayMap = function (_React$Component) {
+	  _inherits(DisplayMap, _React$Component);
+
+	  function DisplayMap() {
+	    _classCallCheck(this, DisplayMap);
+
+	    return _possibleConstructorReturn(this, (DisplayMap.__proto__ || Object.getPrototypeOf(DisplayMap)).apply(this, arguments));
+	  }
+
+	  _createClass(DisplayMap, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', null);
+	    }
+	  }]);
+
+	  return DisplayMap;
+	}(_react2.default.Component);
+
+	exports.default = DisplayMap;
 
 /***/ }
 /******/ ]);
