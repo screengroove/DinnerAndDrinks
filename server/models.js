@@ -3,7 +3,11 @@ const Rec = require('../database/db')
 
 module.exports = {
   auth: {
-    get: () => {
+    get: (data) => {
+      Rec.find((err, data) => {
+        
+      })
+
             /*
              Interact with database
              */

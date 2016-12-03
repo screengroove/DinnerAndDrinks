@@ -5,8 +5,10 @@ module.exports = {
     // Josh's endpoint is user
   auth: {
     get: (req, res) => {
-            /* can look something like this
-                models.user.get() */
+            models.auth.get()
+            .then(data=> {
+              res.send()
+            })
     },
     post: (req, res) => {
             /* can look something like this
