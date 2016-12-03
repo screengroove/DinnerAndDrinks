@@ -26566,7 +26566,7 @@
 
 	var _currentLocation2 = _interopRequireDefault(_currentLocation);
 
-	var _displayMap = __webpack_require__(238);
+	var _displayMap = __webpack_require__(239);
 
 	var _displayMap2 = _interopRequireDefault(_displayMap);
 
@@ -26593,6 +26593,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement('div', { id: 'map' }),
 	        _react2.default.createElement(_currentLocation2.default, null),
 	        _react2.default.createElement(_displayMap2.default, null)
 	      );
@@ -26631,10 +26632,10 @@
 	var CurrentLocation = function (_React$Component) {
 	  _inherits(CurrentLocation, _React$Component);
 
-	  function CurrentLocation(props) {
+	  function CurrentLocation() {
 	    _classCallCheck(this, CurrentLocation);
 
-	    return _possibleConstructorReturn(this, (CurrentLocation.__proto__ || Object.getPrototypeOf(CurrentLocation)).call(this, props));
+	    return _possibleConstructorReturn(this, (CurrentLocation.__proto__ || Object.getPrototypeOf(CurrentLocation)).apply(this, arguments));
 	  }
 
 	  _createClass(CurrentLocation, [{
@@ -26686,7 +26687,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement('div', { id: 'map' });
+	      return _react2.default.createElement('div', null);
 	    }
 	  }]);
 
@@ -26696,7 +26697,8 @@
 	exports.default = CurrentLocation;
 
 /***/ },
-/* 238 */
+/* 238 */,
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26729,6 +26731,24 @@
 	  }
 
 	  _createClass(DisplayMap, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      setTimeout(this.initMap.bind(this), 350);
+	    }
+	  }, {
+	    key: 'initMap',
+	    value: function initMap() {
+	      var uluru = { lat: -25.363, lng: 131.044 };
+	      var map = new google.maps.Map(document.getElementById('map'), {
+	        zoom: 4,
+	        center: uluru
+	      });
+	      var marker = new google.maps.Marker({
+	        position: uluru,
+	        map: map
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement('div', null);

@@ -8,6 +8,7 @@ export default class MapView extends React.Component {
   render () {
     return (
       <div>
+        <div id="map"></div>
         <CurrentLocation />
         <DisplayMap />
       </div>

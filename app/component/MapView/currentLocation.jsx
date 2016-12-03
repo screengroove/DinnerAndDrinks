@@ -2,10 +2,6 @@ import React from 'react'
 
 export default class CurrentLocation extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   componentWillMount () {
     setTimeout(this.initMap.bind(this), 250) // on load this gets your current location
   }
@@ -49,7 +45,7 @@ export default class CurrentLocation extends React.Component {
 
   render () {
     return (
-      <div id='map' />
+      <div />
     )
   }
 
