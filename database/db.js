@@ -30,7 +30,25 @@ let schema = new Schema({
       lat: Number,
       long: Number
     }] // one to many
-  }
+  },
+  comments: [{
+    author: String,
+    message: String,
+    date: Date,
+    venue: String
+  }],
+
+  hotspots: [{
+
+    name: String,
+    address: String,
+    latitude: Number,
+    longitude: Number,
+    description: String,
+    rating: Number,
+    image: String
+
+  }]
 })
 
 // Models
