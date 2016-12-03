@@ -29,7 +29,7 @@ let schema = new Schema({
       bussinessUrl: String,
       lat: Number,
       long: Number
-    }] // one to many
+    }]
   },
   comments: [{
     author: String,
