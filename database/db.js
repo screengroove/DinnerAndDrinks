@@ -16,8 +16,13 @@ let schema = new Schema({
       rating: Number,
       image_url: String,
       bussinessUrl: String
+<<<<<<< HEAD
     }] // one to many
   }
+=======
+    }] // one to many //asdf
+  },
+>>>>>>> b4be1c97c3b75206f43b0f17002d397f071211fa
   comments: [{
     author: String,
     message: String,
