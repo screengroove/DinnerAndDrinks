@@ -5,8 +5,19 @@ const Schema = mongoose.Schema
 // Schema
 let schema = new Schema({
   user: {
-    auth: {}, // one to one
-
+    auth: {
+      username: String,
+      email: String,
+      password: String,
+      fbAuth: Boolean
+    },
+    profile: [{
+      name: String,
+      bio: String,
+      photo: String,
+      hometown: String,
+      interests: String
+    }],
     favoites: [{
       yelpId: String,
       name: String,
