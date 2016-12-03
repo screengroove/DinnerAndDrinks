@@ -30,7 +30,7 @@ let schema = new Schema({
       lat: Number,
       long: Number
     }] // one to many
-  },
+  }
   comments: [{
     author: String,
     message: String,
