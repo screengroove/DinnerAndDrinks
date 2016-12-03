@@ -5,9 +5,7 @@ const OAuth = oauth.OAuth
 const baseUrl = 'https://api.yelp.com/v2/'
 
 let Yelp = () => {
-  this.token = config.yelpToken
-  this.tokenSecret = config.yelpTokenSecret
-  this.oauth = new OAuth(
+  let work = new OAuth(
             null, // request token
             null, // access token
             config.yelpConsumerKey,
@@ -23,10 +21,10 @@ Yelp.prototype.get = (endpoint, params = {}, callback) => {
     const debug = params.debug
     delete params.debug
 
-    this.oauth.get(
+    this.work.get(
             baseUrl + endpoint + '?' + querystring.stringify(params),
-            this.token,
-            this.tokenSecret,
+            config.yelpToken,
+            config.yelpTokenSecret,
             (err, data, resp) => {
               if (err) return reject(err)
               const lastestData = JSON.parse(data)
@@ -58,4 +56,4 @@ Yelp.prototype.phoneSearch = (params, cb) => (
 
 // Add more functions here
 
-module.exports = Yelp
+export default Yelp
