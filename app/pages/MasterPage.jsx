@@ -7,15 +7,15 @@ import MainPage from './MainPage/MainPage.jsx'
 
 export default class MasterPage extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
+  constructor (props) {
+    super(props)
+  }
 
-    render() {
-        return (
-            <div>
-                {this.props.children}
-            </div>
-            )
-        }
+  render () {
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    )
+  }
 }

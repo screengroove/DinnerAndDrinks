@@ -2,54 +2,53 @@
 const Rec = require('../database/db')
 
 module.exports = {
-    auth: {
-        get: () => {
+  auth: {
+    get: () => {
             /*
              Interact with database
              */
-        },
-        post: () => {
-            /*
-             Interact with database
-             */
-        }
     },
-    favorites: {
-        get: () => {
+    post: () => {
             /*
              Interact with database
              */
-        },
-        post: () => {
+    }
+  },
+  favorites: {
+    get: () => {
             /*
              Interact with database
              */
-        }
     },
-    comments: {
-        get: () => {
+    post: () => {
             /*
              Interact with database
              */
-        },
-        post: () => {
+    }
+  },
+  comments: {
+    get: () => {
             /*
              Interact with database
              */
-        }
     },
-    hotspots: {
-        get: () => {
+    post: () => {
             /*
              Interact with database
              */
-        },
-        post: () => {
+    }
+  },
+  hotspots: {
+    get: () => {
             /*
              Interact with database
              */
-        }
     },
-
+    post: () => {
+            /*
+             Interact with database
+             */
+    }
+  }
 
 }
