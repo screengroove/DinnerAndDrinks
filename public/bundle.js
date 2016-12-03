@@ -26509,11 +26509,11 @@
 
 	var _mapView2 = _interopRequireDefault(_mapView);
 
-	var _yelpMap = __webpack_require__(322);
+	var _yelpMap = __webpack_require__(238);
 
 	var _yelpMap2 = _interopRequireDefault(_yelpMap);
 
-	var _hotspotForm = __webpack_require__(296);
+	var _hotspotForm = __webpack_require__(264);
 
 	var _hotspotForm2 = _interopRequireDefault(_hotspotForm);
 
@@ -26572,7 +26572,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _currentLocation = __webpack_require__(295);
+	var _currentLocation = __webpack_require__(237);
 
 	var _currentLocation2 = _interopRequireDefault(_currentLocation);
 
@@ -26611,65 +26611,7 @@
 	exports.default = MapView;
 
 /***/ },
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
-/* 293 */,
-/* 294 */,
-/* 295 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26760,7 +26702,7 @@
 	exports.default = CurrentLocation;
 
 /***/ },
-/* 296 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26775,7 +26717,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axios = __webpack_require__(297);
+	var _axios = __webpack_require__(239);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -26787,73 +26729,46 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var HotspotForm = function (_React$Component) {
-	  _inherits(HotspotForm, _React$Component);
+	var YelpMap = function (_React$Component) {
+	  _inherits(YelpMap, _React$Component);
 
-	  function HotspotForm(props) {
-	    _classCallCheck(this, HotspotForm);
+	  function YelpMap() {
+	    _classCallCheck(this, YelpMap);
 
-	    return _possibleConstructorReturn(this, (HotspotForm.__proto__ || Object.getPrototypeOf(HotspotForm)).call(this, props));
+	    return _possibleConstructorReturn(this, (YelpMap.__proto__ || Object.getPrototypeOf(YelpMap)).apply(this, arguments));
 	  }
 
-	  _createClass(HotspotForm, [{
-	    key: 'submitHotspotForm',
-	    value: function submitHotspotForm() {
-	      var name = document.getElementById('hotspotLocationName').value;
-	      var address = document.getElementById('hotspotAddress').value;
-	      var description = document.getElementById('hotspotDescription').value;
-
-	      var location = {
-	        name: name,
-	        address: address,
-	        description: description
-	      };
-
-	      _axios2.default.post('/api/hotspots', location).then(function (response) {
-	        console.log('Successful reponse: ', response.data);
-	      }).catch(function (error) {
-	        console.log('Error in axios hotspot form post: ', error);
-	      });
-	    }
+	  _createClass(YelpMap, [{
+	    key: 'getYelpMap',
+	    value: function getYelpMap() {}
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement('input', { placeholder: 'name', id: 'hotspotLocationName' }),
-	        _react2.default.createElement('input', { placeholder: 'address', id: 'hotspotAddress' }),
-	        _react2.default.createElement('textarea', { placeholder: 'description', id: 'hotspotDescription' }),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.submitHotspotForm },
-	          'Submit Form'
-	        )
-	      );
+	      return _react2.default.createElement('div', null);
 	    }
 	  }]);
 
-	  return HotspotForm;
+	  return YelpMap;
 	}(_react2.default.Component);
 
-	exports.default = HotspotForm;
+	exports.default = YelpMap;
 
 /***/ },
-/* 297 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(298);
+	module.exports = __webpack_require__(240);
 
 /***/ },
-/* 298 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
-	var bind = __webpack_require__(300);
-	var Axios = __webpack_require__(301);
-	var defaults = __webpack_require__(302);
+	var utils = __webpack_require__(241);
+	var bind = __webpack_require__(242);
+	var Axios = __webpack_require__(243);
+	var defaults = __webpack_require__(244);
 
 	/**
 	 * Create an instance of Axios
@@ -26886,15 +26801,15 @@
 	};
 
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(319);
-	axios.CancelToken = __webpack_require__(320);
-	axios.isCancel = __webpack_require__(316);
+	axios.Cancel = __webpack_require__(261);
+	axios.CancelToken = __webpack_require__(262);
+	axios.isCancel = __webpack_require__(258);
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(321);
+	axios.spread = __webpack_require__(263);
 
 	module.exports = axios;
 
@@ -26903,12 +26818,12 @@
 
 
 /***/ },
-/* 299 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(300);
+	var bind = __webpack_require__(242);
 
 	/*global toString:true*/
 
@@ -27208,7 +27123,7 @@
 
 
 /***/ },
-/* 300 */
+/* 242 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27225,17 +27140,17 @@
 
 
 /***/ },
-/* 301 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(302);
-	var utils = __webpack_require__(299);
-	var InterceptorManager = __webpack_require__(313);
-	var dispatchRequest = __webpack_require__(314);
-	var isAbsoluteURL = __webpack_require__(317);
-	var combineURLs = __webpack_require__(318);
+	var defaults = __webpack_require__(244);
+	var utils = __webpack_require__(241);
+	var InterceptorManager = __webpack_require__(255);
+	var dispatchRequest = __webpack_require__(256);
+	var isAbsoluteURL = __webpack_require__(259);
+	var combineURLs = __webpack_require__(260);
 
 	/**
 	 * Create a new instance of Axios
@@ -27316,13 +27231,13 @@
 
 
 /***/ },
-/* 302 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(299);
-	var normalizeHeaderName = __webpack_require__(303);
+	var utils = __webpack_require__(241);
+	var normalizeHeaderName = __webpack_require__(245);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -27339,10 +27254,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(304);
+	    adapter = __webpack_require__(246);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(304);
+	    adapter = __webpack_require__(246);
 	  }
 	  return adapter;
 	}
@@ -27416,12 +27331,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 303 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
+	var utils = __webpack_require__(241);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -27434,18 +27349,18 @@
 
 
 /***/ },
-/* 304 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(299);
-	var settle = __webpack_require__(305);
-	var buildURL = __webpack_require__(308);
-	var parseHeaders = __webpack_require__(309);
-	var isURLSameOrigin = __webpack_require__(310);
-	var createError = __webpack_require__(306);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(311);
+	var utils = __webpack_require__(241);
+	var settle = __webpack_require__(247);
+	var buildURL = __webpack_require__(250);
+	var parseHeaders = __webpack_require__(251);
+	var isURLSameOrigin = __webpack_require__(252);
+	var createError = __webpack_require__(248);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(253);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -27541,7 +27456,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(312);
+	      var cookies = __webpack_require__(254);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -27618,12 +27533,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 305 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(306);
+	var createError = __webpack_require__(248);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -27649,12 +27564,12 @@
 
 
 /***/ },
-/* 306 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(307);
+	var enhanceError = __webpack_require__(249);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -27672,7 +27587,7 @@
 
 
 /***/ },
-/* 307 */
+/* 249 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27697,12 +27612,12 @@
 
 
 /***/ },
-/* 308 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
+	var utils = __webpack_require__(241);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -27771,12 +27686,12 @@
 
 
 /***/ },
-/* 309 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
+	var utils = __webpack_require__(241);
 
 	/**
 	 * Parse headers into an object
@@ -27814,12 +27729,12 @@
 
 
 /***/ },
-/* 310 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
+	var utils = __webpack_require__(241);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -27888,7 +27803,7 @@
 
 
 /***/ },
-/* 311 */
+/* 253 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27930,12 +27845,12 @@
 
 
 /***/ },
-/* 312 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
+	var utils = __webpack_require__(241);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -27989,12 +27904,12 @@
 
 
 /***/ },
-/* 313 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
+	var utils = __webpack_require__(241);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -28047,15 +27962,15 @@
 
 
 /***/ },
-/* 314 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
-	var transformData = __webpack_require__(315);
-	var isCancel = __webpack_require__(316);
-	var defaults = __webpack_require__(302);
+	var utils = __webpack_require__(241);
+	var transformData = __webpack_require__(257);
+	var isCancel = __webpack_require__(258);
+	var defaults = __webpack_require__(244);
 
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -28132,12 +28047,12 @@
 
 
 /***/ },
-/* 315 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(299);
+	var utils = __webpack_require__(241);
 
 	/**
 	 * Transform the data for a request or a response
@@ -28158,7 +28073,7 @@
 
 
 /***/ },
-/* 316 */
+/* 258 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28169,7 +28084,7 @@
 
 
 /***/ },
-/* 317 */
+/* 259 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28189,7 +28104,7 @@
 
 
 /***/ },
-/* 318 */
+/* 260 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28207,7 +28122,7 @@
 
 
 /***/ },
-/* 319 */
+/* 261 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28232,12 +28147,12 @@
 
 
 /***/ },
-/* 320 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cancel = __webpack_require__(319);
+	var Cancel = __webpack_require__(261);
 
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -28295,7 +28210,7 @@
 
 
 /***/ },
-/* 321 */
+/* 263 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28328,13 +28243,13 @@
 
 
 /***/ },
-/* 322 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -28343,7 +28258,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axios = __webpack_require__(297);
+	var _axios = __webpack_require__(239);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -28355,29 +28270,56 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var YelpMap = function (_React$Component) {
-	    _inherits(YelpMap, _React$Component);
+	var HotspotForm = function (_React$Component) {
+	  _inherits(HotspotForm, _React$Component);
 
-	    function YelpMap() {
-	        _classCallCheck(this, YelpMap);
+	  function HotspotForm(props) {
+	    _classCallCheck(this, HotspotForm);
 
-	        return _possibleConstructorReturn(this, (YelpMap.__proto__ || Object.getPrototypeOf(YelpMap)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (HotspotForm.__proto__ || Object.getPrototypeOf(HotspotForm)).call(this, props));
+	  }
+
+	  _createClass(HotspotForm, [{
+	    key: 'submitHotspotForm',
+	    value: function submitHotspotForm() {
+	      var name = document.getElementById('hotspotLocationName').value;
+	      var address = document.getElementById('hotspotAddress').value;
+	      var description = document.getElementById('hotspotDescription').value;
+
+	      var location = {
+	        name: name,
+	        address: address,
+	        description: description
+	      };
+
+	      _axios2.default.post('/api/hotspots', location).then(function (response) {
+	        console.log('Successful reponse: ', response.data);
+	      }).catch(function (error) {
+	        console.log('Error in axios hotspot form post: ', error);
+	      });
 	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('input', { placeholder: 'name', id: 'hotspotLocationName' }),
+	        _react2.default.createElement('input', { placeholder: 'address', id: 'hotspotAddress' }),
+	        _react2.default.createElement('textarea', { placeholder: 'description', id: 'hotspotDescription' }),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.submitHotspotForm },
+	          'Submit Form'
+	        )
+	      );
+	    }
+	  }]);
 
-	    _createClass(YelpMap, [{
-	        key: 'getYelpMap',
-	        value: function getYelpMap() {}
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement('div', null);
-	        }
-	    }]);
-
-	    return YelpMap;
+	  return HotspotForm;
 	}(_react2.default.Component);
 
-	exports.default = YelpMap;
+	exports.default = HotspotForm;
 
 /***/ }
 /******/ ]);
