@@ -1,7 +1,7 @@
 import React from 'react'
+import yelp from '../../../config.js'
 
 import CurrentLocation from './currentLocation.jsx'
-import DisplayMap from './displayMap.jsx'
 
 export default class MapView extends React.Component {
 
@@ -10,7 +10,6 @@ export default class MapView extends React.Component {
       <div>
         <div id="map"></div>
         <CurrentLocation />
-        <DisplayMap />
       </div>
     )
   }
