@@ -39,15 +39,12 @@ module.exports = {
     }
   },
   hotspots: {
-    get: (req, res) => {
-
-
+    get: () => {
 
     },
     post: (req, res) => {
-
-        console.log(req.body)
-
+      console.log('this is working: ', req)
+      Rec.hotposts.save()
     }
   }
 
