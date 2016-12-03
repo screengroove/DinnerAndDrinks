@@ -17,7 +17,7 @@ let schema = new Schema({
       image_url: String,
       bussinessUrl: String
     }] // one to many
-  },
+  }
   comments: [{
     author: String,
     message: String,
