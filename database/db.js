@@ -31,14 +31,21 @@ let schema = new Schema({
       long: Number
     }] // one to many
   },
-
-  comments: {
-
-  },
-
-  hotspots: {
-
-  }
+  comments: [{
+    author: String,
+    message: String,
+    date: Date,
+    venue: String
+  }],
+  hotspots: [{
+    name: String,
+    address: String,
+    latitude: Number,
+    longitude: Number,
+    description: String,
+    rating: Number,
+    image: String
+  }]
 })
 
 // Models

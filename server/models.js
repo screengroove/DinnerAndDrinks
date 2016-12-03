@@ -40,14 +40,11 @@ module.exports = {
   },
   hotspots: {
     get: () => {
-            /*
-             Interact with database
-             */
+
     },
-    post: () => {
-            /*
-             Interact with database
-             */
+    post: (req, res) => {
+      console.log('this is working: ', req)
+      Rec.hotposts.save()
     }
   }
 
