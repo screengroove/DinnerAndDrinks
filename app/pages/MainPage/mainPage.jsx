@@ -11,12 +11,8 @@ export default class MainPage extends React.Component {
       <div>
           Hello World...
           <MapView />
-<<<<<<< HEAD
-          <HotspotForm />
-          <YelpMap />
-=======
+        <YelpMap />
         <HotspotForm />
->>>>>>> 5f24511e78cce195e5bed54cd98461df6306c56f
       </div>
     )
   }

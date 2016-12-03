@@ -3,11 +3,9 @@ import axios from 'axios'
 
 export default class YelpList extends React.Component {
 
-    render() {
-        return (
-            <div>
-                
-            </div>
-            )
-        }
+  render () {
+    return (
+      <div />
+    )
+  }
 }

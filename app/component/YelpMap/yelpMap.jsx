@@ -3,15 +3,13 @@ import axios from 'axios'
 
 export default class YelpMap extends React.Component {
 
-    getYelpMap() {
+  getYelpMap () {
 
-    }
+  }
 
-    render() {
-        return (
-            <div>
-                
-            </div>
-            )
-        }
+  render () {
+    return (
+      <div />
+    )
+  }
 }
