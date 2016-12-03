@@ -5,6 +5,7 @@ const io = require('socket.io')(server)
 const parser = require('body-parser')
 const morgan = require('morgan')
 const routes = require('./routes')
+const mongoose = require('mongoose')
 
 // port settings
 let port = process.env.PORT || 3000
@@ -12,6 +13,13 @@ let port = process.env.PORT || 3000
 // web socket protocol on localhost on port 3000
 server.listen(port, () => {
   console.log(`Listen to http://localhost:${port}`)
+})
+
+// database connection
+mongoose.connect('mongodb://rebels:sleber@ds119618.mlab.com:19618/recommendatordb')
+const db = mongoose.connection
+db.once('open', () => {
+  console.log('connected to database')
 })
 
 // Middleware
