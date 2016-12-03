@@ -18,13 +18,25 @@ let schema = new Schema({
       bussinessUrl: String
     }] // one to many
   },
-  comments: {
+  comments: [{
+    author: String,
+    message: String,
+    date: Date,
+    venue: String
+  }],
 
-  },
+  hotspots: [{
 
-  hotspots: {
+    name: String,
+    address: String,
+    latitude: Number,
+    longitude: Number,
+    description: String,
+    rating: Number,
+    image: String
 
-  }
+  }]
+
 })
 
 // Models
