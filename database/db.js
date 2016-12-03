@@ -16,7 +16,7 @@ let schema = new Schema({
       rating: Number,
       image_url: String,
       bussinessUrl: String
-    }] // one to many
+    }] // one to many //asdf
   },
   comments: [{
     author: String,
