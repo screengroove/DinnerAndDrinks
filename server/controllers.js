@@ -34,9 +34,8 @@ module.exports = {
     }
   },
   hotspots: {
-    get: (req, res) => {
-            /* can look something like this
-                models.user.get() */
+    get: () => {
+      console.log('you found me')
     },
     post: (req, res) => {
       models.hotspots.post(req.body)
