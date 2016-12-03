@@ -41,13 +41,9 @@ module.exports = {
   hotspots: {
     get: (req, res) => {
 
-
-
     },
     post: (req, res) => {
-
-        console.log(req.body)
-
+      console.log(req.body)
     }
   }
 
