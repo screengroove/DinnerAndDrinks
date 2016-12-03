@@ -26562,11 +26562,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _config = __webpack_require__(1026);
+	var _config = __webpack_require__(237);
 
 	var _config2 = _interopRequireDefault(_config);
 
-	var _currentLocation = __webpack_require__(237);
+	var _currentLocation = __webpack_require__(295);
 
 	var _currentLocation2 = _interopRequireDefault(_currentLocation);
 
@@ -26610,199 +26610,891 @@
 
 	'use strict';
 
+	// secret keys go here
+	// add to .gitignore on your own computer
+	// when adding here talk to everyone so they can add
+	// those keys and values too
+	var Yelp = __webpack_require__(238);
+	var yelp = new Yelp({
+	  consumer_key: '9JsyXXhj9pxI0wRtxIdb9Q',
+	  consumer_secret: '0D3FHzK5wuysal4WYZY3CeYEdR8',
+	  token: 'ivBw983_ASe9DysxtuqI7cxlrGBFOI4m',
+	  token_secret: 'k6QLpFpCtW0r3j_DsqJKEgqmI-Q'
+	});
+
+	module.exports = {
+	  googleMapsApiKey: 'AIzaSyB92DEsCCYUsGL5O8ULNESPb12Cg2bVOSA',
+	  yelpConsumerKey: '9JsyXXhj9pxI0wRtxIdb9Q',
+	  yelpConsumerSecret: '0D3FHzK5wuysal4WYZY3CeYEdR8',
+	  yelpToken: 'ivBw983_ASe9DysxtuqI7cxlrGBFOI4m',
+	  yelpTokenSecret: 'k6QLpFpCtW0r3j_DsqJKEgqmI-Q',
+	  yelp: yelp
+	};
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Yelp = __webpack_require__(239).default;
+	module.exports = Yelp;
+
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _querystring = __webpack_require__(240);
 
-	var _react = __webpack_require__(1);
+	var _querystring2 = _interopRequireDefault(_querystring);
 
-	var _react2 = _interopRequireDefault(_react);
+	var _oauth = __webpack_require__(243);
+
+	var _oauth2 = _interopRequireDefault(_oauth);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	var OAuth = _oauth2.default.OAuth;
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var baseUrl = 'http://api.yelp.com/v2/';
 
-	var CurrentLocation = function (_React$Component) {
-	  _inherits(CurrentLocation, _React$Component);
+	var Yelp = (function () {
+	  function Yelp(opts) {
+	    _classCallCheck(this, Yelp);
 
-	  function CurrentLocation() {
-	    _classCallCheck(this, CurrentLocation);
-
-	    return _possibleConstructorReturn(this, (CurrentLocation.__proto__ || Object.getPrototypeOf(CurrentLocation)).apply(this, arguments));
+	    this.oauthToken = opts.token;
+	    this.oauthTokenSecret = opts.token_secret;
+	    this.oauth = new OAuth(null, null, opts.consumer_key, opts.consumer_secret, opts.version || '1.0', null, 'HMAC-SHA1');
 	  }
 
-	  _createClass(CurrentLocation, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      setTimeout(this.initMap.bind(this), 25); // on load this gets your current location
-	    }
+	  _createClass(Yelp, [{
+	    key: 'get',
+	    value: function get(resource) {
+	      var _this = this;
 
-	    // Google Api function
+	      var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	      var cb = arguments[2];
 
-	  }, {
-	    key: 'initMap',
-	    value: function initMap() {
-	      var map = new google.maps.Map(document.getElementById('map'), {
-	        center: { lat: -34.397, lng: 150.644 },
-	        zoom: 15
-	      });
-	      var infoWindow = new google.maps.InfoWindow({ map: map });
+	      var promise = new Promise(function (resolve, reject) {
+	        var debug = params.debug;
+	        delete params.debug;
 
-	      // Try HTML5 geolocation.
-	      if (navigator.geolocation) {
-	        navigator.geolocation.getCurrentPosition(function (position) {
-	          var pos = {
-	            lat: position.coords.latitude,
-	            lng: position.coords.longitude
-	          };
-
-	          infoWindow.setPosition(pos);
-	          infoWindow.setContent('Location found.');
-	          map.setCenter(pos);
-	        }, function () {
-	          handleLocationError(true, infoWindow, map.getCenter());
+	        _this.oauth.get(baseUrl + resource + '?' + _querystring2.default.stringify(params), _this.oauthToken, _this.oauthTokenSecret, function (err, _data, response) {
+	          if (err) return reject(err);
+	          var data = JSON.parse(_data);
+	          if (debug) return resolve([data, response]);
+	          resolve(data);
 	        });
-	      } else {
-	        // Browser doesn't support Geolocation
-	        handleLocationError(false, infoWindow, map.getCenter());
+	      });
+	      if (typeof cb === 'function') {
+	        promise.then(function (res) {
+	          return cb(null, res);
+	        }).catch(cb);
+	        return null;
 	      }
-	    }
-
-	    // Google Api function:
-	    //  Handles Location Errors
-
-	  }, {
-	    key: 'handleLocationError',
-	    value: function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-	      infoWindow.setPosition(pos);
-	      infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : 'Error: Your browser doesn\'t support geolocation.');
+	      return promise;
 	    }
 	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement('div', null);
+	    key: 'search',
+	    value: function search(params, callback) {
+	      return this.get('search', params, callback);
+	    }
+	  }, {
+	    key: 'business',
+	    value: function business(id, callback) {
+	      return this.get('business/' + id, undefined, callback);
+	    }
+
+	    /**
+	     * Exampe:
+	     * yelp.phone_search({phone: "+12223334444"}, function(error, data) {});
+	     */
+
+	  }, {
+	    key: 'phoneSearch',
+	    value: function phoneSearch(params, callback) {
+	      return this.get('phone_search', params, callback);
 	    }
 	  }]);
 
-	  return CurrentLocation;
-	}(_react2.default.Component);
+	  return Yelp;
+	})();
 
-	exports.default = CurrentLocation;
+	exports.default = Yelp;
 
 /***/ },
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var rng = __webpack_require__(289)
+	'use strict';
 
-	function error () {
-	  var m = [].slice.call(arguments).join(' ')
-	  throw new Error([
-	    m,
-	    'we accept pull requests',
-	    'http://github.com/dominictarr/crypto-browserify'
-	    ].join('\n'))
-	}
+	exports.decode = exports.parse = __webpack_require__(241);
+	exports.encode = exports.stringify = __webpack_require__(242);
 
-	exports.createHash = __webpack_require__(291)
-
-	exports.createHmac = __webpack_require__(303)
-
-	exports.randomBytes = function(size, callback) {
-	  if (callback && callback.call) {
-	    try {
-	      callback.call(this, undefined, new Buffer(rng(size)))
-	    } catch (err) { callback(err) }
-	  } else {
-	    return new Buffer(rng(size))
-	  }
-	}
-
-	function each(a, f) {
-	  for(var i in a)
-	    f(a[i], i)
-	}
-
-	exports.getHashes = function () {
-	  return ['sha1', 'sha256', 'sha512', 'md5', 'rmd160']
-	}
-
-	var p = __webpack_require__(304)(exports)
-	exports.pbkdf2 = p.pbkdf2
-	exports.pbkdf2Sync = p.pbkdf2Sync
-
-
-	// the least I can do is make error messages for the rest of the node.js/crypto api.
-	each(['createCredentials'
-	, 'createCipher'
-	, 'createCipheriv'
-	, 'createDecipher'
-	, 'createDecipheriv'
-	, 'createSign'
-	, 'createVerify'
-	, 'createDiffieHellman'
-	], function (name) {
-	  exports[name] = function () {
-	    error('sorry,', name, 'is not implemented yet')
-	  }
-	})
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
 
 /***/ },
-/* 285 */
+/* 241 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	// If obj.hasOwnProperty has been overridden, then calling
+	// obj.hasOwnProperty(prop) will break.
+	// See: https://github.com/joyent/node/issues/1707
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+
+	module.exports = function(qs, sep, eq, options) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  var obj = {};
+
+	  if (typeof qs !== 'string' || qs.length === 0) {
+	    return obj;
+	  }
+
+	  var regexp = /\+/g;
+	  qs = qs.split(sep);
+
+	  var maxKeys = 1000;
+	  if (options && typeof options.maxKeys === 'number') {
+	    maxKeys = options.maxKeys;
+	  }
+
+	  var len = qs.length;
+	  // maxKeys <= 0 means that we should not limit keys count
+	  if (maxKeys > 0 && len > maxKeys) {
+	    len = maxKeys;
+	  }
+
+	  for (var i = 0; i < len; ++i) {
+	    var x = qs[i].replace(regexp, '%20'),
+	        idx = x.indexOf(eq),
+	        kstr, vstr, k, v;
+
+	    if (idx >= 0) {
+	      kstr = x.substr(0, idx);
+	      vstr = x.substr(idx + 1);
+	    } else {
+	      kstr = x;
+	      vstr = '';
+	    }
+
+	    k = decodeURIComponent(kstr);
+	    v = decodeURIComponent(vstr);
+
+	    if (!hasOwnProperty(obj, k)) {
+	      obj[k] = v;
+	    } else if (Array.isArray(obj[k])) {
+	      obj[k].push(v);
+	    } else {
+	      obj[k] = [obj[k], v];
+	    }
+	  }
+
+	  return obj;
+	};
+
+
+/***/ },
+/* 242 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	var stringifyPrimitive = function(v) {
+	  switch (typeof v) {
+	    case 'string':
+	      return v;
+
+	    case 'boolean':
+	      return v ? 'true' : 'false';
+
+	    case 'number':
+	      return isFinite(v) ? v : '';
+
+	    default:
+	      return '';
+	  }
+	};
+
+	module.exports = function(obj, sep, eq, name) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  if (obj === null) {
+	    obj = undefined;
+	  }
+
+	  if (typeof obj === 'object') {
+	    return Object.keys(obj).map(function(k) {
+	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+	      if (Array.isArray(obj[k])) {
+	        return obj[k].map(function(v) {
+	          return ks + encodeURIComponent(stringifyPrimitive(v));
+	        }).join(sep);
+	      } else {
+	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+	      }
+	    }).join(sep);
+
+	  }
+
+	  if (!name) return '';
+	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+	         encodeURIComponent(stringifyPrimitive(obj));
+	};
+
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports.OAuth = __webpack_require__(244).OAuth;
+	exports.OAuthEcho = __webpack_require__(244).OAuthEcho;
+	exports.OAuth2 = __webpack_require__(294).OAuth2;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var crypto= __webpack_require__(249),
+	    sha1= __webpack_require__(267),
+	    http= __webpack_require__(268),
+	    https= __webpack_require__(292),
+	    URL= __webpack_require__(289),
+	    querystring= __webpack_require__(240),
+	    OAuthUtils= __webpack_require__(293);
+
+	exports.OAuth= function(requestUrl, accessUrl, consumerKey, consumerSecret, version, authorize_callback, signatureMethod, nonceSize, customHeaders) {
+	  this._isEcho = false;
+
+	  this._requestUrl= requestUrl;
+	  this._accessUrl= accessUrl;
+	  this._consumerKey= consumerKey;
+	  this._consumerSecret= this._encodeData( consumerSecret );
+	  if (signatureMethod == "RSA-SHA1") {
+	    this._privateKey = consumerSecret;
+	  }
+	  this._version= version;
+	  if( authorize_callback === undefined ) {
+	    this._authorize_callback= "oob";
+	  }
+	  else {
+	    this._authorize_callback= authorize_callback;
+	  }
+
+	  if( signatureMethod != "PLAINTEXT" && signatureMethod != "HMAC-SHA1" && signatureMethod != "RSA-SHA1")
+	    throw new Error("Un-supported signature method: " + signatureMethod )
+	  this._signatureMethod= signatureMethod;
+	  this._nonceSize= nonceSize || 32;
+	  this._headers= customHeaders || {"Accept" : "*/*",
+	                                   "Connection" : "close",
+	                                   "User-Agent" : "Node authentication"}
+	  this._clientOptions= this._defaultClientOptions= {"requestTokenHttpMethod": "POST",
+	                                                    "accessTokenHttpMethod": "POST",
+	                                                    "followRedirects": true};
+	  this._oauthParameterSeperator = ",";
+	};
+
+	exports.OAuthEcho= function(realm, verify_credentials, consumerKey, consumerSecret, version, signatureMethod, nonceSize, customHeaders) {
+	  this._isEcho = true;
+
+	  this._realm= realm;
+	  this._verifyCredentials = verify_credentials;
+	  this._consumerKey= consumerKey;
+	  this._consumerSecret= this._encodeData( consumerSecret );
+	  if (signatureMethod == "RSA-SHA1") {
+	    this._privateKey = consumerSecret;
+	  }
+	  this._version= version;
+
+	  if( signatureMethod != "PLAINTEXT" && signatureMethod != "HMAC-SHA1" && signatureMethod != "RSA-SHA1")
+	    throw new Error("Un-supported signature method: " + signatureMethod );
+	  this._signatureMethod= signatureMethod;
+	  this._nonceSize= nonceSize || 32;
+	  this._headers= customHeaders || {"Accept" : "*/*",
+	                                   "Connection" : "close",
+	                                   "User-Agent" : "Node authentication"};
+	  this._oauthParameterSeperator = ",";
+	}
+
+	exports.OAuthEcho.prototype = exports.OAuth.prototype;
+
+	exports.OAuth.prototype._getTimestamp= function() {
+	  return Math.floor( (new Date()).getTime() / 1000 );
+	}
+
+	exports.OAuth.prototype._encodeData= function(toEncode){
+	 if( toEncode == null || toEncode == "" ) return ""
+	 else {
+	    var result= encodeURIComponent(toEncode);
+	    // Fix the mismatch between OAuth's  RFC3986's and Javascript's beliefs in what is right and wrong ;)
+	    return result.replace(/\!/g, "%21")
+	                 .replace(/\'/g, "%27")
+	                 .replace(/\(/g, "%28")
+	                 .replace(/\)/g, "%29")
+	                 .replace(/\*/g, "%2A");
+	 }
+	}
+
+	exports.OAuth.prototype._decodeData= function(toDecode) {
+	  if( toDecode != null ) {
+	    toDecode = toDecode.replace(/\+/g, " ");
+	  }
+	  return decodeURIComponent( toDecode);
+	}
+
+	exports.OAuth.prototype._getSignature= function(method, url, parameters, tokenSecret) {
+	  var signatureBase= this._createSignatureBase(method, url, parameters);
+	  return this._createSignature( signatureBase, tokenSecret );
+	}
+
+	exports.OAuth.prototype._normalizeUrl= function(url) {
+	  var parsedUrl= URL.parse(url, true)
+	   var port ="";
+	   if( parsedUrl.port ) {
+	     if( (parsedUrl.protocol == "http:" && parsedUrl.port != "80" ) ||
+	         (parsedUrl.protocol == "https:" && parsedUrl.port != "443") ) {
+	           port= ":" + parsedUrl.port;
+	         }
+	   }
+
+	  if( !parsedUrl.pathname  || parsedUrl.pathname == "" ) parsedUrl.pathname ="/";
+
+	  return parsedUrl.protocol + "//" + parsedUrl.hostname + port + parsedUrl.pathname;
+	}
+
+	// Is the parameter considered an OAuth parameter
+	exports.OAuth.prototype._isParameterNameAnOAuthParameter= function(parameter) {
+	  var m = parameter.match('^oauth_');
+	  if( m && ( m[0] === "oauth_" ) ) {
+	    return true;
+	  }
+	  else {
+	    return false;
+	  }
+	};
+
+	// build the OAuth request authorization header
+	exports.OAuth.prototype._buildAuthorizationHeaders= function(orderedParameters) {
+	  var authHeader="OAuth ";
+	  if( this._isEcho ) {
+	    authHeader += 'realm="' + this._realm + '",';
+	  }
+
+	  for( var i= 0 ; i < orderedParameters.length; i++) {
+	     // Whilst the all the parameters should be included within the signature, only the oauth_ arguments
+	     // should appear within the authorization header.
+	     if( this._isParameterNameAnOAuthParameter(orderedParameters[i][0]) ) {
+	      authHeader+= "" + this._encodeData(orderedParameters[i][0])+"=\""+ this._encodeData(orderedParameters[i][1])+"\""+ this._oauthParameterSeperator;
+	     }
+	  }
+
+	  authHeader= authHeader.substring(0, authHeader.length-this._oauthParameterSeperator.length);
+	  return authHeader;
+	}
+
+	// Takes an object literal that represents the arguments, and returns an array
+	// of argument/value pairs.
+	exports.OAuth.prototype._makeArrayOfArgumentsHash= function(argumentsHash) {
+	  var argument_pairs= [];
+	  for(var key in argumentsHash ) {
+	    if (argumentsHash.hasOwnProperty(key)) {
+	       var value= argumentsHash[key];
+	       if( Array.isArray(value) ) {
+	         for(var i=0;i<value.length;i++) {
+	           argument_pairs[argument_pairs.length]= [key, value[i]];
+	         }
+	       }
+	       else {
+	         argument_pairs[argument_pairs.length]= [key, value];
+	       }
+	    }
+	  }
+	  return argument_pairs;
+	}
+
+	// Sorts the encoded key value pairs by encoded name, then encoded value
+	exports.OAuth.prototype._sortRequestParams= function(argument_pairs) {
+	  // Sort by name, then value.
+	  argument_pairs.sort(function(a,b) {
+	      if ( a[0]== b[0] )  {
+	        return a[1] < b[1] ? -1 : 1;
+	      }
+	      else return a[0] < b[0] ? -1 : 1;
+	  });
+
+	  return argument_pairs;
+	}
+
+	exports.OAuth.prototype._normaliseRequestParams= function(args) {
+	  var argument_pairs= this._makeArrayOfArgumentsHash(args);
+	  // First encode them #3.4.1.3.2 .1
+	  for(var i=0;i<argument_pairs.length;i++) {
+	    argument_pairs[i][0]= this._encodeData( argument_pairs[i][0] );
+	    argument_pairs[i][1]= this._encodeData( argument_pairs[i][1] );
+	  }
+
+	  // Then sort them #3.4.1.3.2 .2
+	  argument_pairs= this._sortRequestParams( argument_pairs );
+
+	  // Then concatenate together #3.4.1.3.2 .3 & .4
+	  var args= "";
+	  for(var i=0;i<argument_pairs.length;i++) {
+	      args+= argument_pairs[i][0];
+	      args+= "="
+	      args+= argument_pairs[i][1];
+	      if( i < argument_pairs.length-1 ) args+= "&";
+	  }
+	  return args;
+	}
+
+	exports.OAuth.prototype._createSignatureBase= function(method, url, parameters) {
+	  url= this._encodeData( this._normalizeUrl(url) );
+	  parameters= this._encodeData( parameters );
+	  return method.toUpperCase() + "&" + url + "&" + parameters;
+	}
+
+	exports.OAuth.prototype._createSignature= function(signatureBase, tokenSecret) {
+	   if( tokenSecret === undefined ) var tokenSecret= "";
+	   else tokenSecret= this._encodeData( tokenSecret );
+	   // consumerSecret is already encoded
+	   var key= this._consumerSecret + "&" + tokenSecret;
+
+	   var hash= ""
+	   if( this._signatureMethod == "PLAINTEXT" ) {
+	     hash= key;
+	   }
+	   else if (this._signatureMethod == "RSA-SHA1") {
+	     key = this._privateKey || "";
+	     hash= crypto.createSign("RSA-SHA1").update(signatureBase).sign(key, 'base64');
+	   }
+	   else {
+	       if( crypto.Hmac ) {
+	         hash = crypto.createHmac("sha1", key).update(signatureBase).digest("base64");
+	       }
+	       else {
+	         hash= sha1.HMACSHA1(key, signatureBase);
+	       }
+	   }
+	   return hash;
+	}
+	exports.OAuth.prototype.NONCE_CHARS= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n',
+	              'o','p','q','r','s','t','u','v','w','x','y','z','A','B',
+	              'C','D','E','F','G','H','I','J','K','L','M','N','O','P',
+	              'Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3',
+	              '4','5','6','7','8','9'];
+
+	exports.OAuth.prototype._getNonce= function(nonceSize) {
+	   var result = [];
+	   var chars= this.NONCE_CHARS;
+	   var char_pos;
+	   var nonce_chars_length= chars.length;
+
+	   for (var i = 0; i < nonceSize; i++) {
+	       char_pos= Math.floor(Math.random() * nonce_chars_length);
+	       result[i]=  chars[char_pos];
+	   }
+	   return result.join('');
+	}
+
+	exports.OAuth.prototype._createClient= function( port, hostname, method, path, headers, sslEnabled ) {
+	  var options = {
+	    host: hostname,
+	    port: port,
+	    path: path,
+	    method: method,
+	    headers: headers
+	  };
+	  var httpModel;
+	  if( sslEnabled ) {
+	    httpModel= https;
+	  } else {
+	    httpModel= http;
+	  }
+	  return httpModel.request(options);
+	}
+
+	exports.OAuth.prototype._prepareParameters= function( oauth_token, oauth_token_secret, method, url, extra_params ) {
+	  var oauthParameters= {
+	      "oauth_timestamp":        this._getTimestamp(),
+	      "oauth_nonce":            this._getNonce(this._nonceSize),
+	      "oauth_version":          this._version,
+	      "oauth_signature_method": this._signatureMethod,
+	      "oauth_consumer_key":     this._consumerKey
+	  };
+
+	  if( oauth_token ) {
+	    oauthParameters["oauth_token"]= oauth_token;
+	  }
+
+	  var sig;
+	  if( this._isEcho ) {
+	    sig = this._getSignature( "GET",  this._verifyCredentials,  this._normaliseRequestParams(oauthParameters), oauth_token_secret);
+	  }
+	  else {
+	    if( extra_params ) {
+	      for( var key in extra_params ) {
+	        if (extra_params.hasOwnProperty(key)) oauthParameters[key]= extra_params[key];
+	      }
+	    }
+	    var parsedUrl= URL.parse( url, false );
+
+	    if( parsedUrl.query ) {
+	      var key2;
+	      var extraParameters= querystring.parse(parsedUrl.query);
+	      for(var key in extraParameters ) {
+	        var value= extraParameters[key];
+	          if( typeof value == "object" ){
+	            // TODO: This probably should be recursive
+	            for(key2 in value){
+	              oauthParameters[key + "[" + key2 + "]"] = value[key2];
+	            }
+	          } else {
+	            oauthParameters[key]= value;
+	          }
+	        }
+	    }
+
+	    sig = this._getSignature( method,  url,  this._normaliseRequestParams(oauthParameters), oauth_token_secret);
+	  }
+
+	  var orderedParameters= this._sortRequestParams( this._makeArrayOfArgumentsHash(oauthParameters) );
+	  orderedParameters[orderedParameters.length]= ["oauth_signature", sig];
+	  return orderedParameters;
+	}
+
+	exports.OAuth.prototype._performSecureRequest= function( oauth_token, oauth_token_secret, method, url, extra_params, post_body, post_content_type,  callback ) {
+	  var orderedParameters= this._prepareParameters(oauth_token, oauth_token_secret, method, url, extra_params);
+
+	  if( !post_content_type ) {
+	    post_content_type= "application/x-www-form-urlencoded";
+	  }
+	  var parsedUrl= URL.parse( url, false );
+	  if( parsedUrl.protocol == "http:" && !parsedUrl.port ) parsedUrl.port= 80;
+	  if( parsedUrl.protocol == "https:" && !parsedUrl.port ) parsedUrl.port= 443;
+
+	  var headers= {};
+	  var authorization = this._buildAuthorizationHeaders(orderedParameters);
+	  if ( this._isEcho ) {
+	    headers["X-Verify-Credentials-Authorization"]= authorization;
+	  }
+	  else {
+	    headers["Authorization"]= authorization;
+	  }
+
+	  headers["Host"] = parsedUrl.host
+
+	  for( var key in this._headers ) {
+	    if (this._headers.hasOwnProperty(key)) {
+	      headers[key]= this._headers[key];
+	    }
+	  }
+
+	  // Filter out any passed extra_params that are really to do with OAuth
+	  for(var key in extra_params) {
+	    if( this._isParameterNameAnOAuthParameter( key ) ) {
+	      delete extra_params[key];
+	    }
+	  }
+
+	  if( (method == "POST" || method == "PUT")  && ( post_body == null && extra_params != null) ) {
+	    // Fix the mismatch between the output of querystring.stringify() and this._encodeData()
+	    post_body= querystring.stringify(extra_params)
+	                       .replace(/\!/g, "%21")
+	                       .replace(/\'/g, "%27")
+	                       .replace(/\(/g, "%28")
+	                       .replace(/\)/g, "%29")
+	                       .replace(/\*/g, "%2A");
+	  }
+
+	  if( post_body ) {
+	      if ( Buffer.isBuffer(post_body) ) {
+	          headers["Content-length"]= post_body.length;
+	      } else {
+	          headers["Content-length"]= Buffer.byteLength(post_body);
+	      }
+	  } else {
+	      headers["Content-length"]= 0;
+	  }
+
+	  headers["Content-Type"]= post_content_type;
+
+	  var path;
+	  if( !parsedUrl.pathname  || parsedUrl.pathname == "" ) parsedUrl.pathname ="/";
+	  if( parsedUrl.query ) path= parsedUrl.pathname + "?"+ parsedUrl.query ;
+	  else path= parsedUrl.pathname;
+
+	  var request;
+	  if( parsedUrl.protocol == "https:" ) {
+	    request= this._createClient(parsedUrl.port, parsedUrl.hostname, method, path, headers, true);
+	  }
+	  else {
+	    request= this._createClient(parsedUrl.port, parsedUrl.hostname, method, path, headers);
+	  }
+
+	  var clientOptions = this._clientOptions;
+	  if( callback ) {
+	    var data="";
+	    var self= this;
+
+	    // Some hosts *cough* google appear to close the connection early / send no content-length header
+	    // allow this behaviour.
+	    var allowEarlyClose= OAuthUtils.isAnEarlyCloseHost( parsedUrl.hostname );
+	    var callbackCalled= false;
+	    var passBackControl = function( response ) {
+	      if(!callbackCalled) {
+	        callbackCalled= true;
+	        if ( response.statusCode >= 200 && response.statusCode <= 299 ) {
+	          callback(null, data, response);
+	        } else {
+	          // Follow 301 or 302 redirects with Location HTTP header
+	          if((response.statusCode == 301 || response.statusCode == 302) && clientOptions.followRedirects && response.headers && response.headers.location) {
+	            self._performSecureRequest( oauth_token, oauth_token_secret, method, response.headers.location, extra_params, post_body, post_content_type,  callback);
+	          }
+	          else {
+	            callback({ statusCode: response.statusCode, data: data }, data, response);
+	          }
+	        }
+	      }
+	    }
+
+	    request.on('response', function (response) {
+	      response.setEncoding('utf8');
+	      response.on('data', function (chunk) {
+	        data+=chunk;
+	      });
+	      response.on('end', function () {
+	        passBackControl( response );
+	      });
+	      response.on('close', function () {
+	        if( allowEarlyClose ) {
+	          passBackControl( response );
+	        }
+	      });
+	    });
+
+	    request.on("error", function(err) {
+	      if(!callbackCalled) {
+	        callbackCalled= true;
+	        callback( err )
+	      }
+	    });
+
+	    if( (method == "POST" || method =="PUT") && post_body != null && post_body != "" ) {
+	      request.write(post_body);
+	    }
+	    request.end();
+	  }
+	  else {
+	    if( (method == "POST" || method =="PUT") && post_body != null && post_body != "" ) {
+	      request.write(post_body);
+	    }
+	    return request;
+	  }
+
+	  return;
+	}
+
+	exports.OAuth.prototype.setClientOptions= function(options) {
+	  var key,
+	      mergedOptions= {},
+	      hasOwnProperty= Object.prototype.hasOwnProperty;
+
+	  for( key in this._defaultClientOptions ) {
+	    if( !hasOwnProperty.call(options, key) ) {
+	      mergedOptions[key]= this._defaultClientOptions[key];
+	    } else {
+	      mergedOptions[key]= options[key];
+	    }
+	  }
+
+	  this._clientOptions= mergedOptions;
+	};
+
+	exports.OAuth.prototype.getOAuthAccessToken= function(oauth_token, oauth_token_secret, oauth_verifier,  callback) {
+	  var extraParams= {};
+	  if( typeof oauth_verifier == "function" ) {
+	    callback= oauth_verifier;
+	  } else {
+	    extraParams.oauth_verifier= oauth_verifier;
+	  }
+
+	   this._performSecureRequest( oauth_token, oauth_token_secret, this._clientOptions.accessTokenHttpMethod, this._accessUrl, extraParams, null, null, function(error, data, response) {
+	         if( error ) callback(error);
+	         else {
+	           var results= querystring.parse( data );
+	           var oauth_access_token= results["oauth_token"];
+	           delete results["oauth_token"];
+	           var oauth_access_token_secret= results["oauth_token_secret"];
+	           delete results["oauth_token_secret"];
+	           callback(null, oauth_access_token, oauth_access_token_secret, results );
+	         }
+	   })
+	}
+
+	// Deprecated
+	exports.OAuth.prototype.getProtectedResource= function(url, method, oauth_token, oauth_token_secret, callback) {
+	  this._performSecureRequest( oauth_token, oauth_token_secret, method, url, null, "", null, callback );
+	}
+
+	exports.OAuth.prototype.delete= function(url, oauth_token, oauth_token_secret, callback) {
+	  return this._performSecureRequest( oauth_token, oauth_token_secret, "DELETE", url, null, "", null, callback );
+	}
+
+	exports.OAuth.prototype.get= function(url, oauth_token, oauth_token_secret, callback) {
+	  return this._performSecureRequest( oauth_token, oauth_token_secret, "GET", url, null, "", null, callback );
+	}
+
+	exports.OAuth.prototype._putOrPost= function(method, url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
+	  var extra_params= null;
+	  if( typeof post_content_type == "function" ) {
+	    callback= post_content_type;
+	    post_content_type= null;
+	  }
+	  if ( typeof post_body != "string" && !Buffer.isBuffer(post_body) ) {
+	    post_content_type= "application/x-www-form-urlencoded"
+	    extra_params= post_body;
+	    post_body= null;
+	  }
+	  return this._performSecureRequest( oauth_token, oauth_token_secret, method, url, extra_params, post_body, post_content_type, callback );
+	}
+
+
+	exports.OAuth.prototype.put= function(url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
+	  return this._putOrPost("PUT", url, oauth_token, oauth_token_secret, post_body, post_content_type, callback);
+	}
+
+	exports.OAuth.prototype.post= function(url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
+	  return this._putOrPost("POST", url, oauth_token, oauth_token_secret, post_body, post_content_type, callback);
+	}
+
+	/**
+	 * Gets a request token from the OAuth provider and passes that information back
+	 * to the calling code.
+	 *
+	 * The callback should expect a function of the following form:
+	 *
+	 * function(err, token, token_secret, parsedQueryString) {}
+	 *
+	 * This method has optional parameters so can be called in the following 2 ways:
+	 *
+	 * 1) Primary use case: Does a basic request with no extra parameters
+	 *  getOAuthRequestToken( callbackFunction )
+	 *
+	 * 2) As above but allows for provision of extra parameters to be sent as part of the query to the server.
+	 *  getOAuthRequestToken( extraParams, callbackFunction )
+	 *
+	 * N.B. This method will HTTP POST verbs by default, if you wish to override this behaviour you will
+	 * need to provide a requestTokenHttpMethod option when creating the client.
+	 *
+	 **/
+	exports.OAuth.prototype.getOAuthRequestToken= function( extraParams, callback ) {
+	   if( typeof extraParams == "function" ){
+	     callback = extraParams;
+	     extraParams = {};
+	   }
+	  // Callbacks are 1.0A related
+	  if( this._authorize_callback ) {
+	    extraParams["oauth_callback"]= this._authorize_callback;
+	  }
+	  this._performSecureRequest( null, null, this._clientOptions.requestTokenHttpMethod, this._requestUrl, extraParams, null, null, function(error, data, response) {
+	    if( error ) callback(error);
+	    else {
+	      var results= querystring.parse(data);
+
+	      var oauth_token= results["oauth_token"];
+	      var oauth_token_secret= results["oauth_token_secret"];
+	      delete results["oauth_token"];
+	      delete results["oauth_token_secret"];
+	      callback(null, oauth_token, oauth_token_secret,  results );
+	    }
+	  });
+	}
+
+	exports.OAuth.prototype.signUrl= function(url, oauth_token, oauth_token_secret, method) {
+
+	  if( method === undefined ) {
+	    var method= "GET";
+	  }
+
+	  var orderedParameters= this._prepareParameters(oauth_token, oauth_token_secret, method, url, {});
+	  var parsedUrl= URL.parse( url, false );
+
+	  var query="";
+	  for( var i= 0 ; i < orderedParameters.length; i++) {
+	    query+= orderedParameters[i][0]+"="+ this._encodeData(orderedParameters[i][1]) + "&";
+	  }
+	  query= query.substring(0, query.length-1);
+
+	  return parsedUrl.protocol + "//"+ parsedUrl.host + parsedUrl.pathname + "?" + query;
+	};
+
+	exports.OAuth.prototype.authHeader= function(url, oauth_token, oauth_token_secret, method) {
+	  if( method === undefined ) {
+	    var method= "GET";
+	  }
+
+	  var orderedParameters= this._prepareParameters(oauth_token, oauth_token_secret, method, url, {});
+	  return this._buildAuthorizationHeaders(orderedParameters);
+	};
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
+
+/***/ },
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer, global) {/*!
@@ -26815,9 +27507,9 @@
 
 	'use strict'
 
-	var base64 = __webpack_require__(286)
-	var ieee754 = __webpack_require__(287)
-	var isArray = __webpack_require__(288)
+	var base64 = __webpack_require__(246)
+	var ieee754 = __webpack_require__(247)
+	var isArray = __webpack_require__(248)
 
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -28595,10 +29287,10 @@
 	  return val !== val // eslint-disable-line no-self-compare
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer, (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer, (function() { return this; }())))
 
 /***/ },
-/* 286 */
+/* 246 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -28718,7 +29410,7 @@
 
 
 /***/ },
-/* 287 */
+/* 247 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -28808,7 +29500,7 @@
 
 
 /***/ },
-/* 288 */
+/* 248 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -28819,13 +29511,73 @@
 
 
 /***/ },
-/* 289 */
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var rng = __webpack_require__(250)
+
+	function error () {
+	  var m = [].slice.call(arguments).join(' ')
+	  throw new Error([
+	    m,
+	    'we accept pull requests',
+	    'http://github.com/dominictarr/crypto-browserify'
+	    ].join('\n'))
+	}
+
+	exports.createHash = __webpack_require__(252)
+
+	exports.createHmac = __webpack_require__(264)
+
+	exports.randomBytes = function(size, callback) {
+	  if (callback && callback.call) {
+	    try {
+	      callback.call(this, undefined, new Buffer(rng(size)))
+	    } catch (err) { callback(err) }
+	  } else {
+	    return new Buffer(rng(size))
+	  }
+	}
+
+	function each(a, f) {
+	  for(var i in a)
+	    f(a[i], i)
+	}
+
+	exports.getHashes = function () {
+	  return ['sha1', 'sha256', 'sha512', 'md5', 'rmd160']
+	}
+
+	var p = __webpack_require__(265)(exports)
+	exports.pbkdf2 = p.pbkdf2
+	exports.pbkdf2Sync = p.pbkdf2Sync
+
+
+	// the least I can do is make error messages for the rest of the node.js/crypto api.
+	each(['createCredentials'
+	, 'createCipher'
+	, 'createCipheriv'
+	, 'createDecipher'
+	, 'createDecipheriv'
+	, 'createSign'
+	, 'createVerify'
+	, 'createDiffieHellman'
+	], function (name) {
+	  exports[name] = function () {
+	    error('sorry,', name, 'is not implemented yet')
+	  }
+	})
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
+
+/***/ },
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, Buffer) {(function() {
 	  var g = ('undefined' === typeof window ? global : window) || {}
 	  _crypto = (
-	    g.crypto || g.msCrypto || __webpack_require__(290)
+	    g.crypto || g.msCrypto || __webpack_require__(251)
 	  )
 	  module.exports = function(size) {
 	    // Modern Browsers
@@ -28849,22 +29601,22 @@
 	  }
 	}())
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(285).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(245).Buffer))
 
 /***/ },
-/* 290 */
+/* 251 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 291 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(292)
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(253)
 
-	var md5 = toConstructor(__webpack_require__(300))
-	var rmd160 = toConstructor(__webpack_require__(302))
+	var md5 = toConstructor(__webpack_require__(261))
+	var rmd160 = toConstructor(__webpack_require__(263))
 
 	function toConstructor (fn) {
 	  return function () {
@@ -28892,10 +29644,10 @@
 	  return createHash(alg)
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
 
 /***/ },
-/* 292 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var exports = module.exports = function (alg) {
@@ -28904,16 +29656,16 @@
 	  return new Alg()
 	}
 
-	var Buffer = __webpack_require__(285).Buffer
-	var Hash   = __webpack_require__(293)(Buffer)
+	var Buffer = __webpack_require__(245).Buffer
+	var Hash   = __webpack_require__(254)(Buffer)
 
-	exports.sha1 = __webpack_require__(294)(Buffer, Hash)
-	exports.sha256 = __webpack_require__(298)(Buffer, Hash)
-	exports.sha512 = __webpack_require__(299)(Buffer, Hash)
+	exports.sha1 = __webpack_require__(255)(Buffer, Hash)
+	exports.sha256 = __webpack_require__(259)(Buffer, Hash)
+	exports.sha512 = __webpack_require__(260)(Buffer, Hash)
 
 
 /***/ },
-/* 293 */
+/* 254 */
 /***/ function(module, exports) {
 
 	module.exports = function (Buffer) {
@@ -28996,7 +29748,7 @@
 
 
 /***/ },
-/* 294 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29008,7 +29760,7 @@
 	 * See http://pajhome.org.uk/crypt/md5 for details.
 	 */
 
-	var inherits = __webpack_require__(295).inherits
+	var inherits = __webpack_require__(256).inherits
 
 	module.exports = function (Buffer, Hash) {
 
@@ -29140,7 +29892,7 @@
 
 
 /***/ },
-/* 295 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -29668,7 +30420,7 @@
 	}
 	exports.isPrimitive = isPrimitive;
 
-	exports.isBuffer = __webpack_require__(296);
+	exports.isBuffer = __webpack_require__(257);
 
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -29712,7 +30464,7 @@
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(297);
+	exports.inherits = __webpack_require__(258);
 
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -29733,7 +30485,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(3)))
 
 /***/ },
-/* 296 */
+/* 257 */
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -29744,7 +30496,7 @@
 	}
 
 /***/ },
-/* 297 */
+/* 258 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -29773,7 +30525,7 @@
 
 
 /***/ },
-/* 298 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -29785,7 +30537,7 @@
 	 *
 	 */
 
-	var inherits = __webpack_require__(295).inherits
+	var inherits = __webpack_require__(256).inherits
 
 	module.exports = function (Buffer, Hash) {
 
@@ -29926,10 +30678,10 @@
 
 
 /***/ },
-/* 299 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var inherits = __webpack_require__(295).inherits
+	var inherits = __webpack_require__(256).inherits
 
 	module.exports = function (Buffer, Hash) {
 	  var K = [
@@ -30176,7 +30928,7 @@
 
 
 /***/ },
-/* 300 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -30188,7 +30940,7 @@
 	 * See http://pajhome.org.uk/crypt/md5 for more info.
 	 */
 
-	var helpers = __webpack_require__(301);
+	var helpers = __webpack_require__(262);
 
 	/*
 	 * Calculate the MD5 of an array of little-endian words, and a bit length
@@ -30337,7 +31089,7 @@
 
 
 /***/ },
-/* 301 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {var intSize = 4;
@@ -30375,10 +31127,10 @@
 
 	module.exports = { hash: hash };
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
 
 /***/ },
-/* 302 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {
@@ -30587,13 +31339,13 @@
 
 
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
 
 /***/ },
-/* 303 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(291)
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(252)
 
 	var zeroBuffer = new Buffer(128)
 	zeroBuffer.fill(0)
@@ -30637,13 +31389,13 @@
 	}
 
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
 
 /***/ },
-/* 304 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var pbkdf2Export = __webpack_require__(305)
+	var pbkdf2Export = __webpack_require__(266)
 
 	module.exports = function (crypto, exports) {
 	  exports = exports || {}
@@ -30658,7 +31410,7 @@
 
 
 /***/ },
-/* 305 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {module.exports = function(crypto) {
@@ -30746,40 +31498,499 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
 
 /***/ },
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */,
-/* 312 */,
-/* 313 */,
-/* 314 */,
-/* 315 */,
-/* 316 */,
-/* 317 */,
-/* 318 */,
-/* 319 */,
-/* 320 */,
-/* 321 */,
-/* 322 */,
-/* 323 */,
-/* 324 */,
-/* 325 */,
-/* 326 */,
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */,
-/* 331 */,
-/* 332 */,
-/* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */
+/* 267 */
+/***/ function(module, exports) {
+
+	/*
+	 * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
+	 * in FIPS 180-1
+	 * Version 2.2 Copyright Paul Johnston 2000 - 2009.
+	 * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+	 * Distributed under the BSD License
+	 * See http://pajhome.org.uk/crypt/md5 for details.
+	 */
+
+	/*
+	 * Configurable variables. You may need to tweak these to be compatible with
+	 * the server-side, but the defaults work in most cases.
+	 */
+	var hexcase = 1;  /* hex output format. 0 - lowercase; 1 - uppercase        */
+	var b64pad  = "="; /* base-64 pad character. "=" for strict RFC compliance   */
+
+	/*
+	 * These are the functions you'll usually want to call
+	 * They take string arguments and return either hex or base-64 encoded strings
+	 */
+	function hex_sha1(s)    { return rstr2hex(rstr_sha1(str2rstr_utf8(s))); }
+	function b64_sha1(s)    { return rstr2b64(rstr_sha1(str2rstr_utf8(s))); }
+	function any_sha1(s, e) { return rstr2any(rstr_sha1(str2rstr_utf8(s)), e); }
+	function hex_hmac_sha1(k, d)
+	  { return rstr2hex(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d))); }
+	function b64_hmac_sha1(k, d)
+	  { return rstr2b64(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d))); }
+	function any_hmac_sha1(k, d, e)
+	  { return rstr2any(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d)), e); }
+
+	/*
+	 * Perform a simple self-test to see if the VM is working
+	 */
+	function sha1_vm_test()
+	{
+	  return hex_sha1("abc").toLowerCase() == "a9993e364706816aba3e25717850c26c9cd0d89d";
+	}
+
+	/*
+	 * Calculate the SHA1 of a raw string
+	 */
+	function rstr_sha1(s)
+	{
+	  return binb2rstr(binb_sha1(rstr2binb(s), s.length * 8));
+	}
+
+	/*
+	 * Calculate the HMAC-SHA1 of a key and some data (raw strings)
+	 */
+	function rstr_hmac_sha1(key, data)
+	{
+	  var bkey = rstr2binb(key);
+	  if(bkey.length > 16) bkey = binb_sha1(bkey, key.length * 8);
+
+	  var ipad = Array(16), opad = Array(16);
+	  for(var i = 0; i < 16; i++)
+	  {
+	    ipad[i] = bkey[i] ^ 0x36363636;
+	    opad[i] = bkey[i] ^ 0x5C5C5C5C;
+	  }
+
+	  var hash = binb_sha1(ipad.concat(rstr2binb(data)), 512 + data.length * 8);
+	  return binb2rstr(binb_sha1(opad.concat(hash), 512 + 160));
+	}
+
+	/*
+	 * Convert a raw string to a hex string
+	 */
+	function rstr2hex(input)
+	{
+	  try { hexcase } catch(e) { hexcase=0; }
+	  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+	  var output = "";
+	  var x;
+	  for(var i = 0; i < input.length; i++)
+	  {
+	    x = input.charCodeAt(i);
+	    output += hex_tab.charAt((x >>> 4) & 0x0F)
+	           +  hex_tab.charAt( x        & 0x0F);
+	  }
+	  return output;
+	}
+
+	/*
+	 * Convert a raw string to a base-64 string
+	 */
+	function rstr2b64(input)
+	{
+	  try { b64pad } catch(e) { b64pad=''; }
+	  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	  var output = "";
+	  var len = input.length;
+	  for(var i = 0; i < len; i += 3)
+	  {
+	    var triplet = (input.charCodeAt(i) << 16)
+	                | (i + 1 < len ? input.charCodeAt(i+1) << 8 : 0)
+	                | (i + 2 < len ? input.charCodeAt(i+2)      : 0);
+	    for(var j = 0; j < 4; j++)
+	    {
+	      if(i * 8 + j * 6 > input.length * 8) output += b64pad;
+	      else output += tab.charAt((triplet >>> 6*(3-j)) & 0x3F);
+	    }
+	  }
+	  return output;
+	}
+
+	/*
+	 * Convert a raw string to an arbitrary string encoding
+	 */
+	function rstr2any(input, encoding)
+	{
+	  var divisor = encoding.length;
+	  var remainders = Array();
+	  var i, q, x, quotient;
+
+	  /* Convert to an array of 16-bit big-endian values, forming the dividend */
+	  var dividend = Array(Math.ceil(input.length / 2));
+	  for(i = 0; i < dividend.length; i++)
+	  {
+	    dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
+	  }
+
+	  /*
+	   * Repeatedly perform a long division. The binary array forms the dividend,
+	   * the length of the encoding is the divisor. Once computed, the quotient
+	   * forms the dividend for the next step. We stop when the dividend is zero.
+	   * All remainders are stored for later use.
+	   */
+	  while(dividend.length > 0)
+	  {
+	    quotient = Array();
+	    x = 0;
+	    for(i = 0; i < dividend.length; i++)
+	    {
+	      x = (x << 16) + dividend[i];
+	      q = Math.floor(x / divisor);
+	      x -= q * divisor;
+	      if(quotient.length > 0 || q > 0)
+	        quotient[quotient.length] = q;
+	    }
+	    remainders[remainders.length] = x;
+	    dividend = quotient;
+	  }
+
+	  /* Convert the remainders to the output string */
+	  var output = "";
+	  for(i = remainders.length - 1; i >= 0; i--)
+	    output += encoding.charAt(remainders[i]);
+
+	  /* Append leading zero equivalents */
+	  var full_length = Math.ceil(input.length * 8 /
+	                                    (Math.log(encoding.length) / Math.log(2)))
+	  for(i = output.length; i < full_length; i++)
+	    output = encoding[0] + output;
+
+	  return output;
+	}
+
+	/*
+	 * Encode a string as utf-8.
+	 * For efficiency, this assumes the input is valid utf-16.
+	 */
+	function str2rstr_utf8(input)
+	{
+	  var output = "";
+	  var i = -1;
+	  var x, y;
+
+	  while(++i < input.length)
+	  {
+	    /* Decode utf-16 surrogate pairs */
+	    x = input.charCodeAt(i);
+	    y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
+	    if(0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF)
+	    {
+	      x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
+	      i++;
+	    }
+
+	    /* Encode output as utf-8 */
+	    if(x <= 0x7F)
+	      output += String.fromCharCode(x);
+	    else if(x <= 0x7FF)
+	      output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
+	                                    0x80 | ( x         & 0x3F));
+	    else if(x <= 0xFFFF)
+	      output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
+	                                    0x80 | ((x >>> 6 ) & 0x3F),
+	                                    0x80 | ( x         & 0x3F));
+	    else if(x <= 0x1FFFFF)
+	      output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
+	                                    0x80 | ((x >>> 12) & 0x3F),
+	                                    0x80 | ((x >>> 6 ) & 0x3F),
+	                                    0x80 | ( x         & 0x3F));
+	  }
+	  return output;
+	}
+
+	/*
+	 * Encode a string as utf-16
+	 */
+	function str2rstr_utf16le(input)
+	{
+	  var output = "";
+	  for(var i = 0; i < input.length; i++)
+	    output += String.fromCharCode( input.charCodeAt(i)        & 0xFF,
+	                                  (input.charCodeAt(i) >>> 8) & 0xFF);
+	  return output;
+	}
+
+	function str2rstr_utf16be(input)
+	{
+	  var output = "";
+	  for(var i = 0; i < input.length; i++)
+	    output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
+	                                   input.charCodeAt(i)        & 0xFF);
+	  return output;
+	}
+
+	/*
+	 * Convert a raw string to an array of big-endian words
+	 * Characters >255 have their high-byte silently ignored.
+	 */
+	function rstr2binb(input)
+	{
+	  var output = Array(input.length >> 2);
+	  for(var i = 0; i < output.length; i++)
+	    output[i] = 0;
+	  for(var i = 0; i < input.length * 8; i += 8)
+	    output[i>>5] |= (input.charCodeAt(i / 8) & 0xFF) << (24 - i % 32);
+	  return output;
+	}
+
+	/*
+	 * Convert an array of big-endian words to a string
+	 */
+	function binb2rstr(input)
+	{
+	  var output = "";
+	  for(var i = 0; i < input.length * 32; i += 8)
+	    output += String.fromCharCode((input[i>>5] >>> (24 - i % 32)) & 0xFF);
+	  return output;
+	}
+
+	/*
+	 * Calculate the SHA-1 of an array of big-endian words, and a bit length
+	 */
+	function binb_sha1(x, len)
+	{
+	  /* append padding */
+	  x[len >> 5] |= 0x80 << (24 - len % 32);
+	  x[((len + 64 >> 9) << 4) + 15] = len;
+
+	  var w = Array(80);
+	  var a =  1732584193;
+	  var b = -271733879;
+	  var c = -1732584194;
+	  var d =  271733878;
+	  var e = -1009589776;
+
+	  for(var i = 0; i < x.length; i += 16)
+	  {
+	    var olda = a;
+	    var oldb = b;
+	    var oldc = c;
+	    var oldd = d;
+	    var olde = e;
+
+	    for(var j = 0; j < 80; j++)
+	    {
+	      if(j < 16) w[j] = x[i + j];
+	      else w[j] = bit_rol(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1);
+	      var t = safe_add(safe_add(bit_rol(a, 5), sha1_ft(j, b, c, d)),
+	                       safe_add(safe_add(e, w[j]), sha1_kt(j)));
+	      e = d;
+	      d = c;
+	      c = bit_rol(b, 30);
+	      b = a;
+	      a = t;
+	    }
+
+	    a = safe_add(a, olda);
+	    b = safe_add(b, oldb);
+	    c = safe_add(c, oldc);
+	    d = safe_add(d, oldd);
+	    e = safe_add(e, olde);
+	  }
+	  return Array(a, b, c, d, e);
+
+	}
+
+	/*
+	 * Perform the appropriate triplet combination function for the current
+	 * iteration
+	 */
+	function sha1_ft(t, b, c, d)
+	{
+	  if(t < 20) return (b & c) | ((~b) & d);
+	  if(t < 40) return b ^ c ^ d;
+	  if(t < 60) return (b & c) | (b & d) | (c & d);
+	  return b ^ c ^ d;
+	}
+
+	/*
+	 * Determine the appropriate additive constant for the current iteration
+	 */
+	function sha1_kt(t)
+	{
+	  return (t < 20) ?  1518500249 : (t < 40) ?  1859775393 :
+	         (t < 60) ? -1894007588 : -899497514;
+	}
+
+	/*
+	 * Add integers, wrapping at 2^32. This uses 16-bit operations internally
+	 * to work around bugs in some JS interpreters.
+	 */
+	function safe_add(x, y)
+	{
+	  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+	  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+	  return (msw << 16) | (lsw & 0xFFFF);
+	}
+
+	/*
+	 * Bitwise rotate a 32-bit number to the left.
+	 */
+	function bit_rol(num, cnt)
+	{
+	  return (num << cnt) | (num >>> (32 - cnt));
+	}
+
+	exports.HMACSHA1= function(key, data) {
+	  return b64_hmac_sha1(key, data);
+	}
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var http = module.exports;
+	var EventEmitter = __webpack_require__(269).EventEmitter;
+	var Request = __webpack_require__(270);
+	var url = __webpack_require__(289)
+
+	http.request = function (params, cb) {
+	    if (typeof params === 'string') {
+	        params = url.parse(params)
+	    }
+	    if (!params) params = {};
+	    if (!params.host && !params.port) {
+	        params.port = parseInt(window.location.port, 10);
+	    }
+	    if (!params.host && params.hostname) {
+	        params.host = params.hostname;
+	    }
+
+	    if (!params.protocol) {
+	        if (params.scheme) {
+	            params.protocol = params.scheme + ':';
+	        } else {
+	            params.protocol = window.location.protocol;
+	        }
+	    }
+
+	    if (!params.host) {
+	        params.host = window.location.hostname || window.location.host;
+	    }
+	    if (/:/.test(params.host)) {
+	        if (!params.port) {
+	            params.port = params.host.split(':')[1];
+	        }
+	        params.host = params.host.split(':')[0];
+	    }
+	    if (!params.port) params.port = params.protocol == 'https:' ? 443 : 80;
+	    
+	    var req = new Request(new xhrHttp, params);
+	    if (cb) req.on('response', cb);
+	    return req;
+	};
+
+	http.get = function (params, cb) {
+	    params.method = 'GET';
+	    var req = http.request(params, cb);
+	    req.end();
+	    return req;
+	};
+
+	http.Agent = function () {};
+	http.Agent.defaultMaxSockets = 4;
+
+	var xhrHttp = (function () {
+	    if (typeof window === 'undefined') {
+	        throw new Error('no window object present');
+	    }
+	    else if (window.XMLHttpRequest) {
+	        return window.XMLHttpRequest;
+	    }
+	    else if (window.ActiveXObject) {
+	        var axs = [
+	            'Msxml2.XMLHTTP.6.0',
+	            'Msxml2.XMLHTTP.3.0',
+	            'Microsoft.XMLHTTP'
+	        ];
+	        for (var i = 0; i < axs.length; i++) {
+	            try {
+	                var ax = new(window.ActiveXObject)(axs[i]);
+	                return function () {
+	                    if (ax) {
+	                        var ax_ = ax;
+	                        ax = null;
+	                        return ax_;
+	                    }
+	                    else {
+	                        return new(window.ActiveXObject)(axs[i]);
+	                    }
+	                };
+	            }
+	            catch (e) {}
+	        }
+	        throw new Error('ajax not supported in this browser')
+	    }
+	    else {
+	        throw new Error('ajax not supported in this browser');
+	    }
+	})();
+
+	http.STATUS_CODES = {
+	    100 : 'Continue',
+	    101 : 'Switching Protocols',
+	    102 : 'Processing',                 // RFC 2518, obsoleted by RFC 4918
+	    200 : 'OK',
+	    201 : 'Created',
+	    202 : 'Accepted',
+	    203 : 'Non-Authoritative Information',
+	    204 : 'No Content',
+	    205 : 'Reset Content',
+	    206 : 'Partial Content',
+	    207 : 'Multi-Status',               // RFC 4918
+	    300 : 'Multiple Choices',
+	    301 : 'Moved Permanently',
+	    302 : 'Moved Temporarily',
+	    303 : 'See Other',
+	    304 : 'Not Modified',
+	    305 : 'Use Proxy',
+	    307 : 'Temporary Redirect',
+	    400 : 'Bad Request',
+	    401 : 'Unauthorized',
+	    402 : 'Payment Required',
+	    403 : 'Forbidden',
+	    404 : 'Not Found',
+	    405 : 'Method Not Allowed',
+	    406 : 'Not Acceptable',
+	    407 : 'Proxy Authentication Required',
+	    408 : 'Request Time-out',
+	    409 : 'Conflict',
+	    410 : 'Gone',
+	    411 : 'Length Required',
+	    412 : 'Precondition Failed',
+	    413 : 'Request Entity Too Large',
+	    414 : 'Request-URI Too Large',
+	    415 : 'Unsupported Media Type',
+	    416 : 'Requested Range Not Satisfiable',
+	    417 : 'Expectation Failed',
+	    418 : 'I\'m a teapot',              // RFC 2324
+	    422 : 'Unprocessable Entity',       // RFC 4918
+	    423 : 'Locked',                     // RFC 4918
+	    424 : 'Failed Dependency',          // RFC 4918
+	    425 : 'Unordered Collection',       // RFC 4918
+	    426 : 'Upgrade Required',           // RFC 2817
+	    428 : 'Precondition Required',      // RFC 6585
+	    429 : 'Too Many Requests',          // RFC 6585
+	    431 : 'Request Header Fields Too Large',// RFC 6585
+	    500 : 'Internal Server Error',
+	    501 : 'Not Implemented',
+	    502 : 'Bad Gateway',
+	    503 : 'Service Unavailable',
+	    504 : 'Gateway Time-out',
+	    505 : 'HTTP Version Not Supported',
+	    506 : 'Variant Also Negotiates',    // RFC 2295
+	    507 : 'Insufficient Storage',       // RFC 4918
+	    509 : 'Bandwidth Limit Exceeded',
+	    510 : 'Not Extended',               // RFC 2774
+	    511 : 'Network Authentication Required' // RFC 6585
+	};
+
+/***/ },
+/* 269 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -31087,86 +32298,222 @@
 
 
 /***/ },
-/* 337 */,
-/* 338 */,
-/* 339 */,
-/* 340 */,
-/* 341 */,
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */,
-/* 350 */,
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */,
-/* 357 */,
-/* 358 */,
-/* 359 */,
-/* 360 */,
-/* 361 */,
-/* 362 */,
-/* 363 */,
-/* 364 */,
-/* 365 */,
-/* 366 */,
-/* 367 */,
-/* 368 */,
-/* 369 */,
-/* 370 */,
-/* 371 */,
-/* 372 */,
-/* 373 */,
-/* 374 */,
-/* 375 */,
-/* 376 */,
-/* 377 */,
-/* 378 */,
-/* 379 */,
-/* 380 */
-/***/ function(module, exports) {
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
 
-	if (typeof Object.create === 'function') {
-	  // implementation from standard node.js 'util' module
-	  module.exports = function inherits(ctor, superCtor) {
-	    ctor.super_ = superCtor
-	    ctor.prototype = Object.create(superCtor.prototype, {
-	      constructor: {
-	        value: ctor,
-	        enumerable: false,
-	        writable: true,
-	        configurable: true
-	      }
+	var Stream = __webpack_require__(271);
+	var Response = __webpack_require__(287);
+	var Base64 = __webpack_require__(288);
+	var inherits = __webpack_require__(272);
+
+	var Request = module.exports = function (xhr, params) {
+	    var self = this;
+	    self.writable = true;
+	    self.xhr = xhr;
+	    self.body = [];
+	    
+	    self.uri = (params.protocol || 'http:') + '//'
+	        + params.host
+	        + (params.port ? ':' + params.port : '')
+	        + (params.path || '/')
+	    ;
+	    
+	    if (typeof params.withCredentials === 'undefined') {
+	        params.withCredentials = true;
+	    }
+
+	    try { xhr.withCredentials = params.withCredentials }
+	    catch (e) {}
+	    
+	    if (params.responseType) try { xhr.responseType = params.responseType }
+	    catch (e) {}
+	    
+	    xhr.open(
+	        params.method || 'GET',
+	        self.uri,
+	        true
+	    );
+
+	    xhr.onerror = function(event) {
+	        self.emit('error', new Error('Network error'));
+	    };
+
+	    self._headers = {};
+	    
+	    if (params.headers) {
+	        var keys = objectKeys(params.headers);
+	        for (var i = 0; i < keys.length; i++) {
+	            var key = keys[i];
+	            if (!self.isSafeRequestHeader(key)) continue;
+	            var value = params.headers[key];
+	            self.setHeader(key, value);
+	        }
+	    }
+	    
+	    if (params.auth) {
+	        //basic auth
+	        this.setHeader('Authorization', 'Basic ' + Base64.btoa(params.auth));
+	    }
+
+	    var res = new Response;
+	    res.on('close', function () {
+	        self.emit('close');
 	    });
-	  };
-	} else {
-	  // old school shim for old browsers
-	  module.exports = function inherits(ctor, superCtor) {
-	    ctor.super_ = superCtor
-	    var TempCtor = function () {}
-	    TempCtor.prototype = superCtor.prototype
-	    ctor.prototype = new TempCtor()
-	    ctor.prototype.constructor = ctor
-	  }
-	}
+	    
+	    res.on('ready', function () {
+	        self.emit('response', res);
+	    });
+
+	    res.on('error', function (err) {
+	        self.emit('error', err);
+	    });
+	    
+	    xhr.onreadystatechange = function () {
+	        // Fix for IE9 bug
+	        // SCRIPT575: Could not complete the operation due to error c00c023f
+	        // It happens when a request is aborted, calling the success callback anyway with readyState === 4
+	        if (xhr.__aborted) return;
+	        res.handle(xhr);
+	    };
+	};
+
+	inherits(Request, Stream);
+
+	Request.prototype.setHeader = function (key, value) {
+	    this._headers[key.toLowerCase()] = value
+	};
+
+	Request.prototype.getHeader = function (key) {
+	    return this._headers[key.toLowerCase()]
+	};
+
+	Request.prototype.removeHeader = function (key) {
+	    delete this._headers[key.toLowerCase()]
+	};
+
+	Request.prototype.write = function (s) {
+	    this.body.push(s);
+	};
+
+	Request.prototype.destroy = function (s) {
+	    this.xhr.__aborted = true;
+	    this.xhr.abort();
+	    this.emit('close');
+	};
+
+	Request.prototype.end = function (s) {
+	    if (s !== undefined) this.body.push(s);
+
+	    var keys = objectKeys(this._headers);
+	    for (var i = 0; i < keys.length; i++) {
+	        var key = keys[i];
+	        var value = this._headers[key];
+	        if (isArray(value)) {
+	            for (var j = 0; j < value.length; j++) {
+	                this.xhr.setRequestHeader(key, value[j]);
+	            }
+	        }
+	        else this.xhr.setRequestHeader(key, value)
+	    }
+
+	    if (this.body.length === 0) {
+	        this.xhr.send('');
+	    }
+	    else if (typeof this.body[0] === 'string') {
+	        this.xhr.send(this.body.join(''));
+	    }
+	    else if (isArray(this.body[0])) {
+	        var body = [];
+	        for (var i = 0; i < this.body.length; i++) {
+	            body.push.apply(body, this.body[i]);
+	        }
+	        this.xhr.send(body);
+	    }
+	    else if (/Array/.test(Object.prototype.toString.call(this.body[0]))) {
+	        var len = 0;
+	        for (var i = 0; i < this.body.length; i++) {
+	            len += this.body[i].length;
+	        }
+	        var body = new(this.body[0].constructor)(len);
+	        var k = 0;
+	        
+	        for (var i = 0; i < this.body.length; i++) {
+	            var b = this.body[i];
+	            for (var j = 0; j < b.length; j++) {
+	                body[k++] = b[j];
+	            }
+	        }
+	        this.xhr.send(body);
+	    }
+	    else if (isXHR2Compatible(this.body[0])) {
+	        this.xhr.send(this.body[0]);
+	    }
+	    else {
+	        var body = '';
+	        for (var i = 0; i < this.body.length; i++) {
+	            body += this.body[i].toString();
+	        }
+	        this.xhr.send(body);
+	    }
+	};
+
+	// Taken from http://dxr.mozilla.org/mozilla/mozilla-central/content/base/src/nsXMLHttpRequest.cpp.html
+	Request.unsafeHeaders = [
+	    "accept-charset",
+	    "accept-encoding",
+	    "access-control-request-headers",
+	    "access-control-request-method",
+	    "connection",
+	    "content-length",
+	    "cookie",
+	    "cookie2",
+	    "content-transfer-encoding",
+	    "date",
+	    "expect",
+	    "host",
+	    "keep-alive",
+	    "origin",
+	    "referer",
+	    "te",
+	    "trailer",
+	    "transfer-encoding",
+	    "upgrade",
+	    "user-agent",
+	    "via"
+	];
+
+	Request.prototype.isSafeRequestHeader = function (headerName) {
+	    if (!headerName) return false;
+	    return indexOf(Request.unsafeHeaders, headerName.toLowerCase()) === -1;
+	};
+
+	var objectKeys = Object.keys || function (obj) {
+	    var keys = [];
+	    for (var key in obj) keys.push(key);
+	    return keys;
+	};
+
+	var isArray = Array.isArray || function (xs) {
+	    return Object.prototype.toString.call(xs) === '[object Array]';
+	};
+
+	var indexOf = function (xs, x) {
+	    if (xs.indexOf) return xs.indexOf(x);
+	    for (var i = 0; i < xs.length; i++) {
+	        if (xs[i] === x) return i;
+	    }
+	    return -1;
+	};
+
+	var isXHR2Compatible = function (obj) {
+	    if (typeof Blob !== 'undefined' && obj instanceof Blob) return true;
+	    if (typeof ArrayBuffer !== 'undefined' && obj instanceof ArrayBuffer) return true;
+	    if (typeof FormData !== 'undefined' && obj instanceof FormData) return true;
+	};
 
 
 /***/ },
-/* 381 */,
-/* 382 */,
-/* 383 */,
-/* 384 */,
-/* 385 */,
-/* 386 */,
-/* 387 */,
-/* 388 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -31192,15 +32539,15 @@
 
 	module.exports = Stream;
 
-	var EE = __webpack_require__(336).EventEmitter;
-	var inherits = __webpack_require__(380);
+	var EE = __webpack_require__(269).EventEmitter;
+	var inherits = __webpack_require__(272);
 
 	inherits(Stream, EE);
-	Stream.Readable = __webpack_require__(389);
-	Stream.Writable = __webpack_require__(399);
-	Stream.Duplex = __webpack_require__(400);
-	Stream.Transform = __webpack_require__(401);
-	Stream.PassThrough = __webpack_require__(402);
+	Stream.Readable = __webpack_require__(273);
+	Stream.Writable = __webpack_require__(283);
+	Stream.Duplex = __webpack_require__(284);
+	Stream.Transform = __webpack_require__(285);
+	Stream.PassThrough = __webpack_require__(286);
 
 	// Backwards-compat with node 0.4.x
 	Stream.Stream = Stream;
@@ -31299,24 +32646,53 @@
 
 
 /***/ },
-/* 389 */
+/* 272 */
+/***/ function(module, exports) {
+
+	if (typeof Object.create === 'function') {
+	  // implementation from standard node.js 'util' module
+	  module.exports = function inherits(ctor, superCtor) {
+	    ctor.super_ = superCtor
+	    ctor.prototype = Object.create(superCtor.prototype, {
+	      constructor: {
+	        value: ctor,
+	        enumerable: false,
+	        writable: true,
+	        configurable: true
+	      }
+	    });
+	  };
+	} else {
+	  // old school shim for old browsers
+	  module.exports = function inherits(ctor, superCtor) {
+	    ctor.super_ = superCtor
+	    var TempCtor = function () {}
+	    TempCtor.prototype = superCtor.prototype
+	    ctor.prototype = new TempCtor()
+	    ctor.prototype.constructor = ctor
+	  }
+	}
+
+
+/***/ },
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {exports = module.exports = __webpack_require__(390);
-	exports.Stream = __webpack_require__(388);
+	/* WEBPACK VAR INJECTION */(function(process) {exports = module.exports = __webpack_require__(274);
+	exports.Stream = __webpack_require__(271);
 	exports.Readable = exports;
-	exports.Writable = __webpack_require__(395);
-	exports.Duplex = __webpack_require__(394);
-	exports.Transform = __webpack_require__(397);
-	exports.PassThrough = __webpack_require__(398);
+	exports.Writable = __webpack_require__(279);
+	exports.Duplex = __webpack_require__(278);
+	exports.Transform = __webpack_require__(281);
+	exports.PassThrough = __webpack_require__(282);
 	if (!process.browser && process.env.READABLE_STREAM === 'disable') {
-	  module.exports = __webpack_require__(388);
+	  module.exports = __webpack_require__(271);
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 390 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -31343,17 +32719,17 @@
 	module.exports = Readable;
 
 	/*<replacement>*/
-	var isArray = __webpack_require__(391);
+	var isArray = __webpack_require__(275);
 	/*</replacement>*/
 
 
 	/*<replacement>*/
-	var Buffer = __webpack_require__(285).Buffer;
+	var Buffer = __webpack_require__(245).Buffer;
 	/*</replacement>*/
 
 	Readable.ReadableState = ReadableState;
 
-	var EE = __webpack_require__(336).EventEmitter;
+	var EE = __webpack_require__(269).EventEmitter;
 
 	/*<replacement>*/
 	if (!EE.listenerCount) EE.listenerCount = function(emitter, type) {
@@ -31361,18 +32737,18 @@
 	};
 	/*</replacement>*/
 
-	var Stream = __webpack_require__(388);
+	var Stream = __webpack_require__(271);
 
 	/*<replacement>*/
-	var util = __webpack_require__(392);
-	util.inherits = __webpack_require__(380);
+	var util = __webpack_require__(276);
+	util.inherits = __webpack_require__(272);
 	/*</replacement>*/
 
 	var StringDecoder;
 
 
 	/*<replacement>*/
-	var debug = __webpack_require__(393);
+	var debug = __webpack_require__(277);
 	if (debug && debug.debuglog) {
 	  debug = debug.debuglog('stream');
 	} else {
@@ -31384,7 +32760,7 @@
 	util.inherits(Readable, Stream);
 
 	function ReadableState(options, stream) {
-	  var Duplex = __webpack_require__(394);
+	  var Duplex = __webpack_require__(278);
 
 	  options = options || {};
 
@@ -31445,14 +32821,14 @@
 	  this.encoding = null;
 	  if (options.encoding) {
 	    if (!StringDecoder)
-	      StringDecoder = __webpack_require__(396).StringDecoder;
+	      StringDecoder = __webpack_require__(280).StringDecoder;
 	    this.decoder = new StringDecoder(options.encoding);
 	    this.encoding = options.encoding;
 	  }
 	}
 
 	function Readable(options) {
-	  var Duplex = __webpack_require__(394);
+	  var Duplex = __webpack_require__(278);
 
 	  if (!(this instanceof Readable))
 	    return new Readable(options);
@@ -31555,7 +32931,7 @@
 	// backwards compatibility.
 	Readable.prototype.setEncoding = function(enc) {
 	  if (!StringDecoder)
-	    StringDecoder = __webpack_require__(396).StringDecoder;
+	    StringDecoder = __webpack_require__(280).StringDecoder;
 	  this._readableState.decoder = new StringDecoder(enc);
 	  this._readableState.encoding = enc;
 	  return this;
@@ -32274,7 +33650,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 391 */
+/* 275 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -32283,7 +33659,7 @@
 
 
 /***/ },
-/* 392 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {// Copyright Joyent, Inc. and other Node contributors.
@@ -32394,16 +33770,16 @@
 	  return Object.prototype.toString.call(o);
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
 
 /***/ },
-/* 393 */
+/* 277 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 394 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -32444,12 +33820,12 @@
 
 
 	/*<replacement>*/
-	var util = __webpack_require__(392);
-	util.inherits = __webpack_require__(380);
+	var util = __webpack_require__(276);
+	util.inherits = __webpack_require__(272);
 	/*</replacement>*/
 
-	var Readable = __webpack_require__(390);
-	var Writable = __webpack_require__(395);
+	var Readable = __webpack_require__(274);
+	var Writable = __webpack_require__(279);
 
 	util.inherits(Duplex, Readable);
 
@@ -32499,7 +33875,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 395 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -32530,18 +33906,18 @@
 	module.exports = Writable;
 
 	/*<replacement>*/
-	var Buffer = __webpack_require__(285).Buffer;
+	var Buffer = __webpack_require__(245).Buffer;
 	/*</replacement>*/
 
 	Writable.WritableState = WritableState;
 
 
 	/*<replacement>*/
-	var util = __webpack_require__(392);
-	util.inherits = __webpack_require__(380);
+	var util = __webpack_require__(276);
+	util.inherits = __webpack_require__(272);
 	/*</replacement>*/
 
-	var Stream = __webpack_require__(388);
+	var Stream = __webpack_require__(271);
 
 	util.inherits(Writable, Stream);
 
@@ -32552,7 +33928,7 @@
 	}
 
 	function WritableState(options, stream) {
-	  var Duplex = __webpack_require__(394);
+	  var Duplex = __webpack_require__(278);
 
 	  options = options || {};
 
@@ -32640,7 +34016,7 @@
 	}
 
 	function Writable(options) {
-	  var Duplex = __webpack_require__(394);
+	  var Duplex = __webpack_require__(278);
 
 	  // Writable ctor is applied to Duplexes, though they're not
 	  // instanceof Writable, they're instanceof Readable.
@@ -32983,7 +34359,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 396 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -33007,7 +34383,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var Buffer = __webpack_require__(285).Buffer;
+	var Buffer = __webpack_require__(245).Buffer;
 
 	var isBufferEncoding = Buffer.isEncoding
 	  || function(encoding) {
@@ -33210,7 +34586,7 @@
 
 
 /***/ },
-/* 397 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -33279,11 +34655,11 @@
 
 	module.exports = Transform;
 
-	var Duplex = __webpack_require__(394);
+	var Duplex = __webpack_require__(278);
 
 	/*<replacement>*/
-	var util = __webpack_require__(392);
-	util.inherits = __webpack_require__(380);
+	var util = __webpack_require__(276);
+	util.inherits = __webpack_require__(272);
 	/*</replacement>*/
 
 	util.inherits(Transform, Duplex);
@@ -33425,7 +34801,7 @@
 
 
 /***/ },
-/* 398 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -33455,11 +34831,11 @@
 
 	module.exports = PassThrough;
 
-	var Transform = __webpack_require__(397);
+	var Transform = __webpack_require__(281);
 
 	/*<replacement>*/
-	var util = __webpack_require__(392);
-	util.inherits = __webpack_require__(380);
+	var util = __webpack_require__(276);
+	util.inherits = __webpack_require__(272);
 	/*</replacement>*/
 
 	util.inherits(PassThrough, Transform);
@@ -33477,59 +34853,227 @@
 
 
 /***/ },
-/* 399 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(395)
+	module.exports = __webpack_require__(279)
 
 
 /***/ },
-/* 400 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(394)
+	module.exports = __webpack_require__(278)
 
 
 /***/ },
-/* 401 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(397)
+	module.exports = __webpack_require__(281)
 
 
 /***/ },
-/* 402 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(398)
+	module.exports = __webpack_require__(282)
 
 
 /***/ },
-/* 403 */,
-/* 404 */,
-/* 405 */,
-/* 406 */,
-/* 407 */,
-/* 408 */,
-/* 409 */,
-/* 410 */,
-/* 411 */,
-/* 412 */,
-/* 413 */,
-/* 414 */,
-/* 415 */,
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */,
-/* 426 */,
-/* 427 */
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Stream = __webpack_require__(271);
+	var util = __webpack_require__(256);
+
+	var Response = module.exports = function (res) {
+	    this.offset = 0;
+	    this.readable = true;
+	};
+
+	util.inherits(Response, Stream);
+
+	var capable = {
+	    streaming : true,
+	    status2 : true
+	};
+
+	function parseHeaders (res) {
+	    var lines = res.getAllResponseHeaders().split(/\r?\n/);
+	    var headers = {};
+	    for (var i = 0; i < lines.length; i++) {
+	        var line = lines[i];
+	        if (line === '') continue;
+	        
+	        var m = line.match(/^([^:]+):\s*(.*)/);
+	        if (m) {
+	            var key = m[1].toLowerCase(), value = m[2];
+	            
+	            if (headers[key] !== undefined) {
+	            
+	                if (isArray(headers[key])) {
+	                    headers[key].push(value);
+	                }
+	                else {
+	                    headers[key] = [ headers[key], value ];
+	                }
+	            }
+	            else {
+	                headers[key] = value;
+	            }
+	        }
+	        else {
+	            headers[line] = true;
+	        }
+	    }
+	    return headers;
+	}
+
+	Response.prototype.getResponse = function (xhr) {
+	    var respType = String(xhr.responseType).toLowerCase();
+	    if (respType === 'blob') return xhr.responseBlob || xhr.response;
+	    if (respType === 'arraybuffer') return xhr.response;
+	    return xhr.responseText;
+	}
+
+	Response.prototype.getHeader = function (key) {
+	    return this.headers[key.toLowerCase()];
+	};
+
+	Response.prototype.handle = function (res) {
+	    if (res.readyState === 2 && capable.status2) {
+	        try {
+	            this.statusCode = res.status;
+	            this.headers = parseHeaders(res);
+	        }
+	        catch (err) {
+	            capable.status2 = false;
+	        }
+	        
+	        if (capable.status2) {
+	            this.emit('ready');
+	        }
+	    }
+	    else if (capable.streaming && res.readyState === 3) {
+	        try {
+	            if (!this.statusCode) {
+	                this.statusCode = res.status;
+	                this.headers = parseHeaders(res);
+	                this.emit('ready');
+	            }
+	        }
+	        catch (err) {}
+	        
+	        try {
+	            this._emitData(res);
+	        }
+	        catch (err) {
+	            capable.streaming = false;
+	        }
+	    }
+	    else if (res.readyState === 4) {
+	        if (!this.statusCode) {
+	            this.statusCode = res.status;
+	            this.emit('ready');
+	        }
+	        this._emitData(res);
+	        
+	        if (res.error) {
+	            this.emit('error', this.getResponse(res));
+	        }
+	        else this.emit('end');
+	        
+	        this.emit('close');
+	    }
+	};
+
+	Response.prototype._emitData = function (res) {
+	    var respBody = this.getResponse(res);
+	    if (respBody.toString().match(/ArrayBuffer/)) {
+	        this.emit('data', new Uint8Array(respBody, this.offset));
+	        this.offset = respBody.byteLength;
+	        return;
+	    }
+	    if (respBody.length > this.offset) {
+	        this.emit('data', respBody.slice(this.offset));
+	        this.offset = respBody.length;
+	    }
+	};
+
+	var isArray = Array.isArray || function (xs) {
+	    return Object.prototype.toString.call(xs) === '[object Array]';
+	};
+
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	;(function () {
+
+	  var object =  true ? exports : this; // #8: web workers
+	  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+	  function InvalidCharacterError(message) {
+	    this.message = message;
+	  }
+	  InvalidCharacterError.prototype = new Error;
+	  InvalidCharacterError.prototype.name = 'InvalidCharacterError';
+
+	  // encoder
+	  // [https://gist.github.com/999166] by [https://github.com/nignag]
+	  object.btoa || (
+	  object.btoa = function (input) {
+	    for (
+	      // initialize result and counter
+	      var block, charCode, idx = 0, map = chars, output = '';
+	      // if the next input index does not exist:
+	      //   change the mapping table to "="
+	      //   check if d has no fractional digits
+	      input.charAt(idx | 0) || (map = '=', idx % 1);
+	      // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+	      output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+	    ) {
+	      charCode = input.charCodeAt(idx += 3/4);
+	      if (charCode > 0xFF) {
+	        throw new InvalidCharacterError("'btoa' failed: The string to be encoded contains characters outside of the Latin1 range.");
+	      }
+	      block = block << 8 | charCode;
+	    }
+	    return output;
+	  });
+
+	  // decoder
+	  // [https://gist.github.com/1020396] by [https://github.com/atk]
+	  object.atob || (
+	  object.atob = function (input) {
+	    input = input.replace(/=+$/, '');
+	    if (input.length % 4 == 1) {
+	      throw new InvalidCharacterError("'atob' failed: The string to be decoded is not correctly encoded.");
+	    }
+	    for (
+	      // initialize result and counters
+	      var bc = 0, bs, buffer, idx = 0, output = '';
+	      // get next character
+	      buffer = input.charAt(idx++);
+	      // character found in table? initialize bit storage and add its ascii value;
+	      ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+	        // and if not first of each 4 characters,
+	        // convert the first 8 bits to one ascii character
+	        bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
+	    ) {
+	      // try to find character in table (0-63, not found => -1)
+	      buffer = chars.indexOf(buffer);
+	    }
+	    return output;
+	  });
+
+	}());
+
+
+/***/ },
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -33553,7 +35097,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(428);
+	var punycode = __webpack_require__(290);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -33625,7 +35169,7 @@
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(430);
+	    querystring = __webpack_require__(240);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -34242,7 +35786,7 @@
 
 
 /***/ },
-/* 428 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -34774,10 +36318,10 @@
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(429)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(291)(module), (function() { return this; }())))
 
 /***/ },
-/* 429 */
+/* 291 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -34793,939 +36337,10 @@
 
 
 /***/ },
-/* 430 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	exports.decode = exports.parse = __webpack_require__(431);
-	exports.encode = exports.stringify = __webpack_require__(432);
-
-
-/***/ },
-/* 431 */
-/***/ function(module, exports) {
-
-	// Copyright Joyent, Inc. and other Node contributors.
-	//
-	// Permission is hereby granted, free of charge, to any person obtaining a
-	// copy of this software and associated documentation files (the
-	// "Software"), to deal in the Software without restriction, including
-	// without limitation the rights to use, copy, modify, merge, publish,
-	// distribute, sublicense, and/or sell copies of the Software, and to permit
-	// persons to whom the Software is furnished to do so, subject to the
-	// following conditions:
-	//
-	// The above copyright notice and this permission notice shall be included
-	// in all copies or substantial portions of the Software.
-	//
-	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-	'use strict';
-
-	// If obj.hasOwnProperty has been overridden, then calling
-	// obj.hasOwnProperty(prop) will break.
-	// See: https://github.com/joyent/node/issues/1707
-	function hasOwnProperty(obj, prop) {
-	  return Object.prototype.hasOwnProperty.call(obj, prop);
-	}
-
-	module.exports = function(qs, sep, eq, options) {
-	  sep = sep || '&';
-	  eq = eq || '=';
-	  var obj = {};
-
-	  if (typeof qs !== 'string' || qs.length === 0) {
-	    return obj;
-	  }
-
-	  var regexp = /\+/g;
-	  qs = qs.split(sep);
-
-	  var maxKeys = 1000;
-	  if (options && typeof options.maxKeys === 'number') {
-	    maxKeys = options.maxKeys;
-	  }
-
-	  var len = qs.length;
-	  // maxKeys <= 0 means that we should not limit keys count
-	  if (maxKeys > 0 && len > maxKeys) {
-	    len = maxKeys;
-	  }
-
-	  for (var i = 0; i < len; ++i) {
-	    var x = qs[i].replace(regexp, '%20'),
-	        idx = x.indexOf(eq),
-	        kstr, vstr, k, v;
-
-	    if (idx >= 0) {
-	      kstr = x.substr(0, idx);
-	      vstr = x.substr(idx + 1);
-	    } else {
-	      kstr = x;
-	      vstr = '';
-	    }
-
-	    k = decodeURIComponent(kstr);
-	    v = decodeURIComponent(vstr);
-
-	    if (!hasOwnProperty(obj, k)) {
-	      obj[k] = v;
-	    } else if (Array.isArray(obj[k])) {
-	      obj[k].push(v);
-	    } else {
-	      obj[k] = [obj[k], v];
-	    }
-	  }
-
-	  return obj;
-	};
-
-
-/***/ },
-/* 432 */
-/***/ function(module, exports) {
-
-	// Copyright Joyent, Inc. and other Node contributors.
-	//
-	// Permission is hereby granted, free of charge, to any person obtaining a
-	// copy of this software and associated documentation files (the
-	// "Software"), to deal in the Software without restriction, including
-	// without limitation the rights to use, copy, modify, merge, publish,
-	// distribute, sublicense, and/or sell copies of the Software, and to permit
-	// persons to whom the Software is furnished to do so, subject to the
-	// following conditions:
-	//
-	// The above copyright notice and this permission notice shall be included
-	// in all copies or substantial portions of the Software.
-	//
-	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-	'use strict';
-
-	var stringifyPrimitive = function(v) {
-	  switch (typeof v) {
-	    case 'string':
-	      return v;
-
-	    case 'boolean':
-	      return v ? 'true' : 'false';
-
-	    case 'number':
-	      return isFinite(v) ? v : '';
-
-	    default:
-	      return '';
-	  }
-	};
-
-	module.exports = function(obj, sep, eq, name) {
-	  sep = sep || '&';
-	  eq = eq || '=';
-	  if (obj === null) {
-	    obj = undefined;
-	  }
-
-	  if (typeof obj === 'object') {
-	    return Object.keys(obj).map(function(k) {
-	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
-	      if (Array.isArray(obj[k])) {
-	        return obj[k].map(function(v) {
-	          return ks + encodeURIComponent(stringifyPrimitive(v));
-	        }).join(sep);
-	      } else {
-	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
-	      }
-	    }).join(sep);
-
-	  }
-
-	  if (!name) return '';
-	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
-	         encodeURIComponent(stringifyPrimitive(obj));
-	};
-
-
-/***/ },
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */,
-/* 438 */,
-/* 439 */,
-/* 440 */,
-/* 441 */,
-/* 442 */,
-/* 443 */,
-/* 444 */,
-/* 445 */,
-/* 446 */,
-/* 447 */,
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */,
-/* 452 */,
-/* 453 */,
-/* 454 */,
-/* 455 */,
-/* 456 */,
-/* 457 */,
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */,
-/* 465 */,
-/* 466 */,
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */,
-/* 474 */,
-/* 475 */,
-/* 476 */,
-/* 477 */,
-/* 478 */,
-/* 479 */,
-/* 480 */,
-/* 481 */,
-/* 482 */,
-/* 483 */,
-/* 484 */,
-/* 485 */,
-/* 486 */,
-/* 487 */,
-/* 488 */,
-/* 489 */,
-/* 490 */,
-/* 491 */,
-/* 492 */,
-/* 493 */,
-/* 494 */,
-/* 495 */,
-/* 496 */,
-/* 497 */,
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */,
-/* 505 */,
-/* 506 */,
-/* 507 */,
-/* 508 */,
-/* 509 */,
-/* 510 */,
-/* 511 */,
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */,
-/* 517 */,
-/* 518 */,
-/* 519 */,
-/* 520 */,
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
-/* 525 */,
-/* 526 */,
-/* 527 */,
-/* 528 */,
-/* 529 */,
-/* 530 */,
-/* 531 */,
-/* 532 */,
-/* 533 */,
-/* 534 */,
-/* 535 */,
-/* 536 */,
-/* 537 */,
-/* 538 */,
-/* 539 */,
-/* 540 */,
-/* 541 */,
-/* 542 */,
-/* 543 */,
-/* 544 */,
-/* 545 */,
-/* 546 */,
-/* 547 */,
-/* 548 */,
-/* 549 */,
-/* 550 */,
-/* 551 */,
-/* 552 */,
-/* 553 */,
-/* 554 */,
-/* 555 */,
-/* 556 */,
-/* 557 */,
-/* 558 */,
-/* 559 */,
-/* 560 */,
-/* 561 */,
-/* 562 */,
-/* 563 */,
-/* 564 */,
-/* 565 */,
-/* 566 */,
-/* 567 */,
-/* 568 */,
-/* 569 */,
-/* 570 */,
-/* 571 */,
-/* 572 */,
-/* 573 */,
-/* 574 */,
-/* 575 */,
-/* 576 */,
-/* 577 */,
-/* 578 */,
-/* 579 */,
-/* 580 */,
-/* 581 */,
-/* 582 */,
-/* 583 */,
-/* 584 */,
-/* 585 */,
-/* 586 */,
-/* 587 */,
-/* 588 */,
-/* 589 */,
-/* 590 */,
-/* 591 */,
-/* 592 */,
-/* 593 */,
-/* 594 */,
-/* 595 */,
-/* 596 */,
-/* 597 */,
-/* 598 */,
-/* 599 */,
-/* 600 */,
-/* 601 */,
-/* 602 */,
-/* 603 */,
-/* 604 */,
-/* 605 */,
-/* 606 */,
-/* 607 */,
-/* 608 */,
-/* 609 */,
-/* 610 */,
-/* 611 */,
-/* 612 */,
-/* 613 */,
-/* 614 */,
-/* 615 */,
-/* 616 */,
-/* 617 */,
-/* 618 */,
-/* 619 */,
-/* 620 */,
-/* 621 */,
-/* 622 */,
-/* 623 */,
-/* 624 */,
-/* 625 */,
-/* 626 */,
-/* 627 */,
-/* 628 */,
-/* 629 */,
-/* 630 */,
-/* 631 */,
-/* 632 */,
-/* 633 */,
-/* 634 */,
-/* 635 */,
-/* 636 */,
-/* 637 */,
-/* 638 */,
-/* 639 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var http = module.exports;
-	var EventEmitter = __webpack_require__(336).EventEmitter;
-	var Request = __webpack_require__(640);
-	var url = __webpack_require__(427)
-
-	http.request = function (params, cb) {
-	    if (typeof params === 'string') {
-	        params = url.parse(params)
-	    }
-	    if (!params) params = {};
-	    if (!params.host && !params.port) {
-	        params.port = parseInt(window.location.port, 10);
-	    }
-	    if (!params.host && params.hostname) {
-	        params.host = params.hostname;
-	    }
-
-	    if (!params.protocol) {
-	        if (params.scheme) {
-	            params.protocol = params.scheme + ':';
-	        } else {
-	            params.protocol = window.location.protocol;
-	        }
-	    }
-
-	    if (!params.host) {
-	        params.host = window.location.hostname || window.location.host;
-	    }
-	    if (/:/.test(params.host)) {
-	        if (!params.port) {
-	            params.port = params.host.split(':')[1];
-	        }
-	        params.host = params.host.split(':')[0];
-	    }
-	    if (!params.port) params.port = params.protocol == 'https:' ? 443 : 80;
-	    
-	    var req = new Request(new xhrHttp, params);
-	    if (cb) req.on('response', cb);
-	    return req;
-	};
-
-	http.get = function (params, cb) {
-	    params.method = 'GET';
-	    var req = http.request(params, cb);
-	    req.end();
-	    return req;
-	};
-
-	http.Agent = function () {};
-	http.Agent.defaultMaxSockets = 4;
-
-	var xhrHttp = (function () {
-	    if (typeof window === 'undefined') {
-	        throw new Error('no window object present');
-	    }
-	    else if (window.XMLHttpRequest) {
-	        return window.XMLHttpRequest;
-	    }
-	    else if (window.ActiveXObject) {
-	        var axs = [
-	            'Msxml2.XMLHTTP.6.0',
-	            'Msxml2.XMLHTTP.3.0',
-	            'Microsoft.XMLHTTP'
-	        ];
-	        for (var i = 0; i < axs.length; i++) {
-	            try {
-	                var ax = new(window.ActiveXObject)(axs[i]);
-	                return function () {
-	                    if (ax) {
-	                        var ax_ = ax;
-	                        ax = null;
-	                        return ax_;
-	                    }
-	                    else {
-	                        return new(window.ActiveXObject)(axs[i]);
-	                    }
-	                };
-	            }
-	            catch (e) {}
-	        }
-	        throw new Error('ajax not supported in this browser')
-	    }
-	    else {
-	        throw new Error('ajax not supported in this browser');
-	    }
-	})();
-
-	http.STATUS_CODES = {
-	    100 : 'Continue',
-	    101 : 'Switching Protocols',
-	    102 : 'Processing',                 // RFC 2518, obsoleted by RFC 4918
-	    200 : 'OK',
-	    201 : 'Created',
-	    202 : 'Accepted',
-	    203 : 'Non-Authoritative Information',
-	    204 : 'No Content',
-	    205 : 'Reset Content',
-	    206 : 'Partial Content',
-	    207 : 'Multi-Status',               // RFC 4918
-	    300 : 'Multiple Choices',
-	    301 : 'Moved Permanently',
-	    302 : 'Moved Temporarily',
-	    303 : 'See Other',
-	    304 : 'Not Modified',
-	    305 : 'Use Proxy',
-	    307 : 'Temporary Redirect',
-	    400 : 'Bad Request',
-	    401 : 'Unauthorized',
-	    402 : 'Payment Required',
-	    403 : 'Forbidden',
-	    404 : 'Not Found',
-	    405 : 'Method Not Allowed',
-	    406 : 'Not Acceptable',
-	    407 : 'Proxy Authentication Required',
-	    408 : 'Request Time-out',
-	    409 : 'Conflict',
-	    410 : 'Gone',
-	    411 : 'Length Required',
-	    412 : 'Precondition Failed',
-	    413 : 'Request Entity Too Large',
-	    414 : 'Request-URI Too Large',
-	    415 : 'Unsupported Media Type',
-	    416 : 'Requested Range Not Satisfiable',
-	    417 : 'Expectation Failed',
-	    418 : 'I\'m a teapot',              // RFC 2324
-	    422 : 'Unprocessable Entity',       // RFC 4918
-	    423 : 'Locked',                     // RFC 4918
-	    424 : 'Failed Dependency',          // RFC 4918
-	    425 : 'Unordered Collection',       // RFC 4918
-	    426 : 'Upgrade Required',           // RFC 2817
-	    428 : 'Precondition Required',      // RFC 6585
-	    429 : 'Too Many Requests',          // RFC 6585
-	    431 : 'Request Header Fields Too Large',// RFC 6585
-	    500 : 'Internal Server Error',
-	    501 : 'Not Implemented',
-	    502 : 'Bad Gateway',
-	    503 : 'Service Unavailable',
-	    504 : 'Gateway Time-out',
-	    505 : 'HTTP Version Not Supported',
-	    506 : 'Variant Also Negotiates',    // RFC 2295
-	    507 : 'Insufficient Storage',       // RFC 4918
-	    509 : 'Bandwidth Limit Exceeded',
-	    510 : 'Not Extended',               // RFC 2774
-	    511 : 'Network Authentication Required' // RFC 6585
-	};
-
-/***/ },
-/* 640 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Stream = __webpack_require__(388);
-	var Response = __webpack_require__(641);
-	var Base64 = __webpack_require__(642);
-	var inherits = __webpack_require__(380);
-
-	var Request = module.exports = function (xhr, params) {
-	    var self = this;
-	    self.writable = true;
-	    self.xhr = xhr;
-	    self.body = [];
-	    
-	    self.uri = (params.protocol || 'http:') + '//'
-	        + params.host
-	        + (params.port ? ':' + params.port : '')
-	        + (params.path || '/')
-	    ;
-	    
-	    if (typeof params.withCredentials === 'undefined') {
-	        params.withCredentials = true;
-	    }
-
-	    try { xhr.withCredentials = params.withCredentials }
-	    catch (e) {}
-	    
-	    if (params.responseType) try { xhr.responseType = params.responseType }
-	    catch (e) {}
-	    
-	    xhr.open(
-	        params.method || 'GET',
-	        self.uri,
-	        true
-	    );
-
-	    xhr.onerror = function(event) {
-	        self.emit('error', new Error('Network error'));
-	    };
-
-	    self._headers = {};
-	    
-	    if (params.headers) {
-	        var keys = objectKeys(params.headers);
-	        for (var i = 0; i < keys.length; i++) {
-	            var key = keys[i];
-	            if (!self.isSafeRequestHeader(key)) continue;
-	            var value = params.headers[key];
-	            self.setHeader(key, value);
-	        }
-	    }
-	    
-	    if (params.auth) {
-	        //basic auth
-	        this.setHeader('Authorization', 'Basic ' + Base64.btoa(params.auth));
-	    }
-
-	    var res = new Response;
-	    res.on('close', function () {
-	        self.emit('close');
-	    });
-	    
-	    res.on('ready', function () {
-	        self.emit('response', res);
-	    });
-
-	    res.on('error', function (err) {
-	        self.emit('error', err);
-	    });
-	    
-	    xhr.onreadystatechange = function () {
-	        // Fix for IE9 bug
-	        // SCRIPT575: Could not complete the operation due to error c00c023f
-	        // It happens when a request is aborted, calling the success callback anyway with readyState === 4
-	        if (xhr.__aborted) return;
-	        res.handle(xhr);
-	    };
-	};
-
-	inherits(Request, Stream);
-
-	Request.prototype.setHeader = function (key, value) {
-	    this._headers[key.toLowerCase()] = value
-	};
-
-	Request.prototype.getHeader = function (key) {
-	    return this._headers[key.toLowerCase()]
-	};
-
-	Request.prototype.removeHeader = function (key) {
-	    delete this._headers[key.toLowerCase()]
-	};
-
-	Request.prototype.write = function (s) {
-	    this.body.push(s);
-	};
-
-	Request.prototype.destroy = function (s) {
-	    this.xhr.__aborted = true;
-	    this.xhr.abort();
-	    this.emit('close');
-	};
-
-	Request.prototype.end = function (s) {
-	    if (s !== undefined) this.body.push(s);
-
-	    var keys = objectKeys(this._headers);
-	    for (var i = 0; i < keys.length; i++) {
-	        var key = keys[i];
-	        var value = this._headers[key];
-	        if (isArray(value)) {
-	            for (var j = 0; j < value.length; j++) {
-	                this.xhr.setRequestHeader(key, value[j]);
-	            }
-	        }
-	        else this.xhr.setRequestHeader(key, value)
-	    }
-
-	    if (this.body.length === 0) {
-	        this.xhr.send('');
-	    }
-	    else if (typeof this.body[0] === 'string') {
-	        this.xhr.send(this.body.join(''));
-	    }
-	    else if (isArray(this.body[0])) {
-	        var body = [];
-	        for (var i = 0; i < this.body.length; i++) {
-	            body.push.apply(body, this.body[i]);
-	        }
-	        this.xhr.send(body);
-	    }
-	    else if (/Array/.test(Object.prototype.toString.call(this.body[0]))) {
-	        var len = 0;
-	        for (var i = 0; i < this.body.length; i++) {
-	            len += this.body[i].length;
-	        }
-	        var body = new(this.body[0].constructor)(len);
-	        var k = 0;
-	        
-	        for (var i = 0; i < this.body.length; i++) {
-	            var b = this.body[i];
-	            for (var j = 0; j < b.length; j++) {
-	                body[k++] = b[j];
-	            }
-	        }
-	        this.xhr.send(body);
-	    }
-	    else if (isXHR2Compatible(this.body[0])) {
-	        this.xhr.send(this.body[0]);
-	    }
-	    else {
-	        var body = '';
-	        for (var i = 0; i < this.body.length; i++) {
-	            body += this.body[i].toString();
-	        }
-	        this.xhr.send(body);
-	    }
-	};
-
-	// Taken from http://dxr.mozilla.org/mozilla/mozilla-central/content/base/src/nsXMLHttpRequest.cpp.html
-	Request.unsafeHeaders = [
-	    "accept-charset",
-	    "accept-encoding",
-	    "access-control-request-headers",
-	    "access-control-request-method",
-	    "connection",
-	    "content-length",
-	    "cookie",
-	    "cookie2",
-	    "content-transfer-encoding",
-	    "date",
-	    "expect",
-	    "host",
-	    "keep-alive",
-	    "origin",
-	    "referer",
-	    "te",
-	    "trailer",
-	    "transfer-encoding",
-	    "upgrade",
-	    "user-agent",
-	    "via"
-	];
-
-	Request.prototype.isSafeRequestHeader = function (headerName) {
-	    if (!headerName) return false;
-	    return indexOf(Request.unsafeHeaders, headerName.toLowerCase()) === -1;
-	};
-
-	var objectKeys = Object.keys || function (obj) {
-	    var keys = [];
-	    for (var key in obj) keys.push(key);
-	    return keys;
-	};
-
-	var isArray = Array.isArray || function (xs) {
-	    return Object.prototype.toString.call(xs) === '[object Array]';
-	};
-
-	var indexOf = function (xs, x) {
-	    if (xs.indexOf) return xs.indexOf(x);
-	    for (var i = 0; i < xs.length; i++) {
-	        if (xs[i] === x) return i;
-	    }
-	    return -1;
-	};
-
-	var isXHR2Compatible = function (obj) {
-	    if (typeof Blob !== 'undefined' && obj instanceof Blob) return true;
-	    if (typeof ArrayBuffer !== 'undefined' && obj instanceof ArrayBuffer) return true;
-	    if (typeof FormData !== 'undefined' && obj instanceof FormData) return true;
-	};
-
-
-/***/ },
-/* 641 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Stream = __webpack_require__(388);
-	var util = __webpack_require__(295);
-
-	var Response = module.exports = function (res) {
-	    this.offset = 0;
-	    this.readable = true;
-	};
-
-	util.inherits(Response, Stream);
-
-	var capable = {
-	    streaming : true,
-	    status2 : true
-	};
-
-	function parseHeaders (res) {
-	    var lines = res.getAllResponseHeaders().split(/\r?\n/);
-	    var headers = {};
-	    for (var i = 0; i < lines.length; i++) {
-	        var line = lines[i];
-	        if (line === '') continue;
-	        
-	        var m = line.match(/^([^:]+):\s*(.*)/);
-	        if (m) {
-	            var key = m[1].toLowerCase(), value = m[2];
-	            
-	            if (headers[key] !== undefined) {
-	            
-	                if (isArray(headers[key])) {
-	                    headers[key].push(value);
-	                }
-	                else {
-	                    headers[key] = [ headers[key], value ];
-	                }
-	            }
-	            else {
-	                headers[key] = value;
-	            }
-	        }
-	        else {
-	            headers[line] = true;
-	        }
-	    }
-	    return headers;
-	}
-
-	Response.prototype.getResponse = function (xhr) {
-	    var respType = String(xhr.responseType).toLowerCase();
-	    if (respType === 'blob') return xhr.responseBlob || xhr.response;
-	    if (respType === 'arraybuffer') return xhr.response;
-	    return xhr.responseText;
-	}
-
-	Response.prototype.getHeader = function (key) {
-	    return this.headers[key.toLowerCase()];
-	};
-
-	Response.prototype.handle = function (res) {
-	    if (res.readyState === 2 && capable.status2) {
-	        try {
-	            this.statusCode = res.status;
-	            this.headers = parseHeaders(res);
-	        }
-	        catch (err) {
-	            capable.status2 = false;
-	        }
-	        
-	        if (capable.status2) {
-	            this.emit('ready');
-	        }
-	    }
-	    else if (capable.streaming && res.readyState === 3) {
-	        try {
-	            if (!this.statusCode) {
-	                this.statusCode = res.status;
-	                this.headers = parseHeaders(res);
-	                this.emit('ready');
-	            }
-	        }
-	        catch (err) {}
-	        
-	        try {
-	            this._emitData(res);
-	        }
-	        catch (err) {
-	            capable.streaming = false;
-	        }
-	    }
-	    else if (res.readyState === 4) {
-	        if (!this.statusCode) {
-	            this.statusCode = res.status;
-	            this.emit('ready');
-	        }
-	        this._emitData(res);
-	        
-	        if (res.error) {
-	            this.emit('error', this.getResponse(res));
-	        }
-	        else this.emit('end');
-	        
-	        this.emit('close');
-	    }
-	};
-
-	Response.prototype._emitData = function (res) {
-	    var respBody = this.getResponse(res);
-	    if (respBody.toString().match(/ArrayBuffer/)) {
-	        this.emit('data', new Uint8Array(respBody, this.offset));
-	        this.offset = respBody.byteLength;
-	        return;
-	    }
-	    if (respBody.length > this.offset) {
-	        this.emit('data', respBody.slice(this.offset));
-	        this.offset = respBody.length;
-	    }
-	};
-
-	var isArray = Array.isArray || function (xs) {
-	    return Object.prototype.toString.call(xs) === '[object Array]';
-	};
-
-
-/***/ },
-/* 642 */
-/***/ function(module, exports, __webpack_require__) {
-
-	;(function () {
-
-	  var object =  true ? exports : this; // #8: web workers
-	  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-	  function InvalidCharacterError(message) {
-	    this.message = message;
-	  }
-	  InvalidCharacterError.prototype = new Error;
-	  InvalidCharacterError.prototype.name = 'InvalidCharacterError';
-
-	  // encoder
-	  // [https://gist.github.com/999166] by [https://github.com/nignag]
-	  object.btoa || (
-	  object.btoa = function (input) {
-	    for (
-	      // initialize result and counter
-	      var block, charCode, idx = 0, map = chars, output = '';
-	      // if the next input index does not exist:
-	      //   change the mapping table to "="
-	      //   check if d has no fractional digits
-	      input.charAt(idx | 0) || (map = '=', idx % 1);
-	      // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-	      output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-	    ) {
-	      charCode = input.charCodeAt(idx += 3/4);
-	      if (charCode > 0xFF) {
-	        throw new InvalidCharacterError("'btoa' failed: The string to be encoded contains characters outside of the Latin1 range.");
-	      }
-	      block = block << 8 | charCode;
-	    }
-	    return output;
-	  });
-
-	  // decoder
-	  // [https://gist.github.com/1020396] by [https://github.com/atk]
-	  object.atob || (
-	  object.atob = function (input) {
-	    input = input.replace(/=+$/, '');
-	    if (input.length % 4 == 1) {
-	      throw new InvalidCharacterError("'atob' failed: The string to be decoded is not correctly encoded.");
-	    }
-	    for (
-	      // initialize result and counters
-	      var bc = 0, bs, buffer, idx = 0, output = '';
-	      // get next character
-	      buffer = input.charAt(idx++);
-	      // character found in table? initialize bit storage and add its ascii value;
-	      ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
-	        // and if not first of each 4 characters,
-	        // convert the first 8 bits to one ascii character
-	        bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
-	    ) {
-	      // try to find character in table (0-63, not found => -1)
-	      buffer = chars.indexOf(buffer);
-	    }
-	    return output;
-	  });
-
-	}());
-
-
-/***/ },
-/* 643 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var http = __webpack_require__(639);
+	var http = __webpack_require__(268);
 
 	var https = module.exports;
 
@@ -35741,1451 +36356,7 @@
 
 
 /***/ },
-/* 644 */,
-/* 645 */,
-/* 646 */,
-/* 647 */,
-/* 648 */,
-/* 649 */,
-/* 650 */,
-/* 651 */,
-/* 652 */,
-/* 653 */,
-/* 654 */,
-/* 655 */,
-/* 656 */,
-/* 657 */,
-/* 658 */,
-/* 659 */,
-/* 660 */,
-/* 661 */,
-/* 662 */,
-/* 663 */,
-/* 664 */,
-/* 665 */,
-/* 666 */,
-/* 667 */,
-/* 668 */,
-/* 669 */,
-/* 670 */,
-/* 671 */,
-/* 672 */,
-/* 673 */,
-/* 674 */,
-/* 675 */,
-/* 676 */,
-/* 677 */,
-/* 678 */,
-/* 679 */,
-/* 680 */,
-/* 681 */,
-/* 682 */,
-/* 683 */,
-/* 684 */,
-/* 685 */,
-/* 686 */,
-/* 687 */,
-/* 688 */,
-/* 689 */,
-/* 690 */,
-/* 691 */,
-/* 692 */,
-/* 693 */,
-/* 694 */,
-/* 695 */,
-/* 696 */,
-/* 697 */,
-/* 698 */,
-/* 699 */,
-/* 700 */,
-/* 701 */,
-/* 702 */,
-/* 703 */,
-/* 704 */,
-/* 705 */,
-/* 706 */,
-/* 707 */,
-/* 708 */,
-/* 709 */,
-/* 710 */,
-/* 711 */,
-/* 712 */,
-/* 713 */,
-/* 714 */,
-/* 715 */,
-/* 716 */,
-/* 717 */,
-/* 718 */,
-/* 719 */,
-/* 720 */,
-/* 721 */,
-/* 722 */,
-/* 723 */,
-/* 724 */,
-/* 725 */,
-/* 726 */,
-/* 727 */,
-/* 728 */,
-/* 729 */,
-/* 730 */,
-/* 731 */,
-/* 732 */,
-/* 733 */,
-/* 734 */,
-/* 735 */,
-/* 736 */,
-/* 737 */,
-/* 738 */,
-/* 739 */,
-/* 740 */,
-/* 741 */,
-/* 742 */,
-/* 743 */,
-/* 744 */,
-/* 745 */,
-/* 746 */,
-/* 747 */,
-/* 748 */,
-/* 749 */,
-/* 750 */,
-/* 751 */,
-/* 752 */,
-/* 753 */,
-/* 754 */,
-/* 755 */,
-/* 756 */,
-/* 757 */,
-/* 758 */,
-/* 759 */,
-/* 760 */,
-/* 761 */,
-/* 762 */,
-/* 763 */,
-/* 764 */,
-/* 765 */,
-/* 766 */,
-/* 767 */,
-/* 768 */,
-/* 769 */,
-/* 770 */,
-/* 771 */,
-/* 772 */,
-/* 773 */,
-/* 774 */,
-/* 775 */,
-/* 776 */,
-/* 777 */,
-/* 778 */,
-/* 779 */,
-/* 780 */,
-/* 781 */,
-/* 782 */,
-/* 783 */,
-/* 784 */,
-/* 785 */,
-/* 786 */,
-/* 787 */,
-/* 788 */,
-/* 789 */,
-/* 790 */,
-/* 791 */,
-/* 792 */,
-/* 793 */,
-/* 794 */,
-/* 795 */,
-/* 796 */,
-/* 797 */,
-/* 798 */,
-/* 799 */,
-/* 800 */,
-/* 801 */,
-/* 802 */,
-/* 803 */,
-/* 804 */,
-/* 805 */,
-/* 806 */,
-/* 807 */,
-/* 808 */,
-/* 809 */,
-/* 810 */,
-/* 811 */,
-/* 812 */,
-/* 813 */,
-/* 814 */,
-/* 815 */,
-/* 816 */,
-/* 817 */,
-/* 818 */,
-/* 819 */,
-/* 820 */,
-/* 821 */,
-/* 822 */,
-/* 823 */,
-/* 824 */,
-/* 825 */,
-/* 826 */,
-/* 827 */,
-/* 828 */,
-/* 829 */,
-/* 830 */,
-/* 831 */,
-/* 832 */,
-/* 833 */,
-/* 834 */,
-/* 835 */,
-/* 836 */,
-/* 837 */,
-/* 838 */,
-/* 839 */,
-/* 840 */,
-/* 841 */,
-/* 842 */,
-/* 843 */,
-/* 844 */,
-/* 845 */,
-/* 846 */,
-/* 847 */,
-/* 848 */,
-/* 849 */,
-/* 850 */,
-/* 851 */,
-/* 852 */,
-/* 853 */,
-/* 854 */,
-/* 855 */,
-/* 856 */,
-/* 857 */,
-/* 858 */,
-/* 859 */,
-/* 860 */,
-/* 861 */,
-/* 862 */,
-/* 863 */,
-/* 864 */,
-/* 865 */,
-/* 866 */,
-/* 867 */,
-/* 868 */,
-/* 869 */,
-/* 870 */,
-/* 871 */,
-/* 872 */,
-/* 873 */,
-/* 874 */,
-/* 875 */,
-/* 876 */,
-/* 877 */,
-/* 878 */,
-/* 879 */,
-/* 880 */,
-/* 881 */,
-/* 882 */,
-/* 883 */,
-/* 884 */,
-/* 885 */,
-/* 886 */,
-/* 887 */,
-/* 888 */,
-/* 889 */,
-/* 890 */,
-/* 891 */,
-/* 892 */,
-/* 893 */,
-/* 894 */,
-/* 895 */,
-/* 896 */,
-/* 897 */,
-/* 898 */,
-/* 899 */,
-/* 900 */,
-/* 901 */,
-/* 902 */,
-/* 903 */,
-/* 904 */,
-/* 905 */,
-/* 906 */,
-/* 907 */,
-/* 908 */,
-/* 909 */,
-/* 910 */,
-/* 911 */,
-/* 912 */,
-/* 913 */,
-/* 914 */,
-/* 915 */,
-/* 916 */,
-/* 917 */,
-/* 918 */,
-/* 919 */,
-/* 920 */,
-/* 921 */,
-/* 922 */,
-/* 923 */,
-/* 924 */,
-/* 925 */,
-/* 926 */,
-/* 927 */,
-/* 928 */,
-/* 929 */,
-/* 930 */,
-/* 931 */,
-/* 932 */,
-/* 933 */,
-/* 934 */,
-/* 935 */,
-/* 936 */,
-/* 937 */,
-/* 938 */,
-/* 939 */,
-/* 940 */,
-/* 941 */,
-/* 942 */,
-/* 943 */,
-/* 944 */,
-/* 945 */,
-/* 946 */,
-/* 947 */,
-/* 948 */,
-/* 949 */,
-/* 950 */,
-/* 951 */,
-/* 952 */,
-/* 953 */,
-/* 954 */,
-/* 955 */,
-/* 956 */,
-/* 957 */,
-/* 958 */,
-/* 959 */,
-/* 960 */,
-/* 961 */,
-/* 962 */,
-/* 963 */,
-/* 964 */,
-/* 965 */,
-/* 966 */,
-/* 967 */,
-/* 968 */,
-/* 969 */,
-/* 970 */,
-/* 971 */,
-/* 972 */,
-/* 973 */,
-/* 974 */,
-/* 975 */,
-/* 976 */,
-/* 977 */,
-/* 978 */,
-/* 979 */,
-/* 980 */,
-/* 981 */,
-/* 982 */,
-/* 983 */,
-/* 984 */,
-/* 985 */,
-/* 986 */,
-/* 987 */,
-/* 988 */,
-/* 989 */,
-/* 990 */,
-/* 991 */,
-/* 992 */,
-/* 993 */,
-/* 994 */,
-/* 995 */,
-/* 996 */,
-/* 997 */,
-/* 998 */,
-/* 999 */,
-/* 1000 */,
-/* 1001 */,
-/* 1002 */,
-/* 1003 */,
-/* 1004 */,
-/* 1005 */,
-/* 1006 */,
-/* 1007 */,
-/* 1008 */,
-/* 1009 */,
-/* 1010 */,
-/* 1011 */,
-/* 1012 */,
-/* 1013 */,
-/* 1014 */,
-/* 1015 */,
-/* 1016 */,
-/* 1017 */,
-/* 1018 */,
-/* 1019 */,
-/* 1020 */,
-/* 1021 */,
-/* 1022 */,
-/* 1023 */,
-/* 1024 */,
-/* 1025 */,
-/* 1026 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	// secret keys go here
-	// add to .gitignore on your own computer
-	// when adding here talk to everyone so they can add
-	// those keys and values too
-	var Yelp = __webpack_require__(1027);
-	var yelp = new Yelp({
-	  consumer_key: '9JsyXXhj9pxI0wRtxIdb9Q',
-	  consumer_secret: '0D3FHzK5wuysal4WYZY3CeYEdR8',
-	  token: 'ivBw983_ASe9DysxtuqI7cxlrGBFOI4m',
-	  token_secret: 'k6QLpFpCtW0r3j_DsqJKEgqmI-Q'
-	});
-
-	module.exports = {
-	  googleMapsApiKey: 'AIzaSyB92DEsCCYUsGL5O8ULNESPb12Cg2bVOSA',
-	  yelpConsumerKey: '9JsyXXhj9pxI0wRtxIdb9Q',
-	  yelpConsumerSecret: '0D3FHzK5wuysal4WYZY3CeYEdR8',
-	  yelpToken: 'ivBw983_ASe9DysxtuqI7cxlrGBFOI4m',
-	  yelpTokenSecret: 'k6QLpFpCtW0r3j_DsqJKEgqmI-Q',
-	  yelp: yelp
-	};
-
-/***/ },
-/* 1027 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Yelp = __webpack_require__(1028).default;
-	module.exports = Yelp;
-
-
-/***/ },
-/* 1028 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _querystring = __webpack_require__(430);
-
-	var _querystring2 = _interopRequireDefault(_querystring);
-
-	var _oauth = __webpack_require__(1029);
-
-	var _oauth2 = _interopRequireDefault(_oauth);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var OAuth = _oauth2.default.OAuth;
-
-	var baseUrl = 'http://api.yelp.com/v2/';
-
-	var Yelp = (function () {
-	  function Yelp(opts) {
-	    _classCallCheck(this, Yelp);
-
-	    this.oauthToken = opts.token;
-	    this.oauthTokenSecret = opts.token_secret;
-	    this.oauth = new OAuth(null, null, opts.consumer_key, opts.consumer_secret, opts.version || '1.0', null, 'HMAC-SHA1');
-	  }
-
-	  _createClass(Yelp, [{
-	    key: 'get',
-	    value: function get(resource) {
-	      var _this = this;
-
-	      var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	      var cb = arguments[2];
-
-	      var promise = new Promise(function (resolve, reject) {
-	        var debug = params.debug;
-	        delete params.debug;
-
-	        _this.oauth.get(baseUrl + resource + '?' + _querystring2.default.stringify(params), _this.oauthToken, _this.oauthTokenSecret, function (err, _data, response) {
-	          if (err) return reject(err);
-	          var data = JSON.parse(_data);
-	          if (debug) return resolve([data, response]);
-	          resolve(data);
-	        });
-	      });
-	      if (typeof cb === 'function') {
-	        promise.then(function (res) {
-	          return cb(null, res);
-	        }).catch(cb);
-	        return null;
-	      }
-	      return promise;
-	    }
-	  }, {
-	    key: 'search',
-	    value: function search(params, callback) {
-	      return this.get('search', params, callback);
-	    }
-	  }, {
-	    key: 'business',
-	    value: function business(id, callback) {
-	      return this.get('business/' + id, undefined, callback);
-	    }
-
-	    /**
-	     * Exampe:
-	     * yelp.phone_search({phone: "+12223334444"}, function(error, data) {});
-	     */
-
-	  }, {
-	    key: 'phoneSearch',
-	    value: function phoneSearch(params, callback) {
-	      return this.get('phone_search', params, callback);
-	    }
-	  }]);
-
-	  return Yelp;
-	})();
-
-	exports.default = Yelp;
-
-/***/ },
-/* 1029 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports.OAuth = __webpack_require__(1030).OAuth;
-	exports.OAuthEcho = __webpack_require__(1030).OAuthEcho;
-	exports.OAuth2 = __webpack_require__(1033).OAuth2;
-
-/***/ },
-/* 1030 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var crypto= __webpack_require__(284),
-	    sha1= __webpack_require__(1031),
-	    http= __webpack_require__(639),
-	    https= __webpack_require__(643),
-	    URL= __webpack_require__(427),
-	    querystring= __webpack_require__(430),
-	    OAuthUtils= __webpack_require__(1032);
-
-	exports.OAuth= function(requestUrl, accessUrl, consumerKey, consumerSecret, version, authorize_callback, signatureMethod, nonceSize, customHeaders) {
-	  this._isEcho = false;
-
-	  this._requestUrl= requestUrl;
-	  this._accessUrl= accessUrl;
-	  this._consumerKey= consumerKey;
-	  this._consumerSecret= this._encodeData( consumerSecret );
-	  if (signatureMethod == "RSA-SHA1") {
-	    this._privateKey = consumerSecret;
-	  }
-	  this._version= version;
-	  if( authorize_callback === undefined ) {
-	    this._authorize_callback= "oob";
-	  }
-	  else {
-	    this._authorize_callback= authorize_callback;
-	  }
-
-	  if( signatureMethod != "PLAINTEXT" && signatureMethod != "HMAC-SHA1" && signatureMethod != "RSA-SHA1")
-	    throw new Error("Un-supported signature method: " + signatureMethod )
-	  this._signatureMethod= signatureMethod;
-	  this._nonceSize= nonceSize || 32;
-	  this._headers= customHeaders || {"Accept" : "*/*",
-	                                   "Connection" : "close",
-	                                   "User-Agent" : "Node authentication"}
-	  this._clientOptions= this._defaultClientOptions= {"requestTokenHttpMethod": "POST",
-	                                                    "accessTokenHttpMethod": "POST",
-	                                                    "followRedirects": true};
-	  this._oauthParameterSeperator = ",";
-	};
-
-	exports.OAuthEcho= function(realm, verify_credentials, consumerKey, consumerSecret, version, signatureMethod, nonceSize, customHeaders) {
-	  this._isEcho = true;
-
-	  this._realm= realm;
-	  this._verifyCredentials = verify_credentials;
-	  this._consumerKey= consumerKey;
-	  this._consumerSecret= this._encodeData( consumerSecret );
-	  if (signatureMethod == "RSA-SHA1") {
-	    this._privateKey = consumerSecret;
-	  }
-	  this._version= version;
-
-	  if( signatureMethod != "PLAINTEXT" && signatureMethod != "HMAC-SHA1" && signatureMethod != "RSA-SHA1")
-	    throw new Error("Un-supported signature method: " + signatureMethod );
-	  this._signatureMethod= signatureMethod;
-	  this._nonceSize= nonceSize || 32;
-	  this._headers= customHeaders || {"Accept" : "*/*",
-	                                   "Connection" : "close",
-	                                   "User-Agent" : "Node authentication"};
-	  this._oauthParameterSeperator = ",";
-	}
-
-	exports.OAuthEcho.prototype = exports.OAuth.prototype;
-
-	exports.OAuth.prototype._getTimestamp= function() {
-	  return Math.floor( (new Date()).getTime() / 1000 );
-	}
-
-	exports.OAuth.prototype._encodeData= function(toEncode){
-	 if( toEncode == null || toEncode == "" ) return ""
-	 else {
-	    var result= encodeURIComponent(toEncode);
-	    // Fix the mismatch between OAuth's  RFC3986's and Javascript's beliefs in what is right and wrong ;)
-	    return result.replace(/\!/g, "%21")
-	                 .replace(/\'/g, "%27")
-	                 .replace(/\(/g, "%28")
-	                 .replace(/\)/g, "%29")
-	                 .replace(/\*/g, "%2A");
-	 }
-	}
-
-	exports.OAuth.prototype._decodeData= function(toDecode) {
-	  if( toDecode != null ) {
-	    toDecode = toDecode.replace(/\+/g, " ");
-	  }
-	  return decodeURIComponent( toDecode);
-	}
-
-	exports.OAuth.prototype._getSignature= function(method, url, parameters, tokenSecret) {
-	  var signatureBase= this._createSignatureBase(method, url, parameters);
-	  return this._createSignature( signatureBase, tokenSecret );
-	}
-
-	exports.OAuth.prototype._normalizeUrl= function(url) {
-	  var parsedUrl= URL.parse(url, true)
-	   var port ="";
-	   if( parsedUrl.port ) {
-	     if( (parsedUrl.protocol == "http:" && parsedUrl.port != "80" ) ||
-	         (parsedUrl.protocol == "https:" && parsedUrl.port != "443") ) {
-	           port= ":" + parsedUrl.port;
-	         }
-	   }
-
-	  if( !parsedUrl.pathname  || parsedUrl.pathname == "" ) parsedUrl.pathname ="/";
-
-	  return parsedUrl.protocol + "//" + parsedUrl.hostname + port + parsedUrl.pathname;
-	}
-
-	// Is the parameter considered an OAuth parameter
-	exports.OAuth.prototype._isParameterNameAnOAuthParameter= function(parameter) {
-	  var m = parameter.match('^oauth_');
-	  if( m && ( m[0] === "oauth_" ) ) {
-	    return true;
-	  }
-	  else {
-	    return false;
-	  }
-	};
-
-	// build the OAuth request authorization header
-	exports.OAuth.prototype._buildAuthorizationHeaders= function(orderedParameters) {
-	  var authHeader="OAuth ";
-	  if( this._isEcho ) {
-	    authHeader += 'realm="' + this._realm + '",';
-	  }
-
-	  for( var i= 0 ; i < orderedParameters.length; i++) {
-	     // Whilst the all the parameters should be included within the signature, only the oauth_ arguments
-	     // should appear within the authorization header.
-	     if( this._isParameterNameAnOAuthParameter(orderedParameters[i][0]) ) {
-	      authHeader+= "" + this._encodeData(orderedParameters[i][0])+"=\""+ this._encodeData(orderedParameters[i][1])+"\""+ this._oauthParameterSeperator;
-	     }
-	  }
-
-	  authHeader= authHeader.substring(0, authHeader.length-this._oauthParameterSeperator.length);
-	  return authHeader;
-	}
-
-	// Takes an object literal that represents the arguments, and returns an array
-	// of argument/value pairs.
-	exports.OAuth.prototype._makeArrayOfArgumentsHash= function(argumentsHash) {
-	  var argument_pairs= [];
-	  for(var key in argumentsHash ) {
-	    if (argumentsHash.hasOwnProperty(key)) {
-	       var value= argumentsHash[key];
-	       if( Array.isArray(value) ) {
-	         for(var i=0;i<value.length;i++) {
-	           argument_pairs[argument_pairs.length]= [key, value[i]];
-	         }
-	       }
-	       else {
-	         argument_pairs[argument_pairs.length]= [key, value];
-	       }
-	    }
-	  }
-	  return argument_pairs;
-	}
-
-	// Sorts the encoded key value pairs by encoded name, then encoded value
-	exports.OAuth.prototype._sortRequestParams= function(argument_pairs) {
-	  // Sort by name, then value.
-	  argument_pairs.sort(function(a,b) {
-	      if ( a[0]== b[0] )  {
-	        return a[1] < b[1] ? -1 : 1;
-	      }
-	      else return a[0] < b[0] ? -1 : 1;
-	  });
-
-	  return argument_pairs;
-	}
-
-	exports.OAuth.prototype._normaliseRequestParams= function(args) {
-	  var argument_pairs= this._makeArrayOfArgumentsHash(args);
-	  // First encode them #3.4.1.3.2 .1
-	  for(var i=0;i<argument_pairs.length;i++) {
-	    argument_pairs[i][0]= this._encodeData( argument_pairs[i][0] );
-	    argument_pairs[i][1]= this._encodeData( argument_pairs[i][1] );
-	  }
-
-	  // Then sort them #3.4.1.3.2 .2
-	  argument_pairs= this._sortRequestParams( argument_pairs );
-
-	  // Then concatenate together #3.4.1.3.2 .3 & .4
-	  var args= "";
-	  for(var i=0;i<argument_pairs.length;i++) {
-	      args+= argument_pairs[i][0];
-	      args+= "="
-	      args+= argument_pairs[i][1];
-	      if( i < argument_pairs.length-1 ) args+= "&";
-	  }
-	  return args;
-	}
-
-	exports.OAuth.prototype._createSignatureBase= function(method, url, parameters) {
-	  url= this._encodeData( this._normalizeUrl(url) );
-	  parameters= this._encodeData( parameters );
-	  return method.toUpperCase() + "&" + url + "&" + parameters;
-	}
-
-	exports.OAuth.prototype._createSignature= function(signatureBase, tokenSecret) {
-	   if( tokenSecret === undefined ) var tokenSecret= "";
-	   else tokenSecret= this._encodeData( tokenSecret );
-	   // consumerSecret is already encoded
-	   var key= this._consumerSecret + "&" + tokenSecret;
-
-	   var hash= ""
-	   if( this._signatureMethod == "PLAINTEXT" ) {
-	     hash= key;
-	   }
-	   else if (this._signatureMethod == "RSA-SHA1") {
-	     key = this._privateKey || "";
-	     hash= crypto.createSign("RSA-SHA1").update(signatureBase).sign(key, 'base64');
-	   }
-	   else {
-	       if( crypto.Hmac ) {
-	         hash = crypto.createHmac("sha1", key).update(signatureBase).digest("base64");
-	       }
-	       else {
-	         hash= sha1.HMACSHA1(key, signatureBase);
-	       }
-	   }
-	   return hash;
-	}
-	exports.OAuth.prototype.NONCE_CHARS= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n',
-	              'o','p','q','r','s','t','u','v','w','x','y','z','A','B',
-	              'C','D','E','F','G','H','I','J','K','L','M','N','O','P',
-	              'Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3',
-	              '4','5','6','7','8','9'];
-
-	exports.OAuth.prototype._getNonce= function(nonceSize) {
-	   var result = [];
-	   var chars= this.NONCE_CHARS;
-	   var char_pos;
-	   var nonce_chars_length= chars.length;
-
-	   for (var i = 0; i < nonceSize; i++) {
-	       char_pos= Math.floor(Math.random() * nonce_chars_length);
-	       result[i]=  chars[char_pos];
-	   }
-	   return result.join('');
-	}
-
-	exports.OAuth.prototype._createClient= function( port, hostname, method, path, headers, sslEnabled ) {
-	  var options = {
-	    host: hostname,
-	    port: port,
-	    path: path,
-	    method: method,
-	    headers: headers
-	  };
-	  var httpModel;
-	  if( sslEnabled ) {
-	    httpModel= https;
-	  } else {
-	    httpModel= http;
-	  }
-	  return httpModel.request(options);
-	}
-
-	exports.OAuth.prototype._prepareParameters= function( oauth_token, oauth_token_secret, method, url, extra_params ) {
-	  var oauthParameters= {
-	      "oauth_timestamp":        this._getTimestamp(),
-	      "oauth_nonce":            this._getNonce(this._nonceSize),
-	      "oauth_version":          this._version,
-	      "oauth_signature_method": this._signatureMethod,
-	      "oauth_consumer_key":     this._consumerKey
-	  };
-
-	  if( oauth_token ) {
-	    oauthParameters["oauth_token"]= oauth_token;
-	  }
-
-	  var sig;
-	  if( this._isEcho ) {
-	    sig = this._getSignature( "GET",  this._verifyCredentials,  this._normaliseRequestParams(oauthParameters), oauth_token_secret);
-	  }
-	  else {
-	    if( extra_params ) {
-	      for( var key in extra_params ) {
-	        if (extra_params.hasOwnProperty(key)) oauthParameters[key]= extra_params[key];
-	      }
-	    }
-	    var parsedUrl= URL.parse( url, false );
-
-	    if( parsedUrl.query ) {
-	      var key2;
-	      var extraParameters= querystring.parse(parsedUrl.query);
-	      for(var key in extraParameters ) {
-	        var value= extraParameters[key];
-	          if( typeof value == "object" ){
-	            // TODO: This probably should be recursive
-	            for(key2 in value){
-	              oauthParameters[key + "[" + key2 + "]"] = value[key2];
-	            }
-	          } else {
-	            oauthParameters[key]= value;
-	          }
-	        }
-	    }
-
-	    sig = this._getSignature( method,  url,  this._normaliseRequestParams(oauthParameters), oauth_token_secret);
-	  }
-
-	  var orderedParameters= this._sortRequestParams( this._makeArrayOfArgumentsHash(oauthParameters) );
-	  orderedParameters[orderedParameters.length]= ["oauth_signature", sig];
-	  return orderedParameters;
-	}
-
-	exports.OAuth.prototype._performSecureRequest= function( oauth_token, oauth_token_secret, method, url, extra_params, post_body, post_content_type,  callback ) {
-	  var orderedParameters= this._prepareParameters(oauth_token, oauth_token_secret, method, url, extra_params);
-
-	  if( !post_content_type ) {
-	    post_content_type= "application/x-www-form-urlencoded";
-	  }
-	  var parsedUrl= URL.parse( url, false );
-	  if( parsedUrl.protocol == "http:" && !parsedUrl.port ) parsedUrl.port= 80;
-	  if( parsedUrl.protocol == "https:" && !parsedUrl.port ) parsedUrl.port= 443;
-
-	  var headers= {};
-	  var authorization = this._buildAuthorizationHeaders(orderedParameters);
-	  if ( this._isEcho ) {
-	    headers["X-Verify-Credentials-Authorization"]= authorization;
-	  }
-	  else {
-	    headers["Authorization"]= authorization;
-	  }
-
-	  headers["Host"] = parsedUrl.host
-
-	  for( var key in this._headers ) {
-	    if (this._headers.hasOwnProperty(key)) {
-	      headers[key]= this._headers[key];
-	    }
-	  }
-
-	  // Filter out any passed extra_params that are really to do with OAuth
-	  for(var key in extra_params) {
-	    if( this._isParameterNameAnOAuthParameter( key ) ) {
-	      delete extra_params[key];
-	    }
-	  }
-
-	  if( (method == "POST" || method == "PUT")  && ( post_body == null && extra_params != null) ) {
-	    // Fix the mismatch between the output of querystring.stringify() and this._encodeData()
-	    post_body= querystring.stringify(extra_params)
-	                       .replace(/\!/g, "%21")
-	                       .replace(/\'/g, "%27")
-	                       .replace(/\(/g, "%28")
-	                       .replace(/\)/g, "%29")
-	                       .replace(/\*/g, "%2A");
-	  }
-
-	  if( post_body ) {
-	      if ( Buffer.isBuffer(post_body) ) {
-	          headers["Content-length"]= post_body.length;
-	      } else {
-	          headers["Content-length"]= Buffer.byteLength(post_body);
-	      }
-	  } else {
-	      headers["Content-length"]= 0;
-	  }
-
-	  headers["Content-Type"]= post_content_type;
-
-	  var path;
-	  if( !parsedUrl.pathname  || parsedUrl.pathname == "" ) parsedUrl.pathname ="/";
-	  if( parsedUrl.query ) path= parsedUrl.pathname + "?"+ parsedUrl.query ;
-	  else path= parsedUrl.pathname;
-
-	  var request;
-	  if( parsedUrl.protocol == "https:" ) {
-	    request= this._createClient(parsedUrl.port, parsedUrl.hostname, method, path, headers, true);
-	  }
-	  else {
-	    request= this._createClient(parsedUrl.port, parsedUrl.hostname, method, path, headers);
-	  }
-
-	  var clientOptions = this._clientOptions;
-	  if( callback ) {
-	    var data="";
-	    var self= this;
-
-	    // Some hosts *cough* google appear to close the connection early / send no content-length header
-	    // allow this behaviour.
-	    var allowEarlyClose= OAuthUtils.isAnEarlyCloseHost( parsedUrl.hostname );
-	    var callbackCalled= false;
-	    var passBackControl = function( response ) {
-	      if(!callbackCalled) {
-	        callbackCalled= true;
-	        if ( response.statusCode >= 200 && response.statusCode <= 299 ) {
-	          callback(null, data, response);
-	        } else {
-	          // Follow 301 or 302 redirects with Location HTTP header
-	          if((response.statusCode == 301 || response.statusCode == 302) && clientOptions.followRedirects && response.headers && response.headers.location) {
-	            self._performSecureRequest( oauth_token, oauth_token_secret, method, response.headers.location, extra_params, post_body, post_content_type,  callback);
-	          }
-	          else {
-	            callback({ statusCode: response.statusCode, data: data }, data, response);
-	          }
-	        }
-	      }
-	    }
-
-	    request.on('response', function (response) {
-	      response.setEncoding('utf8');
-	      response.on('data', function (chunk) {
-	        data+=chunk;
-	      });
-	      response.on('end', function () {
-	        passBackControl( response );
-	      });
-	      response.on('close', function () {
-	        if( allowEarlyClose ) {
-	          passBackControl( response );
-	        }
-	      });
-	    });
-
-	    request.on("error", function(err) {
-	      if(!callbackCalled) {
-	        callbackCalled= true;
-	        callback( err )
-	      }
-	    });
-
-	    if( (method == "POST" || method =="PUT") && post_body != null && post_body != "" ) {
-	      request.write(post_body);
-	    }
-	    request.end();
-	  }
-	  else {
-	    if( (method == "POST" || method =="PUT") && post_body != null && post_body != "" ) {
-	      request.write(post_body);
-	    }
-	    return request;
-	  }
-
-	  return;
-	}
-
-	exports.OAuth.prototype.setClientOptions= function(options) {
-	  var key,
-	      mergedOptions= {},
-	      hasOwnProperty= Object.prototype.hasOwnProperty;
-
-	  for( key in this._defaultClientOptions ) {
-	    if( !hasOwnProperty.call(options, key) ) {
-	      mergedOptions[key]= this._defaultClientOptions[key];
-	    } else {
-	      mergedOptions[key]= options[key];
-	    }
-	  }
-
-	  this._clientOptions= mergedOptions;
-	};
-
-	exports.OAuth.prototype.getOAuthAccessToken= function(oauth_token, oauth_token_secret, oauth_verifier,  callback) {
-	  var extraParams= {};
-	  if( typeof oauth_verifier == "function" ) {
-	    callback= oauth_verifier;
-	  } else {
-	    extraParams.oauth_verifier= oauth_verifier;
-	  }
-
-	   this._performSecureRequest( oauth_token, oauth_token_secret, this._clientOptions.accessTokenHttpMethod, this._accessUrl, extraParams, null, null, function(error, data, response) {
-	         if( error ) callback(error);
-	         else {
-	           var results= querystring.parse( data );
-	           var oauth_access_token= results["oauth_token"];
-	           delete results["oauth_token"];
-	           var oauth_access_token_secret= results["oauth_token_secret"];
-	           delete results["oauth_token_secret"];
-	           callback(null, oauth_access_token, oauth_access_token_secret, results );
-	         }
-	   })
-	}
-
-	// Deprecated
-	exports.OAuth.prototype.getProtectedResource= function(url, method, oauth_token, oauth_token_secret, callback) {
-	  this._performSecureRequest( oauth_token, oauth_token_secret, method, url, null, "", null, callback );
-	}
-
-	exports.OAuth.prototype.delete= function(url, oauth_token, oauth_token_secret, callback) {
-	  return this._performSecureRequest( oauth_token, oauth_token_secret, "DELETE", url, null, "", null, callback );
-	}
-
-	exports.OAuth.prototype.get= function(url, oauth_token, oauth_token_secret, callback) {
-	  return this._performSecureRequest( oauth_token, oauth_token_secret, "GET", url, null, "", null, callback );
-	}
-
-	exports.OAuth.prototype._putOrPost= function(method, url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
-	  var extra_params= null;
-	  if( typeof post_content_type == "function" ) {
-	    callback= post_content_type;
-	    post_content_type= null;
-	  }
-	  if ( typeof post_body != "string" && !Buffer.isBuffer(post_body) ) {
-	    post_content_type= "application/x-www-form-urlencoded"
-	    extra_params= post_body;
-	    post_body= null;
-	  }
-	  return this._performSecureRequest( oauth_token, oauth_token_secret, method, url, extra_params, post_body, post_content_type, callback );
-	}
-
-
-	exports.OAuth.prototype.put= function(url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
-	  return this._putOrPost("PUT", url, oauth_token, oauth_token_secret, post_body, post_content_type, callback);
-	}
-
-	exports.OAuth.prototype.post= function(url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
-	  return this._putOrPost("POST", url, oauth_token, oauth_token_secret, post_body, post_content_type, callback);
-	}
-
-	/**
-	 * Gets a request token from the OAuth provider and passes that information back
-	 * to the calling code.
-	 *
-	 * The callback should expect a function of the following form:
-	 *
-	 * function(err, token, token_secret, parsedQueryString) {}
-	 *
-	 * This method has optional parameters so can be called in the following 2 ways:
-	 *
-	 * 1) Primary use case: Does a basic request with no extra parameters
-	 *  getOAuthRequestToken( callbackFunction )
-	 *
-	 * 2) As above but allows for provision of extra parameters to be sent as part of the query to the server.
-	 *  getOAuthRequestToken( extraParams, callbackFunction )
-	 *
-	 * N.B. This method will HTTP POST verbs by default, if you wish to override this behaviour you will
-	 * need to provide a requestTokenHttpMethod option when creating the client.
-	 *
-	 **/
-	exports.OAuth.prototype.getOAuthRequestToken= function( extraParams, callback ) {
-	   if( typeof extraParams == "function" ){
-	     callback = extraParams;
-	     extraParams = {};
-	   }
-	  // Callbacks are 1.0A related
-	  if( this._authorize_callback ) {
-	    extraParams["oauth_callback"]= this._authorize_callback;
-	  }
-	  this._performSecureRequest( null, null, this._clientOptions.requestTokenHttpMethod, this._requestUrl, extraParams, null, null, function(error, data, response) {
-	    if( error ) callback(error);
-	    else {
-	      var results= querystring.parse(data);
-
-	      var oauth_token= results["oauth_token"];
-	      var oauth_token_secret= results["oauth_token_secret"];
-	      delete results["oauth_token"];
-	      delete results["oauth_token_secret"];
-	      callback(null, oauth_token, oauth_token_secret,  results );
-	    }
-	  });
-	}
-
-	exports.OAuth.prototype.signUrl= function(url, oauth_token, oauth_token_secret, method) {
-
-	  if( method === undefined ) {
-	    var method= "GET";
-	  }
-
-	  var orderedParameters= this._prepareParameters(oauth_token, oauth_token_secret, method, url, {});
-	  var parsedUrl= URL.parse( url, false );
-
-	  var query="";
-	  for( var i= 0 ; i < orderedParameters.length; i++) {
-	    query+= orderedParameters[i][0]+"="+ this._encodeData(orderedParameters[i][1]) + "&";
-	  }
-	  query= query.substring(0, query.length-1);
-
-	  return parsedUrl.protocol + "//"+ parsedUrl.host + parsedUrl.pathname + "?" + query;
-	};
-
-	exports.OAuth.prototype.authHeader= function(url, oauth_token, oauth_token_secret, method) {
-	  if( method === undefined ) {
-	    var method= "GET";
-	  }
-
-	  var orderedParameters= this._prepareParameters(oauth_token, oauth_token_secret, method, url, {});
-	  return this._buildAuthorizationHeaders(orderedParameters);
-	};
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
-
-/***/ },
-/* 1031 */
-/***/ function(module, exports) {
-
-	/*
-	 * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
-	 * in FIPS 180-1
-	 * Version 2.2 Copyright Paul Johnston 2000 - 2009.
-	 * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
-	 * Distributed under the BSD License
-	 * See http://pajhome.org.uk/crypt/md5 for details.
-	 */
-
-	/*
-	 * Configurable variables. You may need to tweak these to be compatible with
-	 * the server-side, but the defaults work in most cases.
-	 */
-	var hexcase = 1;  /* hex output format. 0 - lowercase; 1 - uppercase        */
-	var b64pad  = "="; /* base-64 pad character. "=" for strict RFC compliance   */
-
-	/*
-	 * These are the functions you'll usually want to call
-	 * They take string arguments and return either hex or base-64 encoded strings
-	 */
-	function hex_sha1(s)    { return rstr2hex(rstr_sha1(str2rstr_utf8(s))); }
-	function b64_sha1(s)    { return rstr2b64(rstr_sha1(str2rstr_utf8(s))); }
-	function any_sha1(s, e) { return rstr2any(rstr_sha1(str2rstr_utf8(s)), e); }
-	function hex_hmac_sha1(k, d)
-	  { return rstr2hex(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d))); }
-	function b64_hmac_sha1(k, d)
-	  { return rstr2b64(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d))); }
-	function any_hmac_sha1(k, d, e)
-	  { return rstr2any(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d)), e); }
-
-	/*
-	 * Perform a simple self-test to see if the VM is working
-	 */
-	function sha1_vm_test()
-	{
-	  return hex_sha1("abc").toLowerCase() == "a9993e364706816aba3e25717850c26c9cd0d89d";
-	}
-
-	/*
-	 * Calculate the SHA1 of a raw string
-	 */
-	function rstr_sha1(s)
-	{
-	  return binb2rstr(binb_sha1(rstr2binb(s), s.length * 8));
-	}
-
-	/*
-	 * Calculate the HMAC-SHA1 of a key and some data (raw strings)
-	 */
-	function rstr_hmac_sha1(key, data)
-	{
-	  var bkey = rstr2binb(key);
-	  if(bkey.length > 16) bkey = binb_sha1(bkey, key.length * 8);
-
-	  var ipad = Array(16), opad = Array(16);
-	  for(var i = 0; i < 16; i++)
-	  {
-	    ipad[i] = bkey[i] ^ 0x36363636;
-	    opad[i] = bkey[i] ^ 0x5C5C5C5C;
-	  }
-
-	  var hash = binb_sha1(ipad.concat(rstr2binb(data)), 512 + data.length * 8);
-	  return binb2rstr(binb_sha1(opad.concat(hash), 512 + 160));
-	}
-
-	/*
-	 * Convert a raw string to a hex string
-	 */
-	function rstr2hex(input)
-	{
-	  try { hexcase } catch(e) { hexcase=0; }
-	  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-	  var output = "";
-	  var x;
-	  for(var i = 0; i < input.length; i++)
-	  {
-	    x = input.charCodeAt(i);
-	    output += hex_tab.charAt((x >>> 4) & 0x0F)
-	           +  hex_tab.charAt( x        & 0x0F);
-	  }
-	  return output;
-	}
-
-	/*
-	 * Convert a raw string to a base-64 string
-	 */
-	function rstr2b64(input)
-	{
-	  try { b64pad } catch(e) { b64pad=''; }
-	  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-	  var output = "";
-	  var len = input.length;
-	  for(var i = 0; i < len; i += 3)
-	  {
-	    var triplet = (input.charCodeAt(i) << 16)
-	                | (i + 1 < len ? input.charCodeAt(i+1) << 8 : 0)
-	                | (i + 2 < len ? input.charCodeAt(i+2)      : 0);
-	    for(var j = 0; j < 4; j++)
-	    {
-	      if(i * 8 + j * 6 > input.length * 8) output += b64pad;
-	      else output += tab.charAt((triplet >>> 6*(3-j)) & 0x3F);
-	    }
-	  }
-	  return output;
-	}
-
-	/*
-	 * Convert a raw string to an arbitrary string encoding
-	 */
-	function rstr2any(input, encoding)
-	{
-	  var divisor = encoding.length;
-	  var remainders = Array();
-	  var i, q, x, quotient;
-
-	  /* Convert to an array of 16-bit big-endian values, forming the dividend */
-	  var dividend = Array(Math.ceil(input.length / 2));
-	  for(i = 0; i < dividend.length; i++)
-	  {
-	    dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
-	  }
-
-	  /*
-	   * Repeatedly perform a long division. The binary array forms the dividend,
-	   * the length of the encoding is the divisor. Once computed, the quotient
-	   * forms the dividend for the next step. We stop when the dividend is zero.
-	   * All remainders are stored for later use.
-	   */
-	  while(dividend.length > 0)
-	  {
-	    quotient = Array();
-	    x = 0;
-	    for(i = 0; i < dividend.length; i++)
-	    {
-	      x = (x << 16) + dividend[i];
-	      q = Math.floor(x / divisor);
-	      x -= q * divisor;
-	      if(quotient.length > 0 || q > 0)
-	        quotient[quotient.length] = q;
-	    }
-	    remainders[remainders.length] = x;
-	    dividend = quotient;
-	  }
-
-	  /* Convert the remainders to the output string */
-	  var output = "";
-	  for(i = remainders.length - 1; i >= 0; i--)
-	    output += encoding.charAt(remainders[i]);
-
-	  /* Append leading zero equivalents */
-	  var full_length = Math.ceil(input.length * 8 /
-	                                    (Math.log(encoding.length) / Math.log(2)))
-	  for(i = output.length; i < full_length; i++)
-	    output = encoding[0] + output;
-
-	  return output;
-	}
-
-	/*
-	 * Encode a string as utf-8.
-	 * For efficiency, this assumes the input is valid utf-16.
-	 */
-	function str2rstr_utf8(input)
-	{
-	  var output = "";
-	  var i = -1;
-	  var x, y;
-
-	  while(++i < input.length)
-	  {
-	    /* Decode utf-16 surrogate pairs */
-	    x = input.charCodeAt(i);
-	    y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
-	    if(0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF)
-	    {
-	      x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
-	      i++;
-	    }
-
-	    /* Encode output as utf-8 */
-	    if(x <= 0x7F)
-	      output += String.fromCharCode(x);
-	    else if(x <= 0x7FF)
-	      output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
-	                                    0x80 | ( x         & 0x3F));
-	    else if(x <= 0xFFFF)
-	      output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
-	                                    0x80 | ((x >>> 6 ) & 0x3F),
-	                                    0x80 | ( x         & 0x3F));
-	    else if(x <= 0x1FFFFF)
-	      output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
-	                                    0x80 | ((x >>> 12) & 0x3F),
-	                                    0x80 | ((x >>> 6 ) & 0x3F),
-	                                    0x80 | ( x         & 0x3F));
-	  }
-	  return output;
-	}
-
-	/*
-	 * Encode a string as utf-16
-	 */
-	function str2rstr_utf16le(input)
-	{
-	  var output = "";
-	  for(var i = 0; i < input.length; i++)
-	    output += String.fromCharCode( input.charCodeAt(i)        & 0xFF,
-	                                  (input.charCodeAt(i) >>> 8) & 0xFF);
-	  return output;
-	}
-
-	function str2rstr_utf16be(input)
-	{
-	  var output = "";
-	  for(var i = 0; i < input.length; i++)
-	    output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
-	                                   input.charCodeAt(i)        & 0xFF);
-	  return output;
-	}
-
-	/*
-	 * Convert a raw string to an array of big-endian words
-	 * Characters >255 have their high-byte silently ignored.
-	 */
-	function rstr2binb(input)
-	{
-	  var output = Array(input.length >> 2);
-	  for(var i = 0; i < output.length; i++)
-	    output[i] = 0;
-	  for(var i = 0; i < input.length * 8; i += 8)
-	    output[i>>5] |= (input.charCodeAt(i / 8) & 0xFF) << (24 - i % 32);
-	  return output;
-	}
-
-	/*
-	 * Convert an array of big-endian words to a string
-	 */
-	function binb2rstr(input)
-	{
-	  var output = "";
-	  for(var i = 0; i < input.length * 32; i += 8)
-	    output += String.fromCharCode((input[i>>5] >>> (24 - i % 32)) & 0xFF);
-	  return output;
-	}
-
-	/*
-	 * Calculate the SHA-1 of an array of big-endian words, and a bit length
-	 */
-	function binb_sha1(x, len)
-	{
-	  /* append padding */
-	  x[len >> 5] |= 0x80 << (24 - len % 32);
-	  x[((len + 64 >> 9) << 4) + 15] = len;
-
-	  var w = Array(80);
-	  var a =  1732584193;
-	  var b = -271733879;
-	  var c = -1732584194;
-	  var d =  271733878;
-	  var e = -1009589776;
-
-	  for(var i = 0; i < x.length; i += 16)
-	  {
-	    var olda = a;
-	    var oldb = b;
-	    var oldc = c;
-	    var oldd = d;
-	    var olde = e;
-
-	    for(var j = 0; j < 80; j++)
-	    {
-	      if(j < 16) w[j] = x[i + j];
-	      else w[j] = bit_rol(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1);
-	      var t = safe_add(safe_add(bit_rol(a, 5), sha1_ft(j, b, c, d)),
-	                       safe_add(safe_add(e, w[j]), sha1_kt(j)));
-	      e = d;
-	      d = c;
-	      c = bit_rol(b, 30);
-	      b = a;
-	      a = t;
-	    }
-
-	    a = safe_add(a, olda);
-	    b = safe_add(b, oldb);
-	    c = safe_add(c, oldc);
-	    d = safe_add(d, oldd);
-	    e = safe_add(e, olde);
-	  }
-	  return Array(a, b, c, d, e);
-
-	}
-
-	/*
-	 * Perform the appropriate triplet combination function for the current
-	 * iteration
-	 */
-	function sha1_ft(t, b, c, d)
-	{
-	  if(t < 20) return (b & c) | ((~b) & d);
-	  if(t < 40) return b ^ c ^ d;
-	  if(t < 60) return (b & c) | (b & d) | (c & d);
-	  return b ^ c ^ d;
-	}
-
-	/*
-	 * Determine the appropriate additive constant for the current iteration
-	 */
-	function sha1_kt(t)
-	{
-	  return (t < 20) ?  1518500249 : (t < 40) ?  1859775393 :
-	         (t < 60) ? -1894007588 : -899497514;
-	}
-
-	/*
-	 * Add integers, wrapping at 2^32. This uses 16-bit operations internally
-	 * to work around bugs in some JS interpreters.
-	 */
-	function safe_add(x, y)
-	{
-	  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-	  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-	  return (msw << 16) | (lsw & 0xFFFF);
-	}
-
-	/*
-	 * Bitwise rotate a 32-bit number to the left.
-	 */
-	function bit_rol(num, cnt)
-	{
-	  return (num << cnt) | (num >>> (32 - cnt));
-	}
-
-	exports.HMACSHA1= function(key, data) {
-	  return b64_hmac_sha1(key, data);
-	}
-
-/***/ },
-/* 1032 */
+/* 293 */
 /***/ function(module, exports) {
 
 	// Returns true if this is a host that closes *before* it ends?!?!
@@ -37194,15 +36365,15 @@
 	}
 
 /***/ },
-/* 1033 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var querystring= __webpack_require__(430),
-	    crypto= __webpack_require__(284),
-	    https= __webpack_require__(643),
-	    http= __webpack_require__(639),
-	    URL= __webpack_require__(427),
-	    OAuthUtils= __webpack_require__(1032);
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var querystring= __webpack_require__(240),
+	    crypto= __webpack_require__(249),
+	    https= __webpack_require__(292),
+	    http= __webpack_require__(268),
+	    URL= __webpack_require__(289),
+	    OAuthUtils= __webpack_require__(293);
 
 	exports.OAuth2= function(clientId, clientSecret, baseSite, authorizePath, accessTokenPath, customHeaders) {
 	  this._clientId= clientId;
@@ -37412,7 +36583,98 @@
 	  this._request("GET", url, headers, "", access_token, callback );
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245).Buffer))
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CurrentLocation = function (_React$Component) {
+	  _inherits(CurrentLocation, _React$Component);
+
+	  function CurrentLocation() {
+	    _classCallCheck(this, CurrentLocation);
+
+	    return _possibleConstructorReturn(this, (CurrentLocation.__proto__ || Object.getPrototypeOf(CurrentLocation)).apply(this, arguments));
+	  }
+
+	  _createClass(CurrentLocation, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      setTimeout(this.initMap.bind(this), 25); // on load this gets your current location
+	    }
+
+	    // Google Api function
+
+	  }, {
+	    key: 'initMap',
+	    value: function initMap() {
+	      var map = new google.maps.Map(document.getElementById('map'), {
+	        center: { lat: -34.397, lng: 150.644 },
+	        zoom: 15
+	      });
+	      var infoWindow = new google.maps.InfoWindow({ map: map });
+
+	      // Try HTML5 geolocation.
+	      if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(function (position) {
+	          var pos = {
+	            lat: position.coords.latitude,
+	            lng: position.coords.longitude
+	          };
+
+	          infoWindow.setPosition(pos);
+	          infoWindow.setContent('Location found.');
+	          map.setCenter(pos);
+	        }, function () {
+	          handleLocationError(true, infoWindow, map.getCenter());
+	        });
+	      } else {
+	        // Browser doesn't support Geolocation
+	        handleLocationError(false, infoWindow, map.getCenter());
+	      }
+	    }
+
+	    // Google Api function:
+	    //  Handles Location Errors
+
+	  }, {
+	    key: 'handleLocationError',
+	    value: function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	      infoWindow.setPosition(pos);
+	      infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : 'Error: Your browser doesn\'t support geolocation.');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', null);
+	    }
+	  }]);
+
+	  return CurrentLocation;
+	}(_react2.default.Component);
+
+	exports.default = CurrentLocation;
 
 /***/ }
 /******/ ]);
