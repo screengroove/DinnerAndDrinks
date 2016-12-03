@@ -1,5 +1,4 @@
 import React from 'react'
-import yelp from '../../../config.js'
 
 import CurrentLocation from './currentLocation.jsx'
 
