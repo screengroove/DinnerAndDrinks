@@ -3,7 +3,7 @@ import React from 'react'
 export default class CurrentLocation extends React.Component {
 
   componentWillMount () {
-    setTimeout(this.initMap.bind(this), 500) // on load this gets your current location
+    setTimeout(this.initMap.bind(this), 250) // on load this gets your current location
   }
 
      // Google Api function

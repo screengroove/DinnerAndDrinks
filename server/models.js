@@ -4,7 +4,7 @@ module.exports = {
   auth: {
     get: (data) => {
       Rec.find((err, data) => {
-        
+
       })
 
             /*

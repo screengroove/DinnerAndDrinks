@@ -6,6 +6,7 @@ const parser = require('body-parser')
 const morgan = require('morgan')
 const routes = require('./routes')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 // port settings
 let port = process.env.PORT || 3000
@@ -22,11 +23,21 @@ db.once('open', () => {
   console.log('connected to database')
 })
 
+// Custom Middleware for Allow HTTP Access
+let allowDomain = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  next()
+}
+
 // Middleware
 // Body Parser, Morgan, and Public Compiled folder
-app.use(express.static('public'))
+app.use(cors())
 app.use(morgan('dev'))
 app.use(parser.json())
+app.use(allowDomain)
+app.use(express.static('public'))
 
 // Render the index.html
 app.get('/', (req, res) => { res.sendFile('index.html') })
