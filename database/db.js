@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 // Schema
 const userSchema = new Schema({
+<<<<<<< HEAD
   auth: {
     username: String,
     email: String,
@@ -29,30 +30,55 @@ const userSchema = new Schema({
     lat: Number,
     long: Number
   }]
+=======
+  username: String,
+  email: String,
+  password: String,
+  fbAuth: Boolean,
+  name: String,
+  bio: String,
+  photo: String,
+  hometown: String,
+  interests: String
+})
+const favoriteSchema = new Schema({
+  userId: String,
+  yelpId: String,
+  name: String,
+  categories: [String],
+  address: String,
+  phone: String,
+  rating: Number,
+  image_url: String,
+  businessUrl: String,
+  lat: Number,
+  long: Number
+>>>>>>> afd4f5d02248da72dd17324a73b47bc519f44a89
 })
 const commentSchema = new Schema({
-  author: String,
+  userId: String,
   message: String,
   date: Date,
-  venue: String
+  yelpId: String
 })
 const hotspotSchema = new Schema({
   name: String,
   address: String,
-  latitude: Number,
-  longitude: Number,
+  lat: Number,
+  long: Number,
   description: String,
   rating: Number,
   image: String
 })
-
 // Models
 let User = mongoose.model('User', userSchema)
 let Hotspot = mongoose.model('Hotspot', hotspotSchema)
 let Comment = mongoose.model('Review', commentSchema)
+let Favorites = mongoose.model('Favorites', favoriteSchema)
 // Exports here
 module.exports = {
   User: User,
   Hotspot: Hotspot,
-  Comment: Comment
+  Comment: Comment,
+  Favorites: Favorites
 }

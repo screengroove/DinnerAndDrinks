@@ -38,8 +38,8 @@ module.exports = {
   },
   hotspots: {
     get: (req, res) => {
-            /* can look something like this
-                models.user.get() */
+      models.hotspots.get(req.body)
+      res.send()
     },
     post: (req, res) => {
       models.hotspots.post(req.body)
