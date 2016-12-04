@@ -54,6 +54,13 @@ module.exports = {
     post: (req, res) => {
             /* can look something like this
                 models.user.post() */
+    },    
+    getPhoneSearch: (req, res) => {
+      
+    },
+    postPhoneSearch: (req, res) => {
+            /* can look something like this
+                models.user.post() */
     },
     getSearch: (req, res) => {
       yelp.search({
