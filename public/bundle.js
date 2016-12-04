@@ -26513,11 +26513,11 @@
 
 	var _yelpMap2 = _interopRequireDefault(_yelpMap);
 
-	var _hotspotForm = __webpack_require__(265);
+	var _hotspotForm = __webpack_require__(264);
 
 	var _hotspotForm2 = _interopRequireDefault(_hotspotForm);
 
-	var _hotspotList = __webpack_require__(266);
+	var _hotspotList = __webpack_require__(265);
 
 	var _hotspotList2 = _interopRequireDefault(_hotspotList);
 
@@ -28248,8 +28248,7 @@
 
 
 /***/ },
-/* 264 */,
-/* 265 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28328,7 +28327,7 @@
 	exports.default = HotspotForm;
 
 /***/ },
-/* 266 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28346,6 +28345,10 @@
 	var _axios = __webpack_require__(239);
 
 	var _axios2 = _interopRequireDefault(_axios);
+
+	var _currentLocation = __webpack_require__(237);
+
+	var _currentLocation2 = _interopRequireDefault(_currentLocation);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28367,10 +28370,10 @@
 	  _createClass(HotspotList, [{
 	    key: 'getHotspotList',
 	    value: function getHotspotList() {
-	      _axios2.default.get('/api/hotspots').then(function (response) {
-	        console.log("Successful response: ", response);
+	      _axios2.default.get('/api/hotspots', {}).then(function (response) {
+	        console.log('Successful response: ', response);
 	      }).catch(function (error) {
-	        console.log("Error in axios hotspot list get: ", error);
+	        console.log('Error in axios hotspot list get: ', error);
 	      });
 	    }
 	  }, {
