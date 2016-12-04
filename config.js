@@ -14,6 +14,6 @@ module.exports = {
   yelp: yelp,
   'database': {
     'test': 'mongodb://localhost:27017/test',
-    'mongo':'mongodb://rebels:sleber@ds119618.mlab.com:19618/recommendatordb'
+    'mongo': 'mongodb://rebels:sleber@ds119618.mlab.com:19618/recommendatordb'
   }
 }

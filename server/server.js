@@ -48,11 +48,10 @@ app.use(express.static('public'))
 app.use(cookieParser()) // read cookies (needed for auth)
 
 // required for passport
-app.use(session({ secret: 'secret' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
-
+app.use(session({ secret: 'secret' })) // session secret
+app.use(passport.initialize())
+app.use(passport.session()) // persistent login sessions
+app.use(flash()) // use connect-flash for flash messages stored in session
 
 // Render the index.html
 app.get('/', (req, res) => { res.sendFile('index.html') })

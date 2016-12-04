@@ -10,14 +10,14 @@ module.exports = {
             .then(data => {
               res.send()
             })
-      console.log("withincontroller GET***", req.query)
-      console.log("withincontroller GET", req.body)
-            models.get(req.query)
-            res.send(req.query)
+      console.log('withincontroller GET***', req.query)
+      console.log('withincontroller GET', req.body)
+      models.get(req.query)
+      res.send(req.query)
     },
     post: (req, res) => {
-      console.log("withincontroller post", req.body)
-            models.post(req.body)
+      console.log('withincontroller post', req.body)
+      models.post(req.body)
     }
   },
   comments: {
@@ -43,7 +43,7 @@ module.exports = {
   yelp: {
     get: (req, res) => {
             /* can look something like this
-                models.user.post() */      
+                models.user.post() */
     },
     post: (req, res) => {
             /* can look something like this

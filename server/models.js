@@ -1,32 +1,32 @@
 // Interact with database on the models functions here
 const Hotspot = require('../database/db').Hotspot
 module.exports = {
- users: {
+  users: {
     get: (data) => {
-      console.log("within model GET", data)
+      console.log('within model GET', data)
       User.findOne({
         username: data.username
-      },(err, user) => {
+      }, (err, user) => {
         if (err) {
-          console.log("ERROR in GET MODEL", err)
+          console.log('ERROR in GET MODEL', err)
         }
-        console.log("line 21", user)
+        console.log('line 21', user)
         return user
       })
     },
     post: (req, res) => {
       console.log(req, '*****')
-      console.log("within model POST", req.body)
+      console.log('within model POST', req.body)
       User.create({
         username: req.username,
         password: req.password
-        }, (err, user) => {
+      }, (err, user) => {
         if (err) {
-                console.log("Server-side POST error: ", err)
-            }
-        })
-      }
- },
+          console.log('Server-side POST error: ', err)
+        }
+      })
+    }
+  },
   favorites: {
     get: () => {
             /*
