@@ -44,6 +44,24 @@ module.exports = {
       models.hotspots.post(req.body)
       res.send(req.body)
     }
+  },
+  yelp: {
+    get: (req, res) => {
+           
+    },
+    post: (req, res) => {
+            /* can look something like this
+                models.user.post() */
+    }
+  },
+  maps: {
+    get: (req, res) => {
+            /* can look something like this
+                models.user.get() */
+    },
+    post: (req, res) => {
+
+    }
   }
 
 }

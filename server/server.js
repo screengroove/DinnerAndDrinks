@@ -6,6 +6,7 @@ const parser = require('body-parser')
 const morgan = require('morgan')
 const routes = require('./routes')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 // port settings
 let port = process.env.PORT || 3000
@@ -32,6 +33,7 @@ let allowDomain = (req, res, next) => {
 
 // Middleware
 // Body Parser, Morgan, and Public Compiled folder
+app.use(cors())
 app.use(morgan('dev'))
 app.use(parser.json())
 app.use(allowDomain)

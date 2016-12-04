@@ -20,5 +20,13 @@ router.post('/comments', controllers.comments.post)
 router.get('/hotspots', controllers.hotspots.get)
 router.post('/hotspots', controllers.hotspots.post)
 
+// maps
+router.get('/maps', controllers.maps.get)
+router.post('/maps', controllers.maps.post)
+
+// yelp
+router.get('/yelp', controllers.yelp.get)
+router.post('/yelp', controllers.yelp.post)
+
 // export router for server.js
 module.exports = router
