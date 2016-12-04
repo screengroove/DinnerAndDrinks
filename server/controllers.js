@@ -1,5 +1,5 @@
 // call model functions in controller functions
-const yelp = require('./config')
+const yelp = require('../config')
 const models = require('./models')
 
 module.exports = {
@@ -54,13 +54,16 @@ module.exports = {
     post: (req, res) => {
             /* can look something like this
                 models.user.post() */
-    },    
+    },
     getPhoneSearch: (req, res) => {
-      
+      yelp.phoneSearch({ phone: '' })
+        .then(console.log)
+        .catch((err) => { console.log(`getPhoneSearch error: ${err}`) })
     },
     postPhoneSearch: (req, res) => {
-            /* can look something like this
-                models.user.post() */
+      yelp.phoneSearch({ phone: req.body.phoneNumber })
+        .then(console.log)
+        .catch((err) => { console.log(`postPhoneSearch error: ${err}`) })
     },
     getSearch: (req, res) => {
       yelp.search({

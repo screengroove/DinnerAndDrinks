@@ -4,33 +4,6 @@ const Schema = mongoose.Schema
 
 // Schema
 const userSchema = new Schema({
-<<<<<<< HEAD
-  auth: {
-    username: String,
-    email: String,
-    password: String,
-    fbAuth: Boolean
-  },
-  profile: [{
-    name: String,
-    bio: String,
-    photo: String,
-    hometown: String,
-    interests: String
-  }],
-  favorites: [{
-    yelpId: String,
-    name: String,
-    catergories: [String],
-    address: String,
-    phone: String,
-    rating: Number,
-    image_url: String,
-    businessUrl: String,
-    lat: Number,
-    long: Number
-  }]
-=======
   username: String,
   email: String,
   password: String,
@@ -53,7 +26,6 @@ const favoriteSchema = new Schema({
   businessUrl: String,
   lat: Number,
   long: Number
->>>>>>> afd4f5d02248da72dd17324a73b47bc519f44a89
 })
 const commentSchema = new Schema({
   userId: String,
