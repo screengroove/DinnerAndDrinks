@@ -13,7 +13,7 @@ const userSchema = new Schema({
   photo: String,
   hometown: String,
   interests: String
-})
+}, {collection: 'userSchema'})
 const favoriteSchema = new Schema({
   userId: String,
   yelpId: String,
@@ -26,13 +26,13 @@ const favoriteSchema = new Schema({
   businessUrl: String,
   lat: Number,
   long: Number
-})
+}, {collection: 'favoriteSchema'})
 const commentSchema = new Schema({
   userId: String,
   message: String,
   date: Date,
   yelpId: String
-})
+}, {collection: 'commentSchema'})
 const hotspotSchema = new Schema({
   name: String,
   address: String,
@@ -41,7 +41,7 @@ const hotspotSchema = new Schema({
   description: String,
   rating: Number,
   image: String
-})
+}, {collection: 'hotspotSchema'})
 // Models
 let User = mongoose.model('User', userSchema)
 let Hotspot = mongoose.model('Hotspot', hotspotSchema)
