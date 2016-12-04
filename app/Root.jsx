@@ -19,15 +19,15 @@ class Root extends React.Component {
 
   render () {
     return (
-        <Provider store={dataStore}>
-          <Router history={browserHistory}>
-            <Route path='/' component={MasterPage}>
-              <IndexRoute component={MainPage} />
-              <Route path="/favorites" component={FavoritesPage} />
-            </Route>
-          </Router>
-        </Provider>
-      )
+      <Provider store={dataStore}>
+        <Router history={browserHistory}>
+          <Route path='/' component={MasterPage}>
+            <IndexRoute component={MainPage} />
+            <Route path='/favorites' component={FavoritesPage} />
+          </Route>
+        </Router>
+      </Provider>
+    )
   }
 }
 
