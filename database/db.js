@@ -34,13 +34,13 @@ const commentSchema = new Schema({
   author: String,
   message: String,
   date: Date,
-  venue: String
+  yelpId: String
 })
 const hotspotSchema = new Schema({
   name: String,
   address: String,
-  latitude: Number,
-  longitude: Number,
+  lat: Number,
+  long: Number,
   description: String,
   rating: Number,
   image: String
