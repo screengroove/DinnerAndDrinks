@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import './sass/index.scss'
 
@@ -11,7 +11,11 @@ import MainPage from './pages/MainPage/MainPage.jsx'
 import FavoritesPage from './pages/FavoritesPage/FavoritesPage.jsx'
 import appData from './redux/appData.jsx'
 
-let dataStore = createStore(appData)
+const actionLogger = ({dispatch, getStore}) =>
+    (next) => (action) => { console.log(action); return next(action) }
+const middleware = applyMiddleware(actionLogger)
+
+let dataStore = createStore(appData, middleware)
 
 // Main page to re-render routes is MasterPage
 // IndexRoute is the component seen on that '/' route

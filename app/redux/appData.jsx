@@ -1,40 +1,18 @@
 import { combineReducers } from 'redux'
 
-let name = ''
-let latitude = ''
-let longitude = ''
-
-const locationAction = (name, lat, long) => {
-
-}
-
-const searchTermAction = (term) => {
-
-}
-
-const location = (state = {}, action) => {
+const location = (state, action) => {
     switch (action.type) {
-        case "CHANGE_LOCATION":
-            return {
-                name: action.name,
-                latitude: action.latitude,
-                longitude: action.longitude
-            }
-        default:
-            return state
+        case 'CHANGE_LOCATION': return { latitude: 0.0, longitude: 0.0, name: '' }
     }
+    return state
 }
 
-const searchTerm = (state = {}, action) => {
+const searchTerm = (state, action) => {
     switch (action.type) {
-        case "CHANGE_TERM":
-            return {
-                term: ''
-            }
-        default:
-            return state
-    }   
+        case 'CHANGE_TERM': return ''
+    }
+    return state
 }
 
-let appData = combineReducers({ location, searchTerm })
+const appData = combineReducers({ loc: location, term: searchTerm })
 export default appData
