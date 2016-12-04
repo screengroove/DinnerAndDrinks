@@ -40,9 +40,8 @@ module.exports = {
   hotspots: {
     get: (req, res) => {
       Hotspot.find({}, (err, hotspots) => {
-        console.log("hotspots: ", hotspots)
+        console.log('hotspots: ', hotspots)
       })
-
     },
     post: (req, res) => {
       console.log('this is working: ', req)
