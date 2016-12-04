@@ -1,5 +1,6 @@
 // Interact with database on the models functions here
 const Hotspot = require('../database/db').Hotspot
+const User = require('../database/db').User
 module.exports = {
   users: {
     get: (data) => {
