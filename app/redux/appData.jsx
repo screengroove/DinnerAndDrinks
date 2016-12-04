@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from 'redux'
+import { combineReducers } from 'redux'
 
 let name = ''
 let latitude = ''
@@ -8,7 +8,7 @@ const locationAction = (name, lat, long) => {
 
 }
 
-const searchTermAction = () => {
+const searchTermAction = (term) => {
 
 }
 
@@ -22,7 +22,7 @@ const location = (state = {}, action) => {
             }
         default:
             return state
-    }   
+    }
 }
 
 const searchTerm = (state = {}, action) => {
@@ -36,4 +36,5 @@ const searchTerm = (state = {}, action) => {
     }   
 }
 
-module.exports = combineReducers({ location, searchTerm })
+let appData = combineReducers({ location, searchTerm })
+export default appData

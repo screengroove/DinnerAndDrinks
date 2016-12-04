@@ -9,7 +9,7 @@ import './sass/index.scss'
 import MasterPage from './pages/MasterPage.jsx'
 import MainPage from './pages/MainPage/MainPage.jsx'
 import FavoritesPage from './pages/FavoritesPage/FavoritesPage.jsx'
-import appData from './redux/appData.js'
+import appData from './redux/appData.jsx'
 
 let dataStore = createStore(appData)
 
