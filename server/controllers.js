@@ -41,7 +41,7 @@ module.exports = {
   hotspots: {
     get: (req, res) => {
       models.hotspots.get(req.body)
-      res.send()
+      console.log(res.data)
     },
     post: (req, res) => {
       models.hotspots.post(req.body)
