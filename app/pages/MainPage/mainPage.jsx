@@ -3,7 +3,8 @@ import React from 'react'
 // importing map view
 import MapView from './../../component/MapView/mapView.jsx'
 import YelpMap from './../../component/YelpMap/yelpMap.jsx'
-import HotspotForm from './../../component/HotspotForm/hotspotForm.jsx'
+import HotspotForm from './../../component/Hotspot/hotspotForm.jsx'
+import HotspotList from './../../component/Hotspot/hotspotList.jsx'
 export default class MainPage extends React.Component {
 
   render () {
@@ -13,6 +14,7 @@ export default class MainPage extends React.Component {
           <MapView />
         <YelpMap />
         <HotspotForm />
+        <HotspotList />
       </div>
     )
   }
