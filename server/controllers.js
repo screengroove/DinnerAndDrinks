@@ -48,7 +48,8 @@ module.exports = {
   },
   yelp: {
     get: (req, res) => {
-      
+            /* can look something like this
+                models.user.post() */      
     },
     post: (req, res) => {
             /* can look something like this
@@ -83,20 +84,24 @@ module.exports = {
       }).catch(err => { console.log(`getSearch Yelp error ${err}`) })
     },
     getBusiness: (req, res) => {
-      
+      yelp.business('', (err, data) => {
+        if (err) { console.log(`getBusiness error: ${err}`) }
+      })
     },
     postBusiness: (req, res) => {
-            /* can look something like this
-                models.user.post() */
+      yelp.business(req.body.id, (err, data) => {
+        if (err) { console.log(`postBusiness error: ${err}`) }
+      })
     }
   },
   maps: {
     get: (req, res) => {
             /* can look something like this
-                models.user.get() */
+                models.user.post() */
     },
     post: (req, res) => {
-
+            /* can look something like this
+                models.user.post() */
     }
   }
 
