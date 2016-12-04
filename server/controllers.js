@@ -41,7 +41,7 @@ module.exports = {
   hotspots: {
     get: (req, res) => {
       models.hotspots.get(req.body)
-      console.log("These are the res: ", res.data)
+      console.log('These are the res: ', res.data)
     },
     post: (req, res) => {
       console.log('req.body in the server controller: ', req.body)

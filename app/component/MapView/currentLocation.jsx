@@ -2,6 +2,14 @@ import React from 'react'
 
 export default class CurrentLocation extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      lat: 0.0,
+      long: 0.0
+    }
+  }
+
   componentWillMount () {
     setTimeout(this.initMap.bind(this), 250) // on load this gets your current location
   }
@@ -21,6 +29,8 @@ export default class CurrentLocation extends React.Component {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }
+        this.setState({lat: pos.lat, long: pos.lng})
+        // add new states of current location here
 
         infoWindow.setPosition(pos)
         infoWindow.setContent('Location found.')
