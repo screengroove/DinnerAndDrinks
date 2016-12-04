@@ -44,8 +44,9 @@ module.exports = {
       console.log(res.data)
     },
     post: (req, res) => {
+      console.log('req.body in the server controller: ', req.body)
       models.hotspots.post(req.body)
-      res.send(req.body)
+
     }
   },
   yelp: {
