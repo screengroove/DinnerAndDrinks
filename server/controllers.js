@@ -20,6 +20,14 @@ module.exports = {
       models.post(req.body)
     }
   },
+  favorites: {
+    get: (req, res) => {
+
+    },
+    post: (req, res) => {
+
+    }
+  },
   comments: {
     get: (req, res) => {
             /* can look something like this
