@@ -5,8 +5,8 @@ const controllers = require('./controllers')
 // api/ server roots
 
 // authentication
-router.get('/auth', controllers.auth.get)
-router.post('/auth', controllers.auth.post)
+router.get('/auth', controllers.users.get)
+router.post('/auth', controllers.users.post)
 
 // favorites
 router.get('/favorites', controllers.favorites.get)

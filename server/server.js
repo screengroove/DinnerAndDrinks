@@ -7,6 +7,11 @@ const morgan = require('morgan')
 const routes = require('./routes')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const config = require('../config')
+const passport = require('passport')
+const flash = require('connect-flash')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 
 // port settings
 let port = process.env.PORT || 3000
@@ -17,7 +22,7 @@ server.listen(port, () => {
 })
 
 // database connection
-mongoose.connect('mongodb://rebels:sleber@ds119618.mlab.com:19618/recommendatordb')
+mongoose.connect(config.database.mongo)
 const db = mongoose.connection
 db.once('open', () => {
   console.log('connected to database')
@@ -35,9 +40,19 @@ let allowDomain = (req, res, next) => {
 // Body Parser, Morgan, and Public Compiled folder
 app.use(cors())
 app.use(morgan('dev'))
+app.use(parser.urlencoded({extended: true}))
 app.use(parser.json())
 app.use(allowDomain)
 app.use(express.static('public'))
+
+app.use(cookieParser()) // read cookies (needed for auth)
+
+// required for passport
+app.use(session({ secret: 'secret' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
 
 // Render the index.html
 app.get('/', (req, res) => { res.sendFile('index.html') })
