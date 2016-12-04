@@ -15,7 +15,6 @@ export default class HotspotList extends React.Component {
       .catch((error) => {
         console.log('Error in axios hotspot list get: ', error)
       })
-
   }
 
   render () {
