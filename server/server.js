@@ -16,6 +16,10 @@ const session = require('express-session')
 // port settings
 let port = process.env.PORT || 3000
 
+<<<<<<< f19d65393284fbf09c35487c947d0708cc696716
+=======
+
+>>>>>>> [merge] Solve merge conflict
 // web socket protocol on localhost on port 3000
 server.listen(port, () => {
   console.log(`Listen to http://localhost:${port}`)
