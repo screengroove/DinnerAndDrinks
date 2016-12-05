@@ -22,6 +22,7 @@ server.listen(port, () => {
 })
 
 // database connection
+mongoose.Promise = require('bluebird')
 mongoose.connect(config.database.mongo)
 const db = mongoose.connection
 db.once('open', () => {

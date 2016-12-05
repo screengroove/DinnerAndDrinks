@@ -52,12 +52,8 @@ module.exports = {
     }
   },
   hotspots: {
-    get: (req, res) => {
-      Hotspot.find().exec( (err, data) => {
-        console.log("ah ha...data: ", data)
-        return data
-      })
-
+    get: () => {
+      console.log('sending get request')
     },
     post: (req, res) => {
       console.log('this is working: ', req)

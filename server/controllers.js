@@ -1,6 +1,7 @@
 // call model functions in controller functions
 const yelp = require('../config')
 const models = require('./models')
+const Hotspot = require('../database/db').Hotspot
 
 module.exports = {
     // Josh's endpoint is user
@@ -40,8 +41,10 @@ module.exports = {
   },
   hotspots: {
     get: (req, res) => {
-      models.hotspots.get(req.body)
-      console.log("These are the res: ", res.data)
+      Hotspot.find().exec( (err, data) => {
+        console.log("ah ha...data: ", data)
+        res.send(data)
+      })
     },
     post: (req, res) => {
       console.log('req.body in the server controller: ', req.body)
