@@ -1,8 +1,10 @@
 import React from 'react'
 import axios from 'axios'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import TextField from 'material-ui/TextField'
 import {orange500, blue500} from 'material-ui/styles/colors'
-console.log('within signUP')
+
 export default class SignUp extends React.Component {
 
   constructor (props) {
@@ -49,26 +51,9 @@ export default class SignUp extends React.Component {
     }
     return (
       <div>
-        <TextField
-          floatingLabelText='Email Address'
-          id='email'
-          floatingLabelStyle={styles.floatingLabelStyle}
-          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-          errorText='An email is required for signup.'
-          hintStyle={styles.errorStyle}
-    /><br />
-        <TextField
-          floatingLabelText='Password'
-          id='password'
-          floatingLabelStyle={styles.floatingLabelStyle}
-          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-    /><br />
-        <TextField
-          floatingLabelText='Please confirm your password.'
-          id='confirmPassword'
-          floatingLabelStyle={styles.floatingLabelStyle}
-          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-    /><br />
+       <input placeholder='Email' id='email' />
+        <input placeholder='Password' id='password' />
+        <input placeholder='Please confirm password' id='confirmPassword' />
         <button onClick={this.submitSignUpForm}>Submit Form</button>
       </div>
     )
