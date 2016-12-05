@@ -1,7 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import TextField from 'material-ui/TextField'
 import {orange500, blue500} from 'material-ui/styles/colors'
 
@@ -51,9 +49,11 @@ export default class SignUp extends React.Component {
     }
     return (
       <div>
+
        <input placeholder='Email' id='email' />
         <input placeholder='Password' id='password' />
         <input placeholder='Please confirm password' id='confirmPassword' />
+
         <button onClick={this.submitSignUpForm}>Submit Form</button>
       </div>
     )
