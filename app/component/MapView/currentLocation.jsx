@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import addLoc from '../../redux/appData.jsx'
+// import { connect } from 'react-redux'
+// import addLoc from '../../redux/appData.jsx'
 import axios from 'axios'
 
 export default class CurrentLocation extends React.Component {
@@ -10,25 +10,34 @@ export default class CurrentLocation extends React.Component {
     this.state = {
       lat: 33.976002,
       long: -118.390891,
-      term: 'food'
+      term: 'coffee',
+      list: []
     }
   }
 
   componentWillMount () {
     setTimeout(this.initMap.bind(this), 250) // on load this gets your current location
+    this.postYelpData()
+  }
+
+  componentDidMount () {
+    this.getYelpData()
   }
 
   getYelpData () {
-    axios.get('/yelp/search', {
-      latitude: this.state.lat,
-      longitude: this.state.long,
-      term: this.state.term,
-      sort: 0,
-      category_filter: '',
-      catergories: '',
-      rating: 5.0
+    axios.get('/api/yelp/search')
+    .then(resp => {
+      this.setState({ list: resp.data.businesses })
     })
-    .then(resp => { console.log(resp) })
+    .catch(err => { console.log(`${err}`) })
+  }
+
+  postYelpData () {
+    axios.post('/api/yelp/search', {
+      location: 'Los Angeles',
+      term: this.state.term
+    })
+    .then(resp => { console.log(`Successful`) })
     .catch(err => { console.log(`${err}`) })
   }
 
@@ -76,7 +85,7 @@ export default class CurrentLocation extends React.Component {
   render () {
     return (
       <div>
-        {this.getYelpData()}
+        {console.log(`Yelp`, this.state.list)}
       </div>
     )
   }

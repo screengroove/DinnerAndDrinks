@@ -1,6 +1,8 @@
 // call model functions in controller functions
-const yelp = require('../config')
+const yelp = require('../config').yelp
 const models = require('./models')
+
+let placeholder
 
 module.exports = {
     // Josh's endpoint is user
@@ -53,49 +55,40 @@ module.exports = {
     getPhoneSearch: (req, res) => {
       yelp.phoneSearch({ phone: '' })
         .then(resp => { res.send(resp) })
-        .catch((err) => { console.log(`getPhoneSearch error: ${err}`) })
+        .catch((err) => { console.log(`getPhoneSearch error: `, err) })
     },
     postPhoneSearch: (req, res) => {
       yelp.phoneSearch({ phone: req.body.phoneNumber })
         .then(console.log)
-        .catch((err) => { console.log(`postPhoneSearch error: ${err}`) })
+        .catch((err) => { console.log(`postPhoneSearch error: `, err) })
+    },
+    postSearch: (req, res) => {
+      placeholder = {
+        location: req.body.location,
+        term: req.body.term
+      }
+      res.json({
+        location: req.body.location,
+        term: req.body.term
+      })
     },
     getSearch: (req, res) => {
       yelp.search({
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        term: req.body.term,
-        sort: req.body.sort,
-        category_filter: req.body.catergory_filter,
-        catergories: req.body.catergories,
-        rating: req.body.rating
+        location: placeholder.location,
+        term: placeholder.term
       })
       .then(resp => {
         res.send(resp)
-      }).catch(err => { console.log(`getSearch Yelp error ${err}`) })
-    },
-    postSearch: (req, res) => {
-      yelp.search({
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        term: req.body.term,
-        sort: req.body.sort,
-        category_filter: req.body.catergory_filter,
-        catergories: req.body.catergories,
-        rating: req.body.rating
-      })
-      .then(resp => {
-        res.send(resp)
-      }).catch(err => { console.log(`getSearch Yelp error ${err}`) })
+      }).catch(err => { console.log(`getSearch Yelp error: `, err) })
     },
     getBusiness: (req, res) => {
       yelp.business('', (err, data) => {
-        if (err) { console.log(`getBusiness error: ${err}`) }
+        if (err) { console.log(`getBusiness error: `, err) }
       })
     },
     postBusiness: (req, res) => {
       yelp.business(req.body.id, (err, data) => {
-        if (err) { console.log(`postBusiness error: ${err}`) }
+        if (err) { console.log(`postBusiness error: `, err) }
       })
     }
   },
