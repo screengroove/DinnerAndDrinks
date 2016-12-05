@@ -23,6 +23,9 @@ module.exports = {
     post: (req, res) => {
       models.favorites.post(req.body)
       res.send(req.body)
+    },
+    delete: (req, res) => {
+      models.favorites.delete(req.body, res)
     }
   },
   comments: {

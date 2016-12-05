@@ -11,6 +11,7 @@ router.post('/auth', controllers.users.post)
 // favorites
 router.get('/favorites', controllers.favorites.get)
 router.post('/favorites', controllers.favorites.post)
+router.delete('/favorites', controllers.favorites.delete)
 
 // comments
 router.get('/comments', controllers.comments.get)

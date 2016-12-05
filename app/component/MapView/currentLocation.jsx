@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import Selector from '../Selector/selector.jsx'
 
 let choices = [
   'Coffee',
@@ -103,7 +102,7 @@ export default class CurrentLocation extends React.Component {
      // Google Api function
   initMap () {
     let map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
+      center: {lat: 33.975374099999996, lng: -118.39200809999998},
       zoom: 10
     })
     let infoWindow = new google.maps.InfoWindow({map: map})
