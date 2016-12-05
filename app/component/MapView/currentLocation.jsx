@@ -8,17 +8,11 @@ export default class CurrentLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      lat: 34.026829,
-      long: -118.473297,
-      location: 'Santa Monica',
       term: 'coffee',
-      list: []
+      list: [],
+      reviews: [],
+      id: ''
     }
-    this.latitude = 0.0
-    this.longitude = 0.0
-    localStorage.setItem(['Current-Location-lat'], this.state.lat)
-    localStorage.setItem(['Current-Location-long'], this.state.long)
-
   }
 
   componentWillUpdate () {
@@ -36,6 +30,7 @@ export default class CurrentLocation extends React.Component {
   saveFavorite (index) {
     axios.post('/api/favorites', {
       userId: index,
+      yelpId: this.state.list[index].id,
       name: this.state.list[index].name,
       categories: this.state.list[index].categories,
       address: this.state.list[index].location.address,
@@ -46,7 +41,10 @@ export default class CurrentLocation extends React.Component {
       lat: this.state.list[index].location.coordinate.latitude,
       long: this.state.list[index].location.coordinate.longitude
     })
-    .then(resp => { console.log(`Successful`) })
+    .then(resp => {
+      this.setState({id: this.state.list[index].id})
+      this.getReviews()
+    })
     .catch(err => { console.log(`save Favorites error: `, err) })
   }
 
@@ -58,9 +56,27 @@ export default class CurrentLocation extends React.Component {
     .catch(err => { console.log(`${err}`) })
   }
 
+  getReviews () {
+    this.postId()
+    axios.get('/api/yelp/business')
+      .then(resp => {
+        console.log(resp)
+        this.setState({ reviews: resp.data.reviews })
+      }).catch(err => {
+        console.log(`${err}`)
+      })
+  }
+
+  postId () {
+    axios.post('/api/yelp/business', {
+      id: this.state.id
+    }).then(resp => {})
+    .catch(err => { console.log(`${err}`) })
+  }
+
   postYelpData () {
     axios.post('/api/yelp/search', {
-      location: this.state.location,
+      location: localStorage['Current-Location-city'],
       term: this.state.term
     })
     .then(resp => { })
@@ -79,15 +95,18 @@ export default class CurrentLocation extends React.Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         let pos = {
-          // lat: position.coords.latitude,
-          // lng: position.coords.longitude
-          lat: this.state.lat,
-          lng: this.state.long
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
         }
-        // this.setState({lat: pos.lat, long: pos.lng})
-        // add new states of current location here
 
-        // this.props.dispatch(addLoc(this.state.lat, this.state.long))
+        localStorage.setItem(['Current-Location-lat'], pos.lat)
+        localStorage.setItem(['Current-Location-long'], pos.lng)
+
+        let geocoder = new google.maps.Geocoder()
+        geocoder.geocode({'latLng': pos}, (results, status) => {
+          localStorage.setItem(['Current-Location-city'], results[0].formatted_address.split(', ')[1])
+           // address => string=> results[0].formatted_address
+        })
 
         infoWindow.setPosition(pos)
         infoWindow.setContent('Location found.')
@@ -122,11 +141,19 @@ export default class CurrentLocation extends React.Component {
   render () {
     setTimeout(this.initMap.bind(this), 500)
     return (
-      <div id='map-list'>
-        {console.log(this.state.list)}
-        {this.state.list.map((e, i) => (
-          <input key={i} type='submit' value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
+      <div>
+        <div id='map-list'>
+          {this.state.list.map((e, i) => (
+            <input key={i} type='submit' value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
         ))}
+        </div>
+        <div id='reviews-list'>
+          {this.state.reviews.map(e => (
+            <div>
+              {e.excerpt}
+            </div>
+          ))}
+        </div>
       </div>
     )
   }

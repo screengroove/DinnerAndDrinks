@@ -16,6 +16,7 @@ const userSchema = new Schema({
 }, {collection: 'userSchema'})
 const favoriteSchema = new Schema({
   userId: String,
+  yelpId: String,
   name: String,
   categories: [String],
   address: [String],

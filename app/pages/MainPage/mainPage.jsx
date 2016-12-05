@@ -7,7 +7,7 @@ import HotspotList from './../../component/Hotspot/hotspotList.jsx'
 
 export default class MainPage extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
@@ -18,7 +18,7 @@ export default class MainPage extends React.Component {
           <MapView />
         <HotspotForm />
         <HotspotList />
-        <Link to="/favorites">To Favorites Page</Link>
+        <Link to='/favorites'>To Favorites Page</Link>
       </div>
     )
   }
