@@ -1,7 +1,6 @@
 // call model functions in controller functions
 const yelp = require('../config').yelp
 const models = require('./models')
-const Hotspot = require('../database/db').Hotspot
 
 let placeholder, placeholder2
 
