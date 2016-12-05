@@ -17,11 +17,6 @@ export default class CurrentLocation extends React.Component {
       id: '',
       term: ''
     }
-
-    this.latitude = 0.0
-    this.longitude = 0.0
-    localStorage.setItem(['Current-Location-lat'], this.state.lat)
-    localStorage.setItem(['Current-Location-long'], this.state.long)
   }
 
   componentWillUpdate () {
