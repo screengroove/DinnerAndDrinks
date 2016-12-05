@@ -21,6 +21,14 @@ server.listen(port, () => {
   console.log(`Listen to http://localhost:${port}`)
 })
 
+// database connection
+mongoose.Promise = require('bluebird')
+mongoose.connect(config.database.mongo)
+const db = mongoose.connection
+db.once('open', () => {
+  console.log('connected to database')
+})
+
 // Custom Middleware for Allow HTTP Access
 let allowDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
