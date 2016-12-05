@@ -37,17 +37,12 @@ module.exports = {
                 models.user.post() */
     }
   },
-
-
-
   hotspots: {
-
     get: (req, res) => {
       console.log('These are the res: ', res.data)
       console.log('this is the req.body: ', req.body)
       models.hotspots.get(req.body, res)
     },
-
     post: (req, res) => {
       req.body.lat=""
       req.body.long=""
@@ -62,17 +57,7 @@ module.exports = {
         res.send(req.body)
       })
     }
-
   },
-
-
-
-
-
-
-
-
-
   yelp: {
     getPhoneSearch: (req, res) => {
       yelp.phoneSearch({ phone: '' })
