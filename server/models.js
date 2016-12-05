@@ -33,7 +33,7 @@ module.exports = {
   favorites: {
     get: (req, res) => {
       Favorites.find().exec((err, data) => {
-        return data
+        res.send(data)
       })
     },
     post: (data) => {

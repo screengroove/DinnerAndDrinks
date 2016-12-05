@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router'
 // importing map view
 import MapView from './../../component/MapView/mapView.jsx'
 import HotspotForm from './../../component/Hotspot/hotspotForm.jsx'
@@ -7,13 +7,18 @@ import HotspotList from './../../component/Hotspot/hotspotList.jsx'
 
 export default class MainPage extends React.Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   render () {
     return (
       <div>
-          Hello World...
+          Main
           <MapView />
         <HotspotForm />
         <HotspotList />
+        <Link to="/favorites">To Favorites Page</Link>
       </div>
     )
   }
