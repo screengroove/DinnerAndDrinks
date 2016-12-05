@@ -23,8 +23,10 @@ export default class HotspotForm extends React.Component {
     //var self = this;
     let location = {
       name: name,
-      address: address || this.state,
-      description: description
+      address: address,
+      description: description,
+      long: long,
+      lat: lat
     }
 
     axios.post('/api/hotspots', location)
