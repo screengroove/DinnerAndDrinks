@@ -1,5 +1,8 @@
 // Interact with database on the models functions here
 const Hotspot = require('../database/db').Hotspot
+const User = require('../database/db').User
+const Favorites = require('../database/db').Favorites
+
 module.exports = {
   users: {
     get: (data) => {
@@ -28,15 +31,15 @@ module.exports = {
     }
   },
   favorites: {
-    get: () => {
-            /*
-             Interact with database
-             */
+    get: (req, res) => {
+      Favorites.find().exec((err, data) => {
+        return data
+      })
     },
-    post: () => {
-            /*
-             Interact with database
-             */
+    post: (data) => {
+      Favorites.create(data, (err) => {
+        if (err) return err
+      })
     }
   },
   comments: {
@@ -53,11 +56,10 @@ module.exports = {
   },
   hotspots: {
     get: (req, res) => {
-      Hotspot.find().exec( (err, data) => {
-        console.log("ah ha...data: ", data)
+      Hotspot.find().exec((err, data) => {
+        console.log('ah ha...data: ', data)
         return data
       })
-
     },
     post: (req, res) => {
       console.log('this is working: ', req)

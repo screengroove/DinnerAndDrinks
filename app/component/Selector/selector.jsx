@@ -1,14 +1,33 @@
 import React from 'react'
 
+let choices = [
+  'Coffee',
+  'Movies',
+  'Restaurants'
+]
+
 export default class Selector extends React.Component {
 
-  getCoffee () { return 'coffee' }
-  getMovies () { return 'movies' }
-  getRestaurants () { return 'restaurants' }
+  constructor (props) {
+    super(props)
+    this.state = {
+      choice: ''
+    }
+  }
+
+  getText (e) {
+    this.setState({choice: e.target.value})
+  }
 
   render () {
+    let selections = choices.map(e => (
+      <input type='submit' value={e} onClick={this.getText.bind(this)} />
+    ))
+
     return (
-      <div />
+      <div>
+        {selections}
+      </div>
     )
   }
 }

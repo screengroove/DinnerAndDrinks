@@ -1,11 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import './sass/index.scss'
 
 // Importing MasterPage for the router
 import MasterPage from './pages/MasterPage.jsx'
 import MainPage from './pages/MainPage/MainPage.jsx'
+import FavoritesPage from './pages/FavoritesPage/FavoritesPage.jsx'
+import appData from './redux/appData.jsx'
+
+const actionLogger = ({dispatch, getStore}) =>
+    (next) => (action) => { console.log(action); return next(action) }
+const middleware = applyMiddleware(actionLogger)
+
+let dataStore = createStore(appData, middleware)
 
 // Main page to re-render routes is MasterPage
 // IndexRoute is the component seen on that '/' route
@@ -13,25 +23,15 @@ class Root extends React.Component {
 
   render () {
     return (
-            // Used to name the routes on address bar
-      <Router history={browserHistory}>
-        {/* Nested Routes in React Router: look at docs to add routes */}
-        <Route path='/' component={MasterPage}>
-          <IndexRoute component={MainPage} />
-          {/* Main page will show on the first route */}
-
-          {/**
-
-                    Add new Routes here
-                    <Route path="/user" component={*LoginPage*} />
-
-                    Don't Forget to import your component at the top
-
-                 */}
-
-        </Route>
-      </Router>
-            )
+      <Provider store={dataStore}>
+        <Router history={browserHistory}>
+          <Route path='/' component={MasterPage}>
+            <IndexRoute component={MainPage} />
+            <Route path='/favorites' component={FavoritesPage} />
+          </Route>
+        </Router>
+      </Provider>
+    )
   }
 }
 
