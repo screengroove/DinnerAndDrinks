@@ -123,9 +123,7 @@ export default class CurrentLocation extends React.Component {
       <div id="map-list">
         {console.log(this.state.list)}
         {this.state.list.map((e, i) => (
-
               <input key={i} type="submit" value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
-
         ))}
       </div>
     )
