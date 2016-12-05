@@ -16,6 +16,9 @@ export default class CurrentLocation extends React.Component {
     }
     this.latitude = 0.0
     this.longitude = 0.0
+    localStorage.setItem(['Current-Location-lat'], this.state.lat)
+    localStorage.setItem(['Current-Location-long'], this.state.long)
+
   }
 
   componentWillUpdate () {
@@ -117,7 +120,7 @@ export default class CurrentLocation extends React.Component {
   }
 
   render () {
-    setTimeout(this.initMap.bind(this), 250)
+    setTimeout(this.initMap.bind(this), 500)
     return (
       <div id='map-list'>
         {console.log(this.state.list)}

@@ -5,6 +5,14 @@ export default class HotspotForm extends React.Component {
 
   constructor (props) {
     super(props)
+
+    this.state = {}
+
+    this.useCurrentLocation = this.useCurrentLocation.bind(this)
+  }
+
+  useCurrentLocation () {
+    this.setState({ lat: localStorage['Current-Location-lat'], long: localStorage['Current-Location-long']})
   }
 
   submitHotspotForm () {
@@ -14,7 +22,7 @@ export default class HotspotForm extends React.Component {
 
     let location = {
       name: name,
-      address: address,
+      address: address || this.state,
       description: description
     }
 
@@ -35,6 +43,7 @@ export default class HotspotForm extends React.Component {
       <div>
         <input placeholder='name' id='hotspotLocationName' />
         <input placeholder='address' id='hotspotAddress' />
+        <button onClick={this.useCurrentLocation}>Use Current Location</button>
         <textarea placeholder='description' id='hotspotDescription' />
         <button onClick={this.submitHotspotForm}>Submit Form</button>
       </div>
