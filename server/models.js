@@ -5,29 +5,31 @@ const Favorites = require('../database/db').Favorites
 
 module.exports = {
   users: {
-    get: (data) => {
-      console.log('within model GET', data)
-      User.findOne({
-        username: data.username
-      }, (err, user) => {
-        if (err) {
-          console.log('ERROR in GET MODEL', err)
-        }
-        console.log('line 21', user)
-        return user
-      })
+    get: (req, res) => {
+      User
+        .findOne({
+          username: req.username
+        })
+        .exec((err, user) => {
+          if (err) {
+            console.log('ERROR in MODEL GET: ', err)
+          } else {
+            res.json(user)
+          }
+        })
     },
     post: (req, res) => {
-      console.log(req, '*****')
-      console.log('within model POST', req.body)
-      User.create({
-        username: req.username,
-        password: req.password
-      }, (err, user) => {
-        if (err) {
-          console.log('Server-side POST error: ', err)
-        }
-      })
+      User
+        .create({
+          username: req.username,
+          password: req.password
+        }, (err, user) => {
+          if (err) {
+            console.log('ERROR in MODEL POST: ', err)
+          } else {
+            res.json(user)
+          }
+        })
     }
   },
   favorites: {

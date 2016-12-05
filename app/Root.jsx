@@ -29,6 +29,15 @@ class Root extends React.Component {
           <Route path='/' component={MasterPage}>
             <IndexRoute component={MainPage} />
             <Route path='favorites' component={FavoritesPage} />
+            {/**
+
+                    Add new Routes here
+                    <Route path="/user" component={*LoginPage*} />
+                    <Route path="/auth" component={*SignUpPage*} />
+
+                    Don't Forget to import your component at the top
+
+                 */}
           </Route>
         </Router>
       </Provider>
