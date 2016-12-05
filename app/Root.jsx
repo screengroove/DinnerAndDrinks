@@ -9,6 +9,7 @@ import './sass/index.scss'
 import MasterPage from './pages/MasterPage.jsx'
 import MainPage from './pages/MainPage/MainPage.jsx'
 import FavoritesPage from './pages/FavoritesPage/FavoritesPage.jsx'
+import SignUpPage from './pages/SignUpPage/SignUpPage.jsx'
 import appData from './redux/appData.jsx'
 
 const actionLogger = ({dispatch, getStore}) =>
@@ -27,7 +28,7 @@ class Root extends React.Component {
         <Router history={browserHistory}>
           <Route path='/' component={MasterPage}>
             <IndexRoute component={MainPage} />
-            <Route path='/favorites' component={FavoritesPage} />
+            <Route path='favorites' component={FavoritesPage} />
           </Route>
         </Router>
       </Provider>
