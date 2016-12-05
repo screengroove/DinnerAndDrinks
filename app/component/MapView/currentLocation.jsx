@@ -164,9 +164,9 @@ export default class CurrentLocation extends React.Component {
             <input key={i} type='submit' value={e} onClick={this.selector.bind(this)} />
           ))}
         </div>
+        <div id='map' />
         <div id='map-list'>
         <SelectableList>
-        <Subheader>Yelp</Subheader>
           {this.state.list.map((e, i) => (
             <ListItem
               value={i}

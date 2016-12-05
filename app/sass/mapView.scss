@@ -1,12 +1,24 @@
+#selector{
+    width: 85%;
+    height: 75px;
+}
+
 #map {
     float: left;
-    width: 400px;
+    width: 45%;
     height: 400px;
 }
 
 #map-list {
     float: right;
-    width: 400px;
+    width: 45%;
     height: 400px;
     overflow-y: scroll;
+}
+
+#reviews-list {
+    float: left;
+    width: 85%;
+    height: 400px;
+    padding: 20px;
 }
