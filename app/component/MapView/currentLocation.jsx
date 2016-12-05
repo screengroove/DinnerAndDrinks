@@ -117,7 +117,7 @@ export default class CurrentLocation extends React.Component {
   }
 
   render () {
-    setTimeout(this.initMap.bind(this), 250)
+    setTimeout(this.initMap.bind(this), 500)
     return (
       <div id='map-list'>
         {console.log(this.state.list)}
