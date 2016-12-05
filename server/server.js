@@ -16,6 +16,27 @@ const session = require('express-session')
 // port settings
 let port = process.env.PORT || 3000
 
+// web socket protocol on localhost on port 3000
+server.listen(port, () => {
+  console.log(`Listen to http://localhost:${port}`)
+})
+
+// database connection
+mongoose.Promise = require('bluebird')
+mongoose.connect(config.database.mongo)
+const db = mongoose.connection
+db.once('open', () => {
+  console.log('connected to database')
+})
+
+// Custom Middleware for Allow HTTP Access
+let allowDomain = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  next()
+}
+
 // Middleware
 // Body Parser, Morgan, and Public Compiled folder
 app.use(cors({ origin: '*' }))

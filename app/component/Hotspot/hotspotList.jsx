@@ -10,7 +10,7 @@ export default class HotspotList extends React.Component {
   getHotspotList () {
     axios.get('/api/hotspots', {})
       .then((response) => {
-        console.log('Successful response: ', response)
+        console.log('Successful response: ', response.data)
       })
       .catch((error) => {
         console.log('Error in axios hotspot list get: ', error)
