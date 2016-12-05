@@ -1,6 +1,6 @@
 import React from 'react'
-import SignUp from './../../component/SignUp/signUp.jsx'
-
+import { Router, Route, Link, browserHistory } from 'react-router'
+import SignUp from '../../component/SignUp/signUp.jsx'
 export default class SignUpPage extends React.Component {
 
   render () {
@@ -8,6 +8,7 @@ export default class SignUpPage extends React.Component {
       <div>
           Hello World...
           <SignUp />
+        <Link to='/'>HomePage</Link>
       </div>
     )
   }

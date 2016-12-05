@@ -2,8 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import TextField from 'material-ui/TextField'
 import {orange500, blue500} from 'material-ui/styles/colors'
-
+console.log('within signUP')
 export default class SignUp extends React.Component {
+
   constructor (props) {
     super(props)
   }
