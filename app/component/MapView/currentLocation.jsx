@@ -8,14 +8,11 @@ export default class CurrentLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      lat: 34.026829,
-      long: -118.473297,
       location: 'Santa Monica',
       term: 'coffee',
-      list: []
+      list: [],
+      reviews: []
     }
-    this.latitude = 0.0
-    this.longitude = 0.0
   }
 
   componentWillUpdate () {
@@ -33,6 +30,7 @@ export default class CurrentLocation extends React.Component {
   saveFavorite (index) {
     axios.post('/api/favorites', {
       userId: index,
+      yelpId: this.state.list[index].id,
       name: this.state.list[index].name,
       categories: this.state.list[index].categories,
       address: this.state.list[index].location.address,
@@ -56,6 +54,7 @@ export default class CurrentLocation extends React.Component {
   }
 
   postYelpData () {
+    console.log(localStorage)
     axios.post('/api/yelp/search', {
       location: this.state.location,
       term: this.state.term
@@ -76,19 +75,17 @@ export default class CurrentLocation extends React.Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         let pos = {
-          // lat: position.coords.latitude,
-          // lng: position.coords.longitude
-          lat: this.state.lat,
-          lng: this.state.long
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
         }
-        // this.setState({lat: pos.lat, long: pos.lng})
-        // add new states of current location here
 
-        // this.props.dispatch(addLoc(this.state.lat, this.state.long))
+        localStorage.setItem(['Current-Location-lat'], pos.lat)
+        localStorage.setItem(['Current-Location-long'], pos.lng)
 
         infoWindow.setPosition(pos)
         infoWindow.setContent('Location found.')
         map.setCenter(pos)
+
       }, () => {
         handleLocationError(true, infoWindow, map.getCenter())
       })
@@ -119,12 +116,16 @@ export default class CurrentLocation extends React.Component {
   render () {
     setTimeout(this.initMap.bind(this), 250)
     return (
+      <div>
       <div id='map-list'>
-        {console.log(this.state.list)}
         {this.state.list.map((e, i) => (
           <input key={i} type='submit' value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
         ))}
       </div>
+        <div>
+        
+        </div>
+       </div>
     )
   }
 

@@ -10,7 +10,7 @@ export default class name extends React.Component {
       <div>
         Favorites
         <FavoritesList />
-        <Link to="/">HomePage</Link>
+        <Link to='/'>HomePage</Link>
       </div>
     )
   }
