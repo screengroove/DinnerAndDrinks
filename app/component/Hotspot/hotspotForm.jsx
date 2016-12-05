@@ -8,7 +8,8 @@ export default class HotspotForm extends React.Component {
 
     this.state = {}
 
-    this.useCurrentLocation = this.useCurrentLocation.bind(this)
+    this.useCurrentLocation = this.useCurrentLocation.bind(this);
+    this.submitHotspotForm = this.submitHotspotForm.bind(this);
   }
 
   useCurrentLocation () {
@@ -19,7 +20,7 @@ export default class HotspotForm extends React.Component {
     let name = document.getElementById('hotspotLocationName').value
     let address = document.getElementById('hotspotAddress').value
     let description = document.getElementById('hotspotDescription').value
-
+    //var self = this;
     let location = {
       name: name,
       address: address || this.state,
