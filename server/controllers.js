@@ -50,14 +50,6 @@ module.exports = {
     }
   },
   yelp: {
-    get: (req, res) => {
-            /* can look something like this
-                models.user.post() */
-    },
-    post: (req, res) => {
-            /* can look something like this
-                models.user.post() */
-    },
     getPhoneSearch: (req, res) => {
       yelp.phoneSearch({ phone: '' })
         .then(console.log)

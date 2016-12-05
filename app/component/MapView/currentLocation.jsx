@@ -1,19 +1,35 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import addLoc from '../../redux/appData.jsx'
+import axios from 'axios'
 
-export class CurrentLocation extends React.Component {
+export default class CurrentLocation extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      lat: 0.0,
-      long: 0.0
+      lat: 33.976002,
+      long: -118.390891,
+      term: ''
     }
   }
 
   componentWillMount () {
     setTimeout(this.initMap.bind(this), 250) // on load this gets your current location
+  }
+
+  getYelpData () {
+    axios.get('/yelp/search', {
+      latitude: this.state.lat,
+      longitude: this.state.long,
+      term: this.state.term,
+      sort: 0,
+      category_filter: '',
+      catergories: '',
+      rating: 0
+    })
+    .then(resp => { console.log(``) })
+    .catch(err => { console.log(`${err}`) })
   }
 
      // Google Api function
@@ -31,9 +47,10 @@ export class CurrentLocation extends React.Component {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }
-        this.setState({lat: pos.lat, long: pos.lng})
+        // this.setState({lat: pos.lat, long: pos.lng})
         // add new states of current location here
-        this.props.dispatch(addLoc(this.state.lat, this.state.long))
+
+        // this.props.dispatch(addLoc(this.state.lat, this.state.long))
 
         infoWindow.setPosition(pos)
         infoWindow.setContent('Location found.')
@@ -58,12 +75,11 @@ export class CurrentLocation extends React.Component {
 
   render () {
     return (
-      <div>
-        
-      </div>
+      <div />
     )
   }
 
 }
 
-export default connect()(CurrentLocation)
+// export this
+// export default connect()(CurrentLocation)
