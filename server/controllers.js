@@ -24,10 +24,11 @@ module.exports = {
   },
   favorites: {
     get: (req, res) => {
-
+      models.favorites.get(req.body, res)
     },
     post: (req, res) => {
-
+      models.favorites.post(req.body)
+      res.send(req.body)
     }
   },
   comments: {
@@ -42,7 +43,7 @@ module.exports = {
   },
   hotspots: {
     get: (req, res) => {
-      models.hotspots.get(req.body)
+      models.hotspots.get(req.body, res)
       console.log('These are the res: ', res.data)
     },
     post: (req, res) => {

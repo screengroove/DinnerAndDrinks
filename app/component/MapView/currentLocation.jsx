@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 // import { connect } from 'react-redux'
 // import addLoc from '../../redux/appData.jsx'
 import axios from 'axios'
@@ -30,6 +31,23 @@ export default class CurrentLocation extends React.Component {
     this.getYelpData()
   }
 
+  saveFavorite(index) {
+    axios.post('/api/favorites', {
+        userId: index,
+        name: this.state.list[index].name,
+        categories: this.state.list[index].categories,
+        address: this.state.list[index].location.address,
+        phone: this.state.list[index].phone,
+        rating: this.state.list[index].rating,
+        image_url: this.state.list[index].image_url,
+        businessUrl: this.state.list[index].url,
+        lat: this.state.list[index].location.coordinate.latitude,
+        long: this.state.list[index].location.coordinate.longitude
+    })
+    .then(resp => { console.log(`Successful`) })
+    .catch(err => { console.log(`save Favorites error: `, err) })
+  }
+
   getYelpData () {
     axios.get('/api/yelp/search')
     .then(resp => {
@@ -43,7 +61,7 @@ export default class CurrentLocation extends React.Component {
       location: this.state.location,
       term: this.state.term
     })
-    .then(resp => { console.log(`Successful`) })
+    .then(resp => {  })
     .catch(err => { console.log(`${err}`) })
   }
 
@@ -104,12 +122,10 @@ export default class CurrentLocation extends React.Component {
     return (
       <div id="map-list">
         {console.log(this.state.list)}
-        {this.state.list.map(e => (
-          <div>
-            {
-              e.name
-            }
-          </div>
+        {this.state.list.map((e, i) => (
+
+              <input key={i} type="submit" value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
+
         ))}
       </div>
     )
