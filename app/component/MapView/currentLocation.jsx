@@ -30,18 +30,18 @@ export default class CurrentLocation extends React.Component {
     this.getYelpData()
   }
 
-  saveFavorite(index) {
+  saveFavorite (index) {
     axios.post('/api/favorites', {
-        userId: index,
-        name: this.state.list[index].name,
-        categories: this.state.list[index].categories,
-        address: this.state.list[index].location.address,
-        phone: this.state.list[index].phone,
-        rating: this.state.list[index].rating,
-        image_url: this.state.list[index].image_url,
-        businessUrl: this.state.list[index].url,
-        lat: this.state.list[index].location.coordinate.latitude,
-        long: this.state.list[index].location.coordinate.longitude
+      userId: index,
+      name: this.state.list[index].name,
+      categories: this.state.list[index].categories,
+      address: this.state.list[index].location.address,
+      phone: this.state.list[index].phone,
+      rating: this.state.list[index].rating,
+      image_url: this.state.list[index].image_url,
+      businessUrl: this.state.list[index].url,
+      lat: this.state.list[index].location.coordinate.latitude,
+      long: this.state.list[index].location.coordinate.longitude
     })
     .then(resp => { console.log(`Successful`) })
     .catch(err => { console.log(`save Favorites error: `, err) })
@@ -60,7 +60,7 @@ export default class CurrentLocation extends React.Component {
       location: this.state.location,
       term: this.state.term
     })
-    .then(resp => {  })
+    .then(resp => { })
     .catch(err => { console.log(`${err}`) })
   }
 
@@ -119,10 +119,10 @@ export default class CurrentLocation extends React.Component {
   render () {
     setTimeout(this.initMap.bind(this), 250)
     return (
-      <div id="map-list">
+      <div id='map-list'>
         {console.log(this.state.list)}
         {this.state.list.map((e, i) => (
-              <input key={i} type="submit" value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
+          <input key={i} type='submit' value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
         ))}
       </div>
     )
