@@ -64,8 +64,8 @@ module.exports = {
     },
     postSearch: (req, res) => {
       placeholder = {
-        location: req.body.location,
-        term: req.body.term
+        term: req.body.term,
+        location: req.body.location
       }
       res.json({
         location: req.body.location,

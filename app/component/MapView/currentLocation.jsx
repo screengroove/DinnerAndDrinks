@@ -10,13 +10,19 @@ export default class CurrentLocation extends React.Component {
     this.state = {
       lat: 33.976002,
       long: -118.390891,
+      location: 'Santa Monica',
       term: 'coffee',
       list: []
     }
+    this.latitude = 0.0
+    this.longitude = 0.0
+  }
+
+  componentWillUpdate () {
+    setTimeout(this.initMap.bind(this), 250)
   }
 
   componentWillMount () {
-    setTimeout(this.initMap.bind(this), 250) // on load this gets your current location
     this.postYelpData()
   }
 
@@ -34,7 +40,7 @@ export default class CurrentLocation extends React.Component {
 
   postYelpData () {
     axios.post('/api/yelp/search', {
-      location: 'Los Angeles',
+      location: this.state.location,
       term: this.state.term
     })
     .then(resp => { console.log(`Successful`) })
@@ -57,6 +63,8 @@ export default class CurrentLocation extends React.Component {
           lng: position.coords.longitude
         }
         // this.setState({lat: pos.lat, long: pos.lng})
+        this.latitude = pos.lat
+        this.longitude = pos.lng
         // add new states of current location here
 
         // this.props.dispatch(addLoc(this.state.lat, this.state.long))
@@ -66,6 +74,15 @@ export default class CurrentLocation extends React.Component {
         map.setCenter(pos)
       }, () => {
         handleLocationError(true, infoWindow, map.getCenter())
+      })
+
+      this.state.list.map((e, i) => {
+        let marker = new google.maps.Marker({
+          position: { lat: e.location.coordinate.latitude, lng: e.location.coordinate.longitude },
+          map: map,
+          title: e.name
+        })
+        return marker
       })
     } else {
       // Browser doesn't support Geolocation
@@ -83,9 +100,10 @@ export default class CurrentLocation extends React.Component {
   }
 
   render () {
+    setTimeout(this.initMap.bind(this), 250)
     return (
       <div>
-        {console.log(`Yelp`, this.state.list)}
+
       </div>
     )
   }
