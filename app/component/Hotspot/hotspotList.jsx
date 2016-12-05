@@ -27,7 +27,7 @@ export default class HotspotList extends React.Component {
 
   render () {
     return (
-      <div>
+      <div id="hotspot-list">
         <button onClick={this.getHotspotList}>Get local secret spots</button>
         {this.state.hotspots.map((spot, i) => (
           <div key={i}>
