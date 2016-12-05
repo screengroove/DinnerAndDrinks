@@ -26,8 +26,8 @@ export default class FavoritesList extends React.Component {
             method: 'DELETE',
             url: '/api/favorites',
             data: {
-                id: self.state.list[index].id
-            }
+                name: self.state.list[index].name
+            } 
         })
         .then((resp) => {
             console.log(`Successful delete`)
@@ -43,12 +43,12 @@ export default class FavoritesList extends React.Component {
   render () {
     return (
       <div>
-        {this.state.list.map(e => (
+        {this.state.list.map((e, i) => (
           <div>
             {e.name}
-            <input type="submit" value="Delete me" onClick={} />
+            <button className="toggleBtn" onClick={this.deleteFavorite.bind(this, [i])}>Delete Me</button>
           </div>
-                ))}
+        ))}
       </div>
     )
   }

@@ -42,6 +42,11 @@ module.exports = {
       Favorites.create(data, (err) => {
         if (err) return err
       })
+    },
+    delete: (req, res) => {
+      Favorites.remove({ name: req.body.name }, (err, data) => {
+        res.send(data)
+      })
     }
   },
   comments: {
