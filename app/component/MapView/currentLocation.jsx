@@ -1,22 +1,27 @@
 import React from 'react'
-// import { connect } from 'react-redux'
-// import addLoc from '../../redux/appData.jsx'
 import axios from 'axios'
+import Selector from '../Selector/selector.jsx'
+
+let choices = [
+  'Coffee',
+  'Movies',
+  'Restaurants'
+]
 
 export default class CurrentLocation extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      term: 'coffee',
       list: [],
       reviews: [],
-      id: ''
+      id: '',
+      term: ''
     }
   }
 
   componentWillUpdate () {
-    setTimeout(this.initMap.bind(this), 250)
+
   }
 
   componentWillMount () {
@@ -56,6 +61,13 @@ export default class CurrentLocation extends React.Component {
     .catch(err => { console.log(`${err}`) })
   }
 
+  selector (e) {
+    localStorage.setItem(['Yelp-Search-Term'], e.target.value)
+    this.setState({ term: e.target.value })
+    this.postYelpData()
+    this.getYelpData()
+  }
+
   getReviews () {
     this.postId()
     axios.get('/api/yelp/business')
@@ -77,7 +89,7 @@ export default class CurrentLocation extends React.Component {
   postYelpData () {
     axios.post('/api/yelp/search', {
       location: localStorage['Current-Location-city'],
-      term: this.state.term
+      term: localStorage['Yelp-Search-Term']
     })
     .then(resp => { })
     .catch(err => { console.log(`${err}`) })
@@ -87,7 +99,7 @@ export default class CurrentLocation extends React.Component {
   initMap () {
     let map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -34.397, lng: 150.644},
-      zoom: 15
+      zoom: 10
     })
     let infoWindow = new google.maps.InfoWindow({map: map})
 
@@ -142,14 +154,19 @@ export default class CurrentLocation extends React.Component {
     setTimeout(this.initMap.bind(this), 500)
     return (
       <div>
+        <div id='selector'>
+          {choices.map((e, i) => (
+            <input key={i} type='submit' value={e} onClick={this.selector.bind(this)} />
+          ))}
+        </div>
         <div id='map-list'>
           {this.state.list.map((e, i) => (
             <input key={i} type='submit' value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
         ))}
         </div>
         <div id='reviews-list'>
-          {this.state.reviews.map(e => (
-            <div>
+          {this.state.reviews.map((e, i) => (
+            <div key={i}>
               {e.excerpt}
             </div>
           ))}
