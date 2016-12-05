@@ -52,7 +52,7 @@ module.exports = {
   yelp: {
     getPhoneSearch: (req, res) => {
       yelp.phoneSearch({ phone: '' })
-        .then(console.log)
+        .then(resp => { res.send(resp) })
         .catch((err) => { console.log(`getPhoneSearch error: ${err}`) })
     },
     postPhoneSearch: (req, res) => {
@@ -62,13 +62,13 @@ module.exports = {
     },
     getSearch: (req, res) => {
       yelp.search({
-        latitude: 0.0,
-        longitude: 0.0,
-        term: '',
-        sort: 0,
-        category_filter: '',
-        catergories: '',
-        rating: 0
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        term: req.body.term,
+        sort: req.body.sort,
+        category_filter: req.body.catergory_filter,
+        catergories: req.body.catergories,
+        rating: req.body.rating
       })
       .then(resp => {
         res.send(resp)

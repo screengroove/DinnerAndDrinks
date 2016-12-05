@@ -10,7 +10,7 @@ export default class CurrentLocation extends React.Component {
     this.state = {
       lat: 33.976002,
       long: -118.390891,
-      term: ''
+      term: 'food'
     }
   }
 
@@ -26,9 +26,9 @@ export default class CurrentLocation extends React.Component {
       sort: 0,
       category_filter: '',
       catergories: '',
-      rating: 0
+      rating: 5.0
     })
-    .then(resp => { console.log(``) })
+    .then(resp => { console.log(resp) })
     .catch(err => { console.log(`${err}`) })
   }
 
@@ -75,7 +75,9 @@ export default class CurrentLocation extends React.Component {
 
   render () {
     return (
-      <div />
+      <div>
+        {this.getYelpData()}
+      </div>
     )
   }
 
