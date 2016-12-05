@@ -1,21 +1,24 @@
 import React from 'react'
 import axios from 'axios'
-import CurrentLocation from '../MapView/currentLocation.jsx'
 
 export default class HotspotList extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      secwetSpots: []
+      hotspots: [],
+      curLoc: {
+        lat: localStorage['Current-Location-lat'],
+        long: localStorage['Current-Location-long']
+      }
     }
     this.getHotspotList = this.getHotspotList.bind(this)
   }
 
   getHotspotList () {
-    axios.get('/api/hotspots')
+    axios.get('/api/hotspots', this.state.curLoc)
       .then((response) => {
         console.log(this)
-        this.setState({ secwetSpots: response.data })
+        this.setState({ hotspots: response.data })
       })
       .catch((error) => {
         console.log(`Error in axios hotspot list get: ${error}`)
@@ -26,8 +29,8 @@ export default class HotspotList extends React.Component {
     return (
       <div>
         <button onClick={this.getHotspotList}>Get local secret spots</button>
-        {this.state.secwetSpots.map(spot => (
-          <div>
+        {this.state.hotspots.map((spot, i) => (
+          <div key={i}>
             {spot.name}
           </div>
         ))}
