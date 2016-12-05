@@ -1,6 +1,6 @@
-export const addLoc = (loc) => ({
+export const addLoc = (lat, long) => ({
   type: 'CHANGE_LOCATION',
-  loc: { lat: loc.lat, long: loc.long }
+  loc: {lat: lat, long: long}
 })
 
 export const addTerm = (term) => ({

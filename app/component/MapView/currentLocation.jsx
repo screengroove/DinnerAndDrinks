@@ -1,8 +1,8 @@
 import React from 'react'
-import dispatch from 'react-redux'
+import { connect } from 'react-redux'
 import addLoc from '../../redux/appData.jsx'
 
-export default class CurrentLocation extends React.Component {
+export class CurrentLocation extends React.Component {
 
   constructor (props) {
     super(props)
@@ -33,7 +33,7 @@ export default class CurrentLocation extends React.Component {
         }
         this.setState({lat: pos.lat, long: pos.lng})
         // add new states of current location here
-        dispatch(addLoc({lat: this.state.lat, long: this.state.long}))
+        this.props.dispatch(addLoc(this.state.lat, this.state.long))
 
         infoWindow.setPosition(pos)
         infoWindow.setContent('Location found.')
@@ -65,3 +65,5 @@ export default class CurrentLocation extends React.Component {
   }
 
 }
+
+export default connect()(CurrentLocation)
