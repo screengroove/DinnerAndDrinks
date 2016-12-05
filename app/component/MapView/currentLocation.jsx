@@ -1,11 +1,16 @@
 import React from 'react'
 import axios from 'axios'
+import {List, ListItem, makeSelectable} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import Subheader from 'material-ui/Subheader';
 
 let choices = [
   'Coffee',
   'Movies',
   'Restaurants'
 ]
+
+let SelectableList = makeSelectable(List)
 
 export default class CurrentLocation extends React.Component {
 
@@ -153,15 +158,25 @@ export default class CurrentLocation extends React.Component {
     setTimeout(this.initMap.bind(this), 500)
     return (
       <div>
+      {console.log(`List: `, this.state.list)}
         <div id='selector'>
           {choices.map((e, i) => (
             <input key={i} type='submit' value={e} onClick={this.selector.bind(this)} />
           ))}
         </div>
         <div id='map-list'>
+        <SelectableList>
+        <Subheader>Yelp</Subheader>
           {this.state.list.map((e, i) => (
-            <input key={i} type='submit' value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
+            <ListItem
+              value={i}
+              primaryText={e.name}
+              secondaryText={e.display_phone + " || Rating: " + e.rating}
+              leftAvatar={<Avatar src={e.image_url} />}
+              onClick={this.saveFavorite.bind(this, [i])}
+            />
         ))}
+        </SelectableList>
         </div>
         <div id='reviews-list'>
           {this.state.reviews.map((e, i) => (
