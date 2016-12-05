@@ -19,6 +19,7 @@ export default class MainPage extends React.Component {
         <HotspotForm />
         <HotspotList />
         <Link to='/favorites'>To Favorites Page</Link>
+        <Link to='/signup'>To signup Page</Link>
       </div>
     )
   }
