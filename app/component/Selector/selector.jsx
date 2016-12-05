@@ -11,12 +11,13 @@ export default class Selector extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      choice: ''
+      term: ''
     }
   }
 
   getText (e) {
-    this.setState({choice: e.target.value})
+    localStorage.setItem(['Yelp-Search-Term'], e.target.value)
+    this.setState({ term: e.target.value })
   }
 
   render () {
