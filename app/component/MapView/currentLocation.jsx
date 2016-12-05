@@ -8,8 +8,8 @@ export default class CurrentLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      lat: 33.976002,
-      long: -118.390891,
+      lat: 34.026829,
+      long: -118.473297,
       location: 'Santa Monica',
       term: 'coffee',
       list: []
@@ -59,12 +59,12 @@ export default class CurrentLocation extends React.Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         let pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
+          // lat: position.coords.latitude,
+          // lng: position.coords.longitude
+          lat: this.state.lat,
+          lng: this.state.long
         }
         // this.setState({lat: pos.lat, long: pos.lng})
-        this.latitude = pos.lat
-        this.longitude = pos.lng
         // add new states of current location here
 
         // this.props.dispatch(addLoc(this.state.lat, this.state.long))
@@ -102,8 +102,15 @@ export default class CurrentLocation extends React.Component {
   render () {
     setTimeout(this.initMap.bind(this), 250)
     return (
-      <div>
-
+      <div id="map-list">
+        {console.log(this.state.list)}
+        {this.state.list.map(e => (
+          <div>
+            {
+              e.name
+            }
+          </div>
+        ))}
       </div>
     )
   }
