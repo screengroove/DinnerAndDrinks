@@ -9,18 +9,11 @@ module.exports = {
     // Josh's endpoint is user
   users: {
     get: (req, res) => {
-      models.users.get()
-            .then(data => {
-              res.send()
-            })
-      console.log('withincontroller GET***', req.query)
-      console.log('withincontroller GET', req.body)
-      models.get(req.query)
-      res.send(req.query)
+      models.users.get(req.query, res)
     },
     post: (req, res) => {
-      console.log('withincontroller post', req.body)
-      models.post(req.body)
+      models.users.post(req.body, res)
+      res.send(req.body)
     }
   },
   favorites: {
@@ -45,6 +38,7 @@ module.exports = {
   hotspots: {
     get: (req, res) => {
       models.hotspots.get(req.body, res)
+
       console.log('These are the res: ', res.data)
       console.log('this is the req.body: ', req.body)
     },

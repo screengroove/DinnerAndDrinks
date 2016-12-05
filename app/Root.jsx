@@ -29,6 +29,8 @@ class Root extends React.Component {
           <Route path='/' component={MasterPage}>
             <IndexRoute component={MainPage} />
             <Route path='favorites' component={FavoritesPage} />
+            <Route path='signup' component={SignUpPage} />
+
           </Route>
         </Router>
       </Provider>
