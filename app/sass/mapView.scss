@@ -1,6 +1,10 @@
 #selector{
     width: 85%;
-    height: 75px;
+    height: 200px;
+    overflow-x: scroll;
+    .tile {
+        width: 200px;
+    }
 }
 
 #map {

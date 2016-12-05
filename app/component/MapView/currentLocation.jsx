@@ -1,14 +1,25 @@
 import React from 'react'
 import axios from 'axios'
-import {List, ListItem, makeSelectable} from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-import Subheader from 'material-ui/Subheader';
+import {List, ListItem, makeSelectable} from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
+import {GridList, GridTile} from 'material-ui/GridList'
 
 let choices = [
   'Coffee',
   'Movies',
-  'Restaurants'
+  'Restaurants',
+  'Art',
+  'Music',
+  'Bars',
+  'Sports',
+  'Travel'
 ]
+
+let gridColor = {color: 'rgb(0, 188, 212)'}
+let gridList = {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    overflowX: 'auto' }
 
 let SelectableList = makeSelectable(List)
 
@@ -160,9 +171,13 @@ export default class CurrentLocation extends React.Component {
       <div>
       {console.log(`List: `, this.state.list)}
         <div id='selector'>
+        <GridList style={ gridList } cols={2.2}>
           {choices.map((e, i) => (
-            <input key={i} type='submit' value={e} onClick={this.selector.bind(this)} />
+            <GridTile className="tile" key={i} title={e} value={e} titleStyle={ gridColor } onClick={this.selector.bind(this)} titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+
+            </GridTile>
           ))}
+          </GridList>
         </div>
         <div id='map' />
         <div id='map-list'>
