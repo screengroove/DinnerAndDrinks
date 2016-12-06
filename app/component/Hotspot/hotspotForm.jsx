@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-
+// import RaisedButton from 'material-ui/RaisedButton';
 export default class HotspotForm extends React.Component {
 
   constructor (props) {
@@ -44,6 +44,9 @@ export default class HotspotForm extends React.Component {
       <div id='hotspots-form'>
         <input placeholder='name' id='hotspotLocationName' />
         <input placeholder='address' id='hotspotAddress' />
+
+
+
         <button onClick={this.useCurrentLocation}>Use Current Location</button>
         <textarea placeholder='description' id='hotspotDescription' />
         <button onClick={this.submitHotspotForm}>Submit Form</button>
