@@ -18,7 +18,6 @@ export default class HotspotForm extends React.Component {
     let address = document.getElementById('hotspotAddress').value
     let description = document.getElementById('hotspotDescription').value
 
-
     let location = {
       name: name,
       address: address,
