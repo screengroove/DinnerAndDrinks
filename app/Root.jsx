@@ -37,7 +37,6 @@ class Root extends React.Component {
             <Route path='signup' component={SignUpPage} />
             <Route path='login' component={Login} />
             <Route path='profile' component={ProfilePage} onEnter={requireAuth} />
-
           </Route>
         </Router>
       </MuiThemeProvider>

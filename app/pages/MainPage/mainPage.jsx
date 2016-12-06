@@ -13,9 +13,26 @@ export default class MainPage extends React.Component {
     }
   }
 
+  handleToggle () {
+    this.setState({open: !!this.state.open})
+  }
+
   render () {
     return (
       <div>
+            <AppBar
+              title="Recommendator"
+              onLeftIconButtonTouchTap={console.log(`pressed`)}
+            />
+            <Drawer
+              width={200}
+              open={this.state.open}
+            >
+            <MenuItem>Home</MenuItem>
+            <MenuItem>Sign Up</MenuItem>
+            <MenuItem>Favorites</MenuItem>
+          </Drawer>
+          
         <MapView />
         <HotspotForm />
         <HotspotList />
