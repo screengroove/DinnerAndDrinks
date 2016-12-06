@@ -86,7 +86,6 @@ export default class CurrentLocation extends React.Component {
       .error((error) => {
         console.log(`Consolleeeeeee ${error}`)
       })
-
   }
 
   getYelpData () {
