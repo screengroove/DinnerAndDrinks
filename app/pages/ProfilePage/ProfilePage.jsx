@@ -1,15 +1,14 @@
 import React from 'react'
 import { Router, Route, Link, browserHistory } from 'react-router'
-import SignUp from '../../component/SignUp/signUp.jsx'
-export default class SignUpPage extends React.Component {
+import Profile from '../../component/Profile/Profile.jsx'
+export default class ProfilePage extends React.Component {
 
   render () {
     return (
       <div>
 
-        <SignUp />
-        Already Have an Account?
-        <Link to='/login'> Login</Link>
+        <Profile />
+        Profile Page
         <br />
         Or go
         <Link to='/'> home.</Link>
