@@ -1,11 +1,27 @@
 import React from 'react'
 import axios from 'axios'
+import {List, ListItem, makeSelectable} from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
+import {GridList, GridTile} from 'material-ui/GridList'
 
 let choices = [
   'Coffee',
   'Movies',
-  'Restaurants'
+  'Restaurants',
+  'Art',
+  'Music',
+  'Bars',
+  'Sports',
+  'Travel'
 ]
+
+let gridColor = {color: 'rgb(0, 188, 212)'}
+let gridList = {
+  display: 'flex',
+  flexWrap: 'nowrap',
+  overflowX: 'auto' }
+
+let SelectableList = makeSelectable(List)
 
 export default class CurrentLocation extends React.Component {
 
@@ -17,11 +33,6 @@ export default class CurrentLocation extends React.Component {
       id: '',
       term: ''
     }
-
-    this.latitude = 0.0
-    this.longitude = 0.0
-    localStorage.setItem(['Current-Location-lat'], this.state.lat)
-    localStorage.setItem(['Current-Location-long'], this.state.long)
   }
 
   componentWillUpdate () {
@@ -65,9 +76,9 @@ export default class CurrentLocation extends React.Component {
     .catch(err => { console.log(`${err}`) })
   }
 
-  selector (e) {
-    localStorage.setItem(['Yelp-Search-Term'], e.target.value)
-    this.setState({ term: e.target.value })
+  selector (text) {
+    this.setState({term: text})
+    localStorage.setItem(['Yelp-Search-Term'], this.state.term)
     this.postYelpData()
     this.getYelpData()
   }
@@ -158,15 +169,27 @@ export default class CurrentLocation extends React.Component {
     setTimeout(this.initMap.bind(this), 500)
     return (
       <div>
+        {console.log(`List: `, this.state.list)}
         <div id='selector'>
-          {choices.map((e, i) => (
-            <input key={i} type='submit' value={e} onClick={this.selector.bind(this)} />
+          <GridList style={gridList} cols={2.2}>
+            {choices.map((e, i) => (
+              <GridTile onClick={this.selector.bind(this, [e])} className='tile' title={e} titleStyle={gridColor} titleBackground='linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)' />
           ))}
+          </GridList>
         </div>
+        <div id='map' />
         <div id='map-list'>
-          {this.state.list.map((e, i) => (
-            <input key={i} type='submit' value={e.name} onClick={this.saveFavorite.bind(this, [i])} />
+          <SelectableList>
+            {this.state.list.map((e, i) => (
+              <ListItem
+                value={i}
+                primaryText={e.name}
+                secondaryText={e.display_phone + ' || Rating: ' + e.rating}
+                leftAvatar={<Avatar src={e.image_url} />}
+                onClick={this.saveFavorite.bind(this, [i])}
+            />
         ))}
+          </SelectableList>
         </div>
         <div id='reviews-list'>
           {this.state.reviews.map((e, i) => (

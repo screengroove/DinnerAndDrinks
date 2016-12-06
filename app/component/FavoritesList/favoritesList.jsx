@@ -20,25 +20,25 @@ export default class FavoritesList extends React.Component {
             .catch(err => { console.log(`Favorites get error: ${err}`) })
   }
 
-  deleteFavorite(index) {
+  deleteFavorite (index) {
     var self = this
-        axios({
-            method: 'DELETE',
-            url: '/api/favorites',
-            data: {
-                name: self.state.list[index].name
-            } 
-        })
+    axios({
+      method: 'DELETE',
+      url: '/api/favorites',
+      data: {
+        name: self.state.list[index].name
+      }
+    })
         .then((resp) => {
-            console.log(`Successful delete`)
+          console.log(`Successful delete`)
         })
         .catch((err) => {
-            console.log(`Error in deleting favorite: ${err}`)
+          console.log(`Error in deleting favorite: ${err}`)
         })
     let copy = this.state.list.slice()
     copy.splice(index, 1)
     this.setState({list: copy})
-}
+  }
 
   render () {
     return (
@@ -46,7 +46,7 @@ export default class FavoritesList extends React.Component {
         {this.state.list.map((e, i) => (
           <div>
             {e.name}
-            <button className="toggleBtn" onClick={this.deleteFavorite.bind(this, [i])}>Delete Me</button>
+            <button className='toggleBtn' onClick={this.deleteFavorite.bind(this, [i])}>Delete Me</button>
           </div>
         ))}
       </div>
