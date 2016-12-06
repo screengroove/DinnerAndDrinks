@@ -13,20 +13,19 @@ export default class HotspotForm extends React.Component {
   }
 
   useCurrentLocation () {
-    this.setState({ lat: localStorage['Current-Location-lat'], long: localStorage['Current-Location-long']})
+
   }
 
   submitHotspotForm () {
     let name = document.getElementById('hotspotLocationName').value
     let address = document.getElementById('hotspotAddress').value
     let description = document.getElementById('hotspotDescription').value
-    //var self = this;
+
+
     let location = {
       name: name,
       address: address,
-      description: description,
-      long: long,
-      lat: lat
+      description: description
     }
 
     axios.post('/api/hotspots', location)
