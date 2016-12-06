@@ -35,7 +35,6 @@ export default class HotspotList extends React.Component {
             {spot.name}
           </div>
         ))}
-
       </div>
     )
   }
