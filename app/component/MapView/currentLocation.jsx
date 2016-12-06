@@ -70,17 +70,17 @@ export default class CurrentLocation extends React.Component {
     .catch(err => { console.log(`save Favorites error: `, err) })
   }
 
-  // getHotspots () {
-  //   let copy = [];
-  //   axios.get('/api/hotspots')
-  //     .then((response) => {
-  //       console.log("Response in the hotspots current location file", response)
-  //     })
-  //     .error((error) => {
-  //       console.log(`Consolleeeeeee ${error}`)
-  //     })
-  //   console.log('copy')
-  // }
+  getHotspots () {
+    let copy = [];
+    axios.get('/api/hotspots')
+      .then((response) => {
+        console.log("Response in the hotspots current location file", response)
+      })
+      .error((error) => {
+        console.log(`Consolleeeeeee ${error}`)
+      })
+    console.log('copy')
+  }
 
   getYelpData () {
     axios.get('/api/yelp/search')
