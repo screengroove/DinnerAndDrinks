@@ -12,7 +12,6 @@ import SignUpPage from './pages/SignUpPage/SignUpPage.jsx'
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx'
 import AuthService from './component/AuthService/authService.jsx'
 import Login from './component/Logins/logins.jsx'
-import appData from './redux/appData.jsx'
 // import AuthService class
 
 const auth = new AuthService('1kZVXDOsyi16sfWAHEjefukPuX6HFjgc', 'recommend.auth0.com')
@@ -23,13 +22,6 @@ const requireAuth = (nextState, replace) => {
     replace({ pathname: '/login' })
   }
 }
-
-const actionLogger = ({dispatch, getStore}) =>
-    (next) => (action) => { console.log(action); return next(action) }
-const middleware = applyMiddleware(actionLogger)
-
-let dataStore = createStore(appData, middleware)
-
 
 // Main page to re-render routes is MasterPage
 // IndexRoute is the component seen on that '/' route
