@@ -2,7 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import TextField from 'material-ui/TextField'
 import {orange500, blue500} from 'material-ui/styles/colors'
-console.log('within signUP')
+import { Router, Route, Link, browserHistory } from 'react-router'
+
+
 export default class SignUp extends React.Component {
 
   constructor (props) {
@@ -11,10 +13,13 @@ export default class SignUp extends React.Component {
 
   submitSignupForm () {
     let email = document.getElementById('email').value
+    let firstName = document.getElementById('firstName').value
     let password = document.getElementById('password').value
     let confirmPassword = document.getElementById('confirmPassword').value
 
     let signup = {
+
+      firstName: firstName,
       email: email,
       password: password,
       confirmPassword: confirmPassword
@@ -22,10 +27,11 @@ export default class SignUp extends React.Component {
 
     axios.post('/api/auth', signup)
       .then((response) => {
-        console.log('Successful AUTH reponse: ', response.data)
+        document.querySelector('#firstName').value = ''
         document.querySelector('#email').value = ''
         document.querySelector('#password').value = ''
         document.querySelector('#confirmPassword').value = ''
+        browserHistory.push('/')
       })
       .catch((error) => {
         console.log('Error in axios hotspot from POST: ', error)
@@ -50,11 +56,13 @@ export default class SignUp extends React.Component {
     return (
       <div>
 
-        <input placeholder='Email' id='email' />
-        <input placeholder='Password' id='password' />
-        <input placeholder='Please confirm password' id='confirmPassword' />
+      Sign Up <br />
+        <input placeholder='First Name' id='firstName' /><br />
+        <input placeholder='Email' id='email' /><br />
+        <input placeholder='Password' id='password' /><br />
+        <input placeholder='Please confirm password' id='confirmPassword' /><br />
+        <button onClick={this.submitSignupForm}>Submit Form</button>
 
-        <button onClick={this.submitSignUpForm}>Submit Form</button>
       </div>
     )
   }

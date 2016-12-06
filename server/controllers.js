@@ -2,14 +2,14 @@
 const yelp = require('../config').yelp
 const models = require('./models')
 
-let placeholder
-let placeholder2
+let placeholder, placeholder2
 
 module.exports = {
     // Josh's endpoint is user
   users: {
     get: (req, res) => {
       models.users.get(req.query, res)
+
     },
     post: (req, res) => {
       models.users.post(req.body, res)

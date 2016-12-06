@@ -8,11 +8,15 @@ module.exports = {
     get: (req, res) => {
       User
         .findOne({
-          username: req.username
+
+          email: req.email,
+          password: req.password
+
         })
         .exec((err, user) => {
           if (err) {
             console.log('ERROR in MODEL GET: ', err)
+
           } else {
             res.json(user)
           }
@@ -21,7 +25,8 @@ module.exports = {
     post: (req, res) => {
       User
         .create({
-          username: req.username,
+          firstName: req.firstName,
+          email: req.email,
           password: req.password
         }, (err, user) => {
           if (err) {

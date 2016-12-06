@@ -8,7 +8,7 @@ const userSchema = new Schema({
   email: String,
   password: String,
   fbAuth: Boolean,
-  name: String,
+  firstName: String,
   bio: String,
   photo: String,
   hometown: String,
