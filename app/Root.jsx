@@ -26,9 +26,6 @@ const requireAuth = (nextState, replace) => {
 
 const actionLogger = ({dispatch, getStore}) =>
     (next) => (action) => { console.log(action); return next(action) }
-const middleware = applyMiddleware(actionLogger)
-
-let dataStore = createStore(appData, middleware)
 
 
 // Main page to re-render routes is MasterPage

@@ -6,10 +6,6 @@ export default class HotspotList extends React.Component {
     super(props)
     this.state = {
       hotspots: [],
-      // curLoc: {
-      //   lat: localStorage['Current-Location-lat'],
-      //   long: localStorage['Current-Location-long']
-      // }
     }
     this.getHotspotList = this.getHotspotList.bind(this)
   }

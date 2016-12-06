@@ -10,7 +10,6 @@ export default class HotspotForm extends React.Component {
 
     this.state = {}
 
-    this.useCurrentLocation = this.useCurrentLocation.bind(this);
     this.submitHotspotForm = this.submitHotspotForm.bind(this);
   }
 
@@ -24,7 +23,10 @@ export default class HotspotForm extends React.Component {
       address: address,
       description: description
     }
-
+    if (!address){
+      alert('Please enter a valid address')
+      return;
+    }
     axios.post('/api/hotspots', location)
       .then((response) => {
         console.log('Successful reponse: ', response.data)
