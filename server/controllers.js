@@ -45,8 +45,8 @@ module.exports = {
       models.hotspots.get(req.body, res)
     },
     post: (req, res) => {
-      req.body.lat=""
-      req.body.long=""
+      req.body.lat=0
+      req.body.long=0
       request.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + req.body.address + '&key=' + API_KEY, (error, response, body) => {
         if (error) {
           console.log(`There has been a grave error: ${error}`)
