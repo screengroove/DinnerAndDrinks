@@ -30,6 +30,8 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "auth0-js": "^7.5.0",
+    "auth0-lock": "^10.7.2",
     "axios": "^0.15.3",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.4.6",

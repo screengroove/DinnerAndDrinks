@@ -9,6 +9,27 @@ import MasterPage from './pages/MasterPage.jsx'
 import MainPage from './pages/MainPage/MainPage.jsx'
 import FavoritesPage from './pages/FavoritesPage/FavoritesPage.jsx'
 import SignUpPage from './pages/SignUpPage/SignUpPage.jsx'
+import ProfilePage from './pages/ProfilePage/ProfilePage.jsx'
+import AuthService from './component/AuthService/authService.jsx'
+import Login from './component/Logins/logins.jsx'
+import appData from './redux/appData.jsx'
+// import AuthService class
+
+const auth = new AuthService('1kZVXDOsyi16sfWAHEjefukPuX6HFjgc', 'recommend.auth0.com')
+
+// validate authentication for private routes
+const requireAuth = (nextState, replace) => {
+  if (!auth.loggedIn()) {
+    replace({ pathname: '/login' })
+  }
+}
+
+const actionLogger = ({dispatch, getStore}) =>
+    (next) => (action) => { console.log(action); return next(action) }
+const middleware = applyMiddleware(actionLogger)
+
+let dataStore = createStore(appData, middleware)
+
 
 // Main page to re-render routes is MasterPage
 // IndexRoute is the component seen on that '/' route
@@ -22,6 +43,9 @@ class Root extends React.Component {
             <IndexRoute component={MainPage} />
             <Route path='favorites' component={FavoritesPage} />
             <Route path='signup' component={SignUpPage} />
+            <Route path='login' component={Login} />
+            <Route path='profile' component={ProfilePage} onEnter={requireAuth} />
+
           </Route>
         </Router>
       </MuiThemeProvider>
