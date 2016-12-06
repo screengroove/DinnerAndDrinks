@@ -76,9 +76,8 @@ export default class CurrentLocation extends React.Component {
     .catch(err => { console.log(`${err}`) })
   }
 
-  selector (e) {
-    localStorage.setItem(['Yelp-Search-Term'], e.target.value)
-    this.setState({ term: e.target.value })
+  selector () {
+    localStorage.setItem(['Yelp-Search-Term'], this.state.term)
     this.postYelpData()
     this.getYelpData()
   }
@@ -173,7 +172,7 @@ export default class CurrentLocation extends React.Component {
         <div id='selector'>
         <GridList style={ gridList } cols={2.2}>
           {choices.map((e, i) => (
-            <GridTile className="tile" key={i} title={e} value={e} titleStyle={ gridColor } onClick={this.selector.bind(this)} titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+            <GridTile className="tile" title={e} titleStyle={ gridColor } onClick={this.setState({term: e}) && this.selector.bind(this)} titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
 
             </GridTile>
           ))}
