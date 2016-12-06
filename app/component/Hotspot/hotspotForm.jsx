@@ -40,7 +40,7 @@ export default class HotspotForm extends React.Component {
 
   render () {
     return (
-      <div id="hotspots-form">
+      <div id='hotspots-form'>
         <input placeholder='name' id='hotspotLocationName' />
         <input placeholder='address' id='hotspotAddress' />
         <button onClick={this.useCurrentLocation}>Use Current Location</button>

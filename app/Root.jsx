@@ -15,7 +15,7 @@ import SignUpPage from './pages/SignUpPage/SignUpPage.jsx'
 class Root extends React.Component {
 
   render () {
-    return (  
+    return (
       <MuiThemeProvider>
         <Router history={browserHistory}>
           <Route path='/' component={MasterPage}>

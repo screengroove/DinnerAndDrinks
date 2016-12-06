@@ -50,7 +50,7 @@ export default class SignUp extends React.Component {
     return (
       <div>
 
-       <input placeholder='Email' id='email' />
+        <input placeholder='Email' id='email' />
         <input placeholder='Password' id='password' />
         <input placeholder='Please confirm password' id='confirmPassword' />
 
