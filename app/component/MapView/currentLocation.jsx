@@ -114,7 +114,7 @@ export default class CurrentLocation extends React.Component {
   initMap () {
     let map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 33.975374099999996, lng: -118.39200809999998},
-      zoom: 10
+      zoom: 11
     })
     let infoWindow = new google.maps.InfoWindow({map: map})
 
@@ -169,7 +169,6 @@ export default class CurrentLocation extends React.Component {
     setTimeout(this.initMap.bind(this), 500)
     return (
       <div>
-        {console.log(`List: `, this.state.list)}
         <div id='selector'>
           <GridList style={gridList} cols={2.2}>
             {choices.map((e, i) => (
