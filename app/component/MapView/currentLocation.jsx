@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {List, ListItem, makeSelectable} from 'material-ui/List'
+import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar'
 import {GridList, GridTile} from 'material-ui/GridList'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
@@ -207,11 +208,10 @@ export default class CurrentLocation extends React.Component {
           </SelectableList>
         </div>
         <div id='reviews-list'>
-          {this.state.reviews.map((e, i) => (
-            <div key={i}>
-              {e.excerpt}
-            </div>
-          ))}
+          <Subheader>Details</Subheader>
+          <List>
+            <ListItem />
+          </List>
         </div>
       </div>
     )
@@ -219,5 +219,8 @@ export default class CurrentLocation extends React.Component {
 
 }
 
-// export this
-// export default connect()(CurrentLocation)
+/**
+ * 
+ * 
+ * 
+ */
