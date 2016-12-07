@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import TextField from 'material-ui/TextField'
-import {orange500, blue500} from 'material-ui/styles/colors'
+import {orange500, blue800, blue900} from 'material-ui/styles/colors'
 import { Router, Route, Link, browserHistory } from 'react-router'
 
 export default class SignUp extends React.Component {
@@ -23,7 +23,6 @@ export default class SignUp extends React.Component {
     } else {
       this.setState({errorMessage: 'Passwords do not match'})
     }
-    this.setState({errorMessage: ''})
   }
  
 
@@ -43,7 +42,6 @@ export default class SignUp extends React.Component {
 
     axios.post('/api/auth', signup)
       .then((response) => {
-        console.log(response, 'respnss')
         document.querySelector('#firstName').value = ''
         document.querySelector('#email').value = ''
         document.querySelector('#password').value = ''
@@ -64,15 +62,15 @@ export default class SignUp extends React.Component {
         borderColor: orange500
       },
       floatingLabelStyle: {
-        color: orange500
+        color: blue800
       },
       floatingLabelFocusStyle: {
-        color: blue500
+        color: blue900
       }
     }
     return (
-      <div>
-      <p id="signup-message">Sign Up</p><br />
+      <div className="signup-div"><br />
+      <p id="signup-p">Sign Up</p>
         <TextField
           floatingLabelText='First Name' type='text' id='firstName' required
           floatingLabelStyle={styles.floatingLabelStyle}
@@ -89,13 +87,19 @@ export default class SignUp extends React.Component {
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
         /><br />
         <TextField
-          floatingLabelText='Confirm Password'input type='password' id='confirmPassword'
+          floatingLabelText='Confirm Password' type='password' id='confirmPassword'
           floatingLabelStyle={styles.floatingLabelStyle}
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
           onChange={this.validatePassword.bind(this)}
          /><br />
         <p id="errorMessage">{this.state.errorMessage}</p><br />
-        <button type='submit' class='pure-button pure-button-primary' onClick={this.submitSignupForm}>Submit</button>
+        <button type='submit' className="button" onClick={this.submitSignupForm}>Submit</button>
+        <br/>
+        Already Have an Account?
+        <Link to='/login'> Login</Link>
+        <br />
+        Or go
+        <Link to='/'> home.</Link>
 
       </div>
     )

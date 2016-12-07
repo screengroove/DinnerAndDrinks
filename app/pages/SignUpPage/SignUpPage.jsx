@@ -6,15 +6,9 @@ export default class SignUpPage extends React.Component {
 
   render () {
     return (
-      <div>
-
-        <SignUp />
-        Already Have an Account?
-        <Link to='/login'> Login</Link>
-        <br />
-        Or go
-        <Link to='/'> home.</Link>
-      </div>
+     <div className="signup-div">
+      <SignUp />
+     </div>
     )
   }
 }
