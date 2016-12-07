@@ -253,7 +253,10 @@ export default class CurrentLocation extends React.Component {
             <CardText style={fonts}>
               {(!this.state.showing ? '' : 'Review: ' + this.state.reviews.reviews[0].excerpt)} <br /> <br />
               {(!this.state.showing ? '' : 'Rating: ' + this.state.reviews.rating)} <br />
-              {(!this.state.showing ? '' : 'Phone Number: ' + this.state.reviews.display_phone)} <br />
+              {(!this.state.showing ? '' : 'Phone Number: ' + this.state.reviews.display_phone)} <br /><br />
+              {(!this.state.showing ? '' : 'Address: ' + this.state.reviews.location.display_address[0])} <br />
+              {(!this.state.showing ? '' : '               ' + this.state.reviews.location.display_address[1])} <br />
+              {(!this.state.showing ? '' : '               ' + this.state.reviews.location.display_address[2])} <br />
             </CardText>
           </Card>
         </div>
