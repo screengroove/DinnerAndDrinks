@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {List, ListItem, makeSelectable} from 'material-ui/List'
-import Subheader from 'material-ui/Subheader';
+import Subheader from 'material-ui/Subheader'
 import Avatar from 'material-ui/Avatar'
 import {GridList, GridTile} from 'material-ui/GridList'
 import FloatingActionButton from 'material-ui/FloatingActionButton'

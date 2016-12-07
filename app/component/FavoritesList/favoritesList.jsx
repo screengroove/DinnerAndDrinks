@@ -1,5 +1,16 @@
 import React from 'react'
 import axios from 'axios'
+import {List, ListItem, makeSelectable} from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import ContentRemove from 'material-ui/svg-icons/content/remove'
+
+const style = {
+  marginRight: 20
+}
+
+let SelectableList = makeSelectable(List)
 
 export default class FavoritesList extends React.Component {
 
@@ -42,15 +53,36 @@ export default class FavoritesList extends React.Component {
   render () {
     return (
       <div>
-
-        {this.state.list.map((e, i) => (
-          <div>
-            {e.name}
-            <button className='toggleBtn' onClick={this.deleteFavorite.bind(this, [i])}>Delete Me</button>
-          </div>
+        <SelectableList>
+            {this.state.list.map((e, i) => (
+              <ListItem
+                value={i}
+                primaryText={e.name}
+                rightIcon={<FloatingActionButton onClick={this.deleteFavorite.bind(this, [i])} mini secondary style={style}>
+                  <ContentRemove />
+                </FloatingActionButton>}
+                secondaryText={e.phone + ' || Rating: ' + e.rating}
+                leftAvatar={<Avatar src={e.image_url} />}
+            />
         ))}
-
+          </SelectableList>
       </div>
     )
   }
 }
+
+/**
+ * 
+  userId: String,
+  yelpId: String,
+  name: String,
+  categories: [String],
+  address: [String],
+  phone: String,
+  rating: Number,
+  image_url: String,
+  businessUrl: String,
+  lat: Number,
+  long: Number
+ * 
+ */
