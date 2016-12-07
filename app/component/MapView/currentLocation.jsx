@@ -6,6 +6,7 @@ import Avatar from 'material-ui/Avatar'
 import {GridList, GridTile} from 'material-ui/GridList'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card'
 
 let choices = [
   {name: 'Coffee', url: 'https://genesistransformation.files.wordpress.com/2014/11/coffee.jpg'},
@@ -22,6 +23,12 @@ const style = {
   marginRight: 20
 }
 
+const gambler = {
+  height: '400px',
+  width: '400px',
+  margin: '0 auto'
+}
+
 let gridColor = {color: 'rgb(0, 188, 212)'}
 let gridList = { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' }
 
@@ -36,17 +43,15 @@ export default class CurrentLocation extends React.Component {
       list: [],
       reviews: [],
       id: '',
-      term: ''
+      term: '',
+      index: 0,
+      showing: false
     }
 
     this.latitude = 0.0
     this.longitude = 0.0
     localStorage.setItem(['Current-Location-lat'], this.state.lat)
     localStorage.setItem(['Current-Location-long'], this.state.long)
-  }
-
-  componentWillUpdate () {
-
   }
 
   componentWillMount () {
@@ -108,7 +113,8 @@ export default class CurrentLocation extends React.Component {
     this.postId()
     axios.get('/api/yelp/business')
       .then(resp => {
-        this.setState({ reviews: resp.data.reviews })
+        this.setState({ reviews: resp.data })
+        this.setState({showing: true})
       }).catch(err => {
         console.log(`${err}`)
       })
@@ -187,6 +193,7 @@ export default class CurrentLocation extends React.Component {
 
   getId (index) {
     this.setState({id: this.state.list[index].id})
+    this.setState({index: index})
     this.getReviews()
   }
 
@@ -221,30 +228,30 @@ export default class CurrentLocation extends React.Component {
                 onClick={this.getId.bind(this, [i])}
                 primaryText={e.name}
                 rightIcon={<FloatingActionButton onClick={this.saveFavorite.bind(this, [i])} mini secondary style={style}>
-                  <ContentAdd />
-                </FloatingActionButton>}
+                                      <ContentAdd />
+                                    </FloatingActionButton>}
                 secondaryText={e.display_phone + ' || Rating: ' + e.rating}
                 leftAvatar={<Avatar src={e.image_url} />}
             />
-        ))}
+          ))}
           </SelectableList>
         </div>
+        <div id="spaceholder"></div>
         <div id='reviews-list'>
           <Subheader>Details</Subheader>
-          <List>
-            <ListItem />
-            <ListItem />
-            <ListItem />
-            <ListItem />
-            <ListItem />
-          </List>
+          <Card style={gambler}>
+            <CardMedia overlay={<CardTitle title={(!this.state.showing ? '' : this.state.reviews.name)} />}>
+              <img src={(!this.state.showing ? '' : this.state.reviews.image_url)} />
+            </CardMedia>
+            <CardText>
+              {(!this.state.showing ? '' : this.state.reviews.reviews[0].excerpt)} <br /> <br />
+              {(!this.state.showing ? '' : 'Rating: ' + this.state.reviews.rating)} <br />
+             {(!this.state.showing ? '' : 'Phone Number: ' + this.state.reviews.display_phone)} <br />
+            </CardText>
+          </Card>
         </div>
       </div>
     )
   }
 
 }
-
-/**
-
- */

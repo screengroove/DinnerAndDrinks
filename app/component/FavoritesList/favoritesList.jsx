@@ -71,19 +71,3 @@ export default class FavoritesList extends React.Component {
     )
   }
 }
-
-/**
- * 
-  userId: String,
-  yelpId: String,
-  name: String,
-  categories: [String],
-  address: [String],
-  phone: String,
-  rating: Number,
-  image_url: String,
-  businessUrl: String,
-  lat: Number,
-  long: Number
- * 
- */
