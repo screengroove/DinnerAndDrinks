@@ -23,6 +23,13 @@ const requireAuth = (nextState, replace) => {
   }
 }
 
+<<<<<<< HEAD
+=======
+const actionLogger = ({dispatch, getStore}) =>
+    (next) => (action) => { console.log(action); return next(action) }
+
+
+>>>>>>> feat/hotspots_2
 // Main page to re-render routes is MasterPage
 // IndexRoute is the component seen on that '/' route
 class Root extends React.Component {
