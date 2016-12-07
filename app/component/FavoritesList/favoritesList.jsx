@@ -21,12 +21,11 @@ export default class FavoritesList extends React.Component {
   }
 
   deleteFavorite (index) {
-    var self = this
     axios({
       method: 'DELETE',
       url: '/api/favorites',
       data: {
-        name: self.state.list[index].name
+        deleteMe: this.state.list[index]._id
       }
     })
         .then((resp) => {

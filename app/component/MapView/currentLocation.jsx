@@ -18,8 +18,8 @@ let choices = [
 ]
 
 const style = {
-  marginRight: 20,
-};
+  marginRight: 20
+}
 
 let gridColor = {color: 'rgb(0, 188, 212)'}
 let gridList = { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' }
@@ -162,7 +162,7 @@ export default class CurrentLocation extends React.Component {
     }
   }
 
-  getId(index) {
+  getId (index) {
     this.setState({id: this.state.list[index].id})
     this.getReviews()
   }
@@ -197,9 +197,9 @@ export default class CurrentLocation extends React.Component {
                 value={i}
                 onClick={this.getId.bind(this, [i])}
                 primaryText={e.name}
-                rightIcon={<FloatingActionButton onClick={this.saveFavorite.bind(this, [i])} mini={true} secondary={true} style={style}>
-                                    <ContentAdd />
-                                    </FloatingActionButton>}
+                rightIcon={<FloatingActionButton onClick={this.saveFavorite.bind(this, [i])} mini secondary style={style}>
+                  <ContentAdd />
+                </FloatingActionButton>}
                 secondaryText={e.display_phone + ' || Rating: ' + e.rating}
                 leftAvatar={<Avatar src={e.image_url} />}
             />

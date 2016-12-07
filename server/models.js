@@ -48,7 +48,7 @@ module.exports = {
       })
     },
     delete: (req, res) => {
-      Favorites.remove({ name: req.body.name }, (err, data) => {
+      Favorites.remove({ _id: req.deleteMe }, (err, data) => {
         res.send(data)
       })
     }
