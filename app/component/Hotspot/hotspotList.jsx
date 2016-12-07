@@ -14,7 +14,6 @@ export default class HotspotList extends React.Component {
     var self = this;
     axios.get('/api/hotspots', self.state.curLoc)
       .then((response) => {
-        console.log('------------------');
         self.setState({ hotspots: response.data })
       })
       .catch((error) => {
