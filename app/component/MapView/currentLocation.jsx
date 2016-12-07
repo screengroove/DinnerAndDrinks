@@ -25,6 +25,7 @@ export default class CurrentLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      hotspots: [],
       list: [],
       reviews: [],
       id: '',
@@ -47,6 +48,7 @@ export default class CurrentLocation extends React.Component {
 
   componentDidMount () {
     this.getYelpData()
+    this.getHotspots()
   }
 
   saveFavorite (index) {
@@ -71,15 +73,14 @@ export default class CurrentLocation extends React.Component {
   }
 
   getHotspots () {
-    let copy = [];
     axios.get('/api/hotspots')
       .then((response) => {
-        console.log("Response in the hotspots current location file", response)
+        this.setState({ hotspots: response.data })
+        console.log(this.state.hotspots)
       })
       .error((error) => {
         console.log(`Consolleeeeeee ${error}`)
       })
-    console.log('copy')
   }
 
   getYelpData () {
@@ -159,6 +160,15 @@ export default class CurrentLocation extends React.Component {
       this.state.list.map((e, i) => {
         let marker = new google.maps.Marker({
           position: { lat: e.location.coordinate.latitude, lng: e.location.coordinate.longitude },
+          map: map,
+          title: e.name
+        })
+        return marker
+      })
+      this.state.hotspots.map((e, i) => {
+        console.log(e)
+        let marker = new google.maps.Marker({
+          position: { lat: e.lat, lng: e.long },
           map: map,
           title: e.name
         })
