@@ -12,10 +12,10 @@ export default class HotspotForm extends React.Component {
   constructor (props) {
     super(props)
 
+
     this.state = {
       rating: 2.5
     }
-
 
     this.submitHotspotForm = this.submitHotspotForm.bind(this)
     this.handleSlider = this.handleSlider.bind(this)
