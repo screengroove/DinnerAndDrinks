@@ -6,16 +6,10 @@ import HotspotList from './../../component/Hotspot/hotspotList.jsx'
 
 export default class MainPage extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     return (
       <div>
         <MapView />
-        <HotspotForm />
-        <HotspotList />
       </div>
     )
   }

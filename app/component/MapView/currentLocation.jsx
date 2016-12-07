@@ -45,10 +45,6 @@ export default class CurrentLocation extends React.Component {
     localStorage.setItem(['Current-Location-long'], this.state.long)
   }
 
-  componentWillUpdate () {
-
-  }
-
   componentWillMount () {
     this.postYelpData()
   }
@@ -241,7 +237,3 @@ export default class CurrentLocation extends React.Component {
   }
 
 }
-
-/**
-
- */
