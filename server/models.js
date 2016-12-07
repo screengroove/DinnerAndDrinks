@@ -31,7 +31,7 @@ module.exports = {
           if (err) {
             console.log('ERROR in MODEL POST: ', err)
           } else {
-            res.json(user)
+
           }
         })
     }
