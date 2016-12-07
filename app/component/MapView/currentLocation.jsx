@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {List, ListItem, makeSelectable} from 'material-ui/List'
+import Subheader from 'material-ui/Subheader'
 import Avatar from 'material-ui/Avatar'
 import {GridList, GridTile} from 'material-ui/GridList'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
@@ -18,8 +19,8 @@ let choices = [
 ]
 
 const style = {
-  marginRight: 20,
-};
+  marginRight: 20
+}
 
 let gridColor = {color: 'rgb(0, 188, 212)'}
 let gridList = { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' }
@@ -184,7 +185,7 @@ export default class CurrentLocation extends React.Component {
     }
   }
 
-  getId(index) {
+  getId (index) {
     this.setState({id: this.state.list[index].id})
     this.getReviews()
   }
@@ -219,9 +220,9 @@ export default class CurrentLocation extends React.Component {
                 value={i}
                 onClick={this.getId.bind(this, [i])}
                 primaryText={e.name}
-                rightIcon={<FloatingActionButton onClick={this.saveFavorite.bind(this, [i])} mini={true} secondary={true} style={style}>
-                                    <ContentAdd />
-                                    </FloatingActionButton>}
+                rightIcon={<FloatingActionButton onClick={this.saveFavorite.bind(this, [i])} mini secondary style={style}>
+                  <ContentAdd />
+                </FloatingActionButton>}
                 secondaryText={e.display_phone + ' || Rating: ' + e.rating}
                 leftAvatar={<Avatar src={e.image_url} />}
             />
@@ -229,11 +230,14 @@ export default class CurrentLocation extends React.Component {
           </SelectableList>
         </div>
         <div id='reviews-list'>
-          {this.state.reviews.map((e, i) => (
-            <div key={i}>
-              {e.excerpt}
-            </div>
-          ))}
+          <Subheader>Details</Subheader>
+          <List>
+            <ListItem />
+            <ListItem />
+            <ListItem />
+            <ListItem />
+            <ListItem />
+          </List>
         </div>
       </div>
     )
@@ -241,5 +245,6 @@ export default class CurrentLocation extends React.Component {
 
 }
 
-// export this
-// export default connect()(CurrentLocation)
+/**
+
+ */
