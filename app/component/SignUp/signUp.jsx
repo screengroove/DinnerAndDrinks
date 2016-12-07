@@ -4,7 +4,6 @@ import TextField from 'material-ui/TextField'
 import {orange500, blue500} from 'material-ui/styles/colors'
 import { Router, Route, Link, browserHistory } from 'react-router'
 
-
 export default class SignUp extends React.Component {
 
   constructor (props) {

@@ -16,7 +16,6 @@ module.exports = {
         .exec((err, user) => {
           if (err) {
             console.log('ERROR in MODEL GET: ', err)
-
           } else {
             res.json(user)
           }

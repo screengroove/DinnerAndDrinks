@@ -8,14 +8,13 @@ export default class SignUpPage extends React.Component {
     return (
       <div>
 
-
         <SignUp />
         Already Have an Account?
         <Link to='/login'> Login</Link>
         <br />
         Or go
         <Link to='/'> home.</Link>
-    </div>
+      </div>
     )
   }
 }
