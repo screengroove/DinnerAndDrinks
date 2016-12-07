@@ -27,7 +27,7 @@ export default class HotspotForm extends React.Component {
     let name = document.getElementById('hotspotLocationName').value
     let address = document.getElementById('hotspotAddress').value
     let description = document.getElementById('hotspotDescription').value
-    let user = localStorage['User-Name']
+    let user = localStorage['User-Name'] || "Anonymous"
     let location = {
       name: name,
       address: address,
