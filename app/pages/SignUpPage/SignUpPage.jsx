@@ -6,9 +6,9 @@ export default class SignUpPage extends React.Component {
 
   render () {
     return (
-     <div className="signup-div">
-      <SignUp />
-     </div>
+      <div className='signup-div'>
+        <SignUp />
+      </div>
     )
   }
 }

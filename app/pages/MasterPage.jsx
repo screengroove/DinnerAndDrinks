@@ -17,6 +17,9 @@ export default class MasterPage extends React.Component {
   handleToggle () {
     this.setState({open: !this.state.open})
   }
+  clearLocalStorage () {
+    localStorage.clear()
+  }
 
   render () {
     return (
@@ -24,8 +27,9 @@ export default class MasterPage extends React.Component {
         <AppBar title='Recommendator' onClick={this.handleToggle} />
         <Drawer width={200} open={this.state.open}>
           <MenuItem onClick={this.handleToggle} ><Link to='/'>Home</Link></MenuItem>
-          <MenuItem onClick={this.handleToggle} ><Link to='/signup'>Sign Up</Link></MenuItem>
+          <MenuItem onClick={this.handleToggle} ><Link to='/signup'>Sign Up/Login</Link></MenuItem>
           <MenuItem onClick={this.handleToggle} ><Link to='/favorites'>Favorites</Link></MenuItem>
+          <MenuItem onClick={this.clearLocalStorage} ><Link to='/'>Logout</Link></MenuItem>
         </Drawer>
         {this.props.children}
       </div>

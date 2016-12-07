@@ -5,13 +5,13 @@ export default class HotspotList extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      hotspots: [],
+      hotspots: []
     }
     this.getHotspotList = this.getHotspotList.bind(this)
   }
 
   getHotspotList () {
-    var self = this;
+    var self = this
     axios.get('/api/hotspots', self.state.curLoc)
       .then((response) => {
         self.setState({ hotspots: response.data })

@@ -4,8 +4,6 @@ import { Router, Route, Link, browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import {orange500, blue500, blue800} from 'material-ui/styles/colors'
 
-
-
 export default class Login extends React.Component {
 
   constructor (props) {
@@ -24,23 +22,16 @@ export default class Login extends React.Component {
 
     axios.get('/api/auth', {params: login})
       .then((response) => {
-        console.log('Successful AUTH reponse in login: ', response)
         document.querySelector('#email').value = ''
         document.querySelector('#password').value = ''
         localStorage.setItem('User-Name', response.data.firstName)
         localStorage.setItem('User-Id', response.data._id)
         localStorage.setItem('UserLoggedIn', true)
-
         browserHistory.push('/')
       })
       .catch((error) => {
-        console.log('Error in axios hotspot from get login: ', error)
+        alert('Are you sure you entered that correctly? Please try again.')
       })
-  }
-  clearLocalStorage () {
-    localStorage.clear()
-    browserHistory.push('/')
-      // redirect to home
   }
 
   render () {
@@ -61,24 +52,19 @@ export default class Login extends React.Component {
       }
     }
     return (
-      <div id="login">
+      <div id='login'>
         <TextField
-          floatingLabelText='Email Address' type='email' id='email' required
+          floatingLabelText='Email Address' id='email'
           floatingLabelStyle={styles.floatingLabelStyle}
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-
-        /><br/>
-
-        <TextField
-          floatingLabelText='Password' type='password' id='password' required
-          floatingLabelStyle={styles.floatingLabelStyle}
-          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-
         /><br />
 
-        <button onClick={this.submitLoginForm}>Submit Form</button><br /><br />
-        <button onClick={this.clearLocalStorage}>Logout</button><br />
-
+        <TextField
+          floatingLabelText='Password' type='password' id='password'
+          floatingLabelStyle={styles.floatingLabelStyle}
+          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+        /><br />
+        <button onClick={this.submitLoginForm}>Login</button><br /><br />
       </div>
     )
   }
