@@ -40,7 +40,8 @@ const hotspotSchema = new Schema({
   long: Number,
   description: String,
   rating: Number,
-  image: String
+  image: String,
+  user: String
 }, {collection: 'hotspotSchema'})
 // Models
 let User = mongoose.model('User', userSchema)

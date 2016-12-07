@@ -59,7 +59,7 @@ export default class HotspotList extends React.Component {
                 <span><p>{spot.address}</p></span>
                 <span><p>{spot.description}</p></span>
                 <span><p>{spot.rating} Stars</p></span>
-                <span><p>{spot.user}</p></span>
+                <span><small>Submission by: {spot.user}</small></span>
                 <FloatingActionButton onClick={this.saveFavorite.bind(this, [i])}>
                                       <ContentAdd />
                                     </FloatingActionButton>
