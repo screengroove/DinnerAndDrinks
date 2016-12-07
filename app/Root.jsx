@@ -10,6 +10,7 @@ import MainPage from './pages/MainPage/MainPage.jsx'
 import FavoritesPage from './pages/FavoritesPage/FavoritesPage.jsx'
 import SignUpPage from './pages/SignUpPage/SignUpPage.jsx'
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx'
+import HotspotsPage from './pages/HotspotsPage/HotspotsPage.jsx'
 import Login from './component/Logins/logins.jsx'
 
 // Main page to re-render routes is MasterPage
@@ -26,6 +27,7 @@ class Root extends React.Component {
             <Route path='signup' component={SignUpPage} />
             <Route path='login' component={Login} />
             <Route path='profile' component={ProfilePage} />
+            <Route path='hotspots' component={HotspotsPage} />
           </Route>
         </Router>
       </MuiThemeProvider>

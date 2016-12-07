@@ -1,13 +1,37 @@
+#hotspots-tab-foundation {
+  padding-top:10px;
+  text-align:center;
+  margin: 0 auto;
+  box-shadow: 0px 8px 21px 0px rgba(0,0,0,0.75);
+}
+#hotspot-form-foundation{
+    box-shadow: 0px 3px 15px 0px rgba(0,0,0,0.75);
+    text-align: center;
+    margin: 0 auto;
+    width: 75%;
+}
 #hotspots-form {
-    float: left; 
+    text-align: center;
+    margin: 0 auto;
     width: 50%;
 }
-
+#hotspot-entry {
+  display: inline;
+}
+#hotspot-list-foundation {
+  height:800px;
+}
 #hotspot-list {
-    float: left;
-    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    width: 75%;
+    height: 90%;
+    overflow: scroll;
+    box-shadow: 0px 3px 15px 0px rgba(0,0,0,0.75);
 }
-
+#hotspot-list-entry {
+  display:inline
+}
 #links {
     float: left;
     width: 50%;
