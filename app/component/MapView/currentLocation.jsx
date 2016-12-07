@@ -233,8 +233,7 @@ export default class CurrentLocation extends React.Component {
         {console.log(` asdfasdfasdfasdfasdf `,this.state.reviews)}
           <Subheader>Details</Subheader>
           <List>
-            <ListItem 
-            />
+            <ListItem />
           </List>
         </div>
       </div>
