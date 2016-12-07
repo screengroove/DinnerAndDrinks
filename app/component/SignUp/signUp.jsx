@@ -3,6 +3,8 @@ import axios from 'axios'
 import TextField from 'material-ui/TextField'
 import {orange500, blue800, blue900} from 'material-ui/styles/colors'
 import { Router, Route, Link, browserHistory } from 'react-router'
+import {Button, Modal} from 'react-bootstrap/lib'
+import LoginModal from '/Users/JP/HR/Recommendator/app/component/Logins/loginModal.jsx'
 
 export default class SignUp extends React.Component {
 
@@ -11,7 +13,6 @@ export default class SignUp extends React.Component {
     this.state = {
       errorMessage: ''
     }
-
   }
 
   validatePassword () {
@@ -25,9 +26,7 @@ export default class SignUp extends React.Component {
       this.setState({errorMessage: 'Passwords do not match'})
     }
     this.setState({errorMessage: ''})
-
   }
- 
 
   validatePassword () {
     console.log('validatePassword')
@@ -40,7 +39,6 @@ export default class SignUp extends React.Component {
       this.setState({errorMessage: 'Passwords do not match'})
     }
   }
- 
 
   submitSignupForm () {
     let email = document.getElementById('email').value
@@ -63,7 +61,7 @@ export default class SignUp extends React.Component {
         document.querySelector('#email').value = ''
         document.querySelector('#password').value = ''
         document.querySelector('#confirmPassword').value = ''
-        browserHistory.push('/')
+        alert("Thank you for signing up with us! Feel free to login.")
       })
       .catch((error) => {
         console.log('Error in axios hotspot from POST: ', error)
@@ -87,8 +85,8 @@ export default class SignUp extends React.Component {
     }
     return (
 
-      <div className="signup-div"><br />
-      <p id="signup-p">Sign Up</p>
+      <div className='signup-div'><br />
+        <p id='signup-p'>Sign Up</p>
 
         <TextField
           floatingLabelText='First Name' type='text' id='firstName' required
@@ -96,33 +94,30 @@ export default class SignUp extends React.Component {
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
         /><br />
         <TextField
-          floatingLabelText='Email Address' type='email' id='email' required
+          floatingLabelText='Email Address' type='text' id='email'
           floatingLabelStyle={styles.floatingLabelStyle}
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
         /><br />
         <TextField
-          floatingLabelText='Password' type='password' id='password' required
+          floatingLabelText='Password' type='password' id='password'
           floatingLabelStyle={styles.floatingLabelStyle}
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
         /><br />
         <TextField
-
           floatingLabelText='Confirm Password'input type='password' id='confirmPassword'
-
           floatingLabelStyle={styles.floatingLabelStyle}
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
           onChange={this.validatePassword.bind(this)}
          /><br />
-        <p id="errorMessage">{this.state.errorMessage}</p><br />
+        <p id='errorMessage'>{this.state.errorMessage}</p><br />
 
-        <button type='submit' className="button" onClick={this.submitSignupForm}>Submit</button>
-        <br/>
+        <button type='submit' className='button' onClick={this.submitSignupForm && this.LoginModal}>Submit</button>
+        <br />
         Already Have an Account?
         <Link to='/login'> Login</Link>
         <br />
         Or go
         <Link to='/'> home.</Link>
-
 
       </div>
     )

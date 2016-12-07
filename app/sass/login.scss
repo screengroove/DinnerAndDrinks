@@ -1,12 +1,22 @@
 #login {
-display:flex;
-justify-content:center;
-align-items:center;
-<<<<<<< HEAD
-=======
-margin: auto;
->>>>>>> feat/style
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    background-image: url('http://i.imgur.com/ncF41VA.jpg');
+    min-height: 100%;
+    min-width: 900px;
+    padding: 125px 0px 0px 600px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 #errorMessage {
     
+}
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
 }

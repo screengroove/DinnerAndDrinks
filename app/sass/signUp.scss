@@ -5,6 +5,7 @@
     background-image: url('http://i.imgur.com/ncF41VA.jpg');
     min-height: 100%;
     min-width: 900px;
+    padding: 125px 0px 0px 600px;
     width: 100%;
     height: auto;
     position: fixed;
@@ -12,4 +13,7 @@
     left: 0;
  
 }
-
+#signup-p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24;
+}

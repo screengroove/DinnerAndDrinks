@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import RaisedButton from 'material-ui/RaisedButton'
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin()
 export default class HotspotForm extends React.Component {
 
   constructor (props) {
@@ -10,7 +10,7 @@ export default class HotspotForm extends React.Component {
 
     this.state = {}
 
-    this.submitHotspotForm = this.submitHotspotForm.bind(this);
+    this.submitHotspotForm = this.submitHotspotForm.bind(this)
   }
 
   submitHotspotForm () {
@@ -23,9 +23,9 @@ export default class HotspotForm extends React.Component {
       address: address,
       description: description
     }
-    if (!address){
+    if (!address) {
       alert('Please enter a valid address')
-      return;
+      return
     }
     axios.post('/api/hotspots', location)
       .then((response) => {
