@@ -52,6 +52,7 @@ export default class HotspotList extends React.Component {
     return (
       <div id='hotspot-list-foundation'>
         <List id='hotspot-list'>
+        <h2>View Submissions</h2>
             {this.state.hotspots.map((spot, i) => (
               <ListItem id="hotspot-entry" key={i}>
                 <span><p>{spot.name}</p></span>
