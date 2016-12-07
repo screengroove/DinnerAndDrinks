@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-
+import RaisedButton from 'material-ui/RaisedButton'
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 export default class HotspotForm extends React.Component {
 
   constructor (props) {
@@ -8,11 +10,7 @@ export default class HotspotForm extends React.Component {
 
     this.state = {}
 
-    this.useCurrentLocation = this.useCurrentLocation.bind(this)
-  }
-
-  useCurrentLocation () {
-    this.setState({ lat: localStorage['Current-Location-lat'], long: localStorage['Current-Location-long']})
+    this.submitHotspotForm = this.submitHotspotForm.bind(this);
   }
 
   submitHotspotForm () {
@@ -22,10 +20,13 @@ export default class HotspotForm extends React.Component {
 
     let location = {
       name: name,
-      address: address || this.state,
+      address: address,
       description: description
     }
-
+    if (!address){
+      alert('Please enter a valid address')
+      return;
+    }
     axios.post('/api/hotspots', location)
       .then((response) => {
         console.log('Successful reponse: ', response.data)
@@ -43,9 +44,8 @@ export default class HotspotForm extends React.Component {
       <div id='hotspots-form'>
         <input placeholder='name' id='hotspotLocationName' />
         <input placeholder='address' id='hotspotAddress' />
-        <button onClick={this.useCurrentLocation}>Use Current Location</button>
         <textarea placeholder='description' id='hotspotDescription' />
-        <button onClick={this.submitHotspotForm}>Submit Form</button>
+        <RaisedButton onClick={this.submitHotspotForm}>Submit Form</RaisedButton>
       </div>
     )
   }
