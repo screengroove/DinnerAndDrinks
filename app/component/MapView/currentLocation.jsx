@@ -1,18 +1,19 @@
 import React from 'react'
+import path from 'path'
 import axios from 'axios'
 import {List, ListItem, makeSelectable} from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import {GridList, GridTile} from 'material-ui/GridList'
 
 let choices = [
-  'Coffee',
-  'Movies',
-  'Restaurants',
-  'Art',
-  'Music',
-  'Bars',
-  'Sports',
-  'Travel'
+  {name: 'Coffee', url: 'https://genesistransformation.files.wordpress.com/2014/11/coffee.jpg'},
+  {name: 'Movies', url: 'http://cdn.shopify.com/s/files/1/1046/0096/products/movie-tickets-and-popcorn-600x400_grande.jpg?v=1447772629'},
+  {name: 'Restaurants', url: 'http://img1.10bestmedia.com/static/img/placeholder-restaurants.jpg'},
+ { name: 'Art', url: 'http://img.mota.ru/upload/wallpapers/2015/07/27/13/05/44958/mota.ru-20150727134-1920x1080.jpg'},
+  {name: 'Music', url: 'http://artinest.com/wp-content/uploads/2015/09/openmic.jpg'},
+  {name: 'Bars', url: 'https://cdn.pastemagazine.com/www/articles/LABEERBARS-NEWMAIN.jpg'},
+  {name: 'Sports', url: 'http://www.wallcoo.net/sport/nba_la_clippers/images/jerseyroad.jpg'},
+  {name: 'Travel', url: 'http://traveltelly.com//media/uploads/2012/09/TravelTelly_Paris_eiffel_tower04.jpg'}
 ]
 
 let gridColor = {color: 'rgb(0, 188, 212)'}
@@ -174,7 +175,9 @@ export default class CurrentLocation extends React.Component {
         <div id='selector'>
           <GridList style={gridList} cols={2.2}>
             {choices.map((e, i) => (
-              <GridTile onClick={this.selector.bind(this, [e])} className='tile' title={e} titleStyle={gridColor} titleBackground='linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)' />
+              <GridTile onClick={this.selector.bind(this, [e])} className='tile' title={e.name} titleStyle={gridColor} titleBackground='linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)' >
+                <img src={e.url} />
+              </GridTile>
           ))}
           </GridList>
         </div>
