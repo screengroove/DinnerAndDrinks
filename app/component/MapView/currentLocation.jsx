@@ -3,17 +3,23 @@ import axios from 'axios'
 import {List, ListItem, makeSelectable} from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import {GridList, GridTile} from 'material-ui/GridList'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
 
 let choices = [
-  'Coffee',
-  'Movies',
-  'Restaurants',
-  'Art',
-  'Music',
-  'Bars',
-  'Sports',
-  'Travel'
+  {name: 'Coffee', url: 'https://genesistransformation.files.wordpress.com/2014/11/coffee.jpg'},
+  {name: 'Movies', url: 'http://cdn.shopify.com/s/files/1/1046/0096/products/movie-tickets-and-popcorn-600x400_grande.jpg?v=1447772629'},
+  {name: 'Restaurants', url: 'http://img1.10bestmedia.com/static/img/placeholder-restaurants.jpg'},
+  {name: 'Art', url: 'http://img.mota.ru/upload/wallpapers/2015/07/27/13/05/44958/mota.ru-20150727134-1920x1080.jpg'},
+  {name: 'Music', url: 'http://artinest.com/wp-content/uploads/2015/09/openmic.jpg'},
+  {name: 'Bars', url: 'https://cdn.pastemagazine.com/www/articles/LABEERBARS-NEWMAIN.jpg'},
+  {name: 'Sports', url: 'http://www.wallcoo.net/sport/nba_la_clippers/images/jerseyroad.jpg'},
+  {name: 'Travel', url: 'http://traveltelly.com//media/uploads/2012/09/TravelTelly_Paris_eiffel_tower04.jpg'}
 ]
+
+const style = {
+  marginRight: 20,
+};
 
 let gridColor = {color: 'rgb(0, 188, 212)'}
 let gridList = { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' }
@@ -65,7 +71,6 @@ export default class CurrentLocation extends React.Component {
     })
     .then(resp => {
       this.setState({id: this.state.list[index].id})
-      this.getReviews()
     })
     .catch(err => { console.log(`save Favorites error: `, err) })
   }
@@ -89,7 +94,6 @@ export default class CurrentLocation extends React.Component {
     this.postId()
     axios.get('/api/yelp/business')
       .then(resp => {
-        console.log(resp)
         this.setState({ reviews: resp.data.reviews })
       }).catch(err => {
         console.log(`${err}`)
@@ -158,6 +162,11 @@ export default class CurrentLocation extends React.Component {
     }
   }
 
+  getId(index) {
+    this.setState({id: this.state.list[index].id})
+    this.getReviews()
+  }
+
     // Google Api function:
     //  Handles Location Errors
   handleLocationError (browserHasGeolocation, infoWindow, pos) {
@@ -174,7 +183,9 @@ export default class CurrentLocation extends React.Component {
         <div id='selector'>
           <GridList style={gridList} cols={2.2}>
             {choices.map((e, i) => (
-              <GridTile onClick={this.selector.bind(this, [e])} className='tile' title={e} titleStyle={gridColor} titleBackground='linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)' />
+              <GridTile onClick={this.selector.bind(this, [e.name])} className='tile' title={e.name} titleStyle={gridColor} titleBackground='linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)' >
+                <img src={e.url} />
+              </GridTile>
           ))}
           </GridList>
         </div>
@@ -184,10 +195,13 @@ export default class CurrentLocation extends React.Component {
             {this.state.list.map((e, i) => (
               <ListItem
                 value={i}
+                onClick={this.getId.bind(this, [i])}
                 primaryText={e.name}
+                rightIcon={<FloatingActionButton onClick={this.saveFavorite.bind(this, [i])} mini={true} secondary={true} style={style}>
+                                    <ContentAdd />
+                                    </FloatingActionButton>}
                 secondaryText={e.display_phone + ' || Rating: ' + e.rating}
                 leftAvatar={<Avatar src={e.image_url} />}
-                onClick={this.saveFavorite.bind(this, [i])}
             />
         ))}
           </SelectableList>
