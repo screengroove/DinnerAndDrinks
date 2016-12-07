@@ -31,14 +31,13 @@ export default class FavoritesList extends React.Component {
   }
 
   deleteFavorite (index) {
-
-      axios({
-        method: 'DELETE',
-        url: '/api/favorites',
-        data: {
-          deleteMe: this.state.list[index]._id
-        }
-      })
+    axios({
+      method: 'DELETE',
+      url: '/api/favorites',
+      data: {
+        deleteMe: this.state.list[index]._id
+      }
+    })
       .then((resp) => {
         console.log(`Successful delete`)
       })
@@ -55,19 +54,20 @@ export default class FavoritesList extends React.Component {
     return (
       <div>
         <SelectableList>
-            {this.state.list.map((e, i) => (
-              <ListItem
-                value={i}
-                primaryText={e.name}
-                rightIcon={<FloatingActionButton onClick={this.deleteFavorite.bind(this, [i])} mini secondary style={style}>
-                  <ContentRemove />
-                </FloatingActionButton>}
-                secondaryText={e.phone + ' || Rating: ' + e.rating}
-                leftAvatar={<Avatar src={e.image_url} />}
+          {this.state.list.map((e, i) => (
+            <ListItem
+              value={i}
+              primaryText={e.name}
+              rightIcon={<FloatingActionButton onClick={this.deleteFavorite.bind(this, [i])} mini secondary style={style}>
+                <ContentRemove />
+              </FloatingActionButton>}
+              secondaryText={e.phone + ' || Rating: ' + e.rating}
+              leftAvatar={<Avatar src={e.image_url} />}
             />
         ))}
-          </SelectableList>
+        </SelectableList>
       </div>
     )
   }
+
 }
