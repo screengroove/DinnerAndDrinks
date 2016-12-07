@@ -20,7 +20,7 @@ export default class FavoritesList extends React.Component {
             .catch(err => { console.log(`Favorites get error: ${err}`) })
   }
 
-deleteFavorite (index) {
+  deleteFavorite (index) {
     var self = this
     axios({
       method: 'DELETE',
@@ -39,7 +39,6 @@ deleteFavorite (index) {
     copy.splice(index, 1)
     this.setState({list: copy})
   }
-
 
   render () {
     return (

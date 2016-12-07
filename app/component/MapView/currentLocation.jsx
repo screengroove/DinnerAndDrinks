@@ -16,10 +16,7 @@ let choices = [
 ]
 
 let gridColor = {color: 'rgb(0, 188, 212)'}
-let gridList = {
-  display: 'flex',
-  flexWrap: 'nowrap',
-  overflowX: 'auto' }
+let gridList = { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' }
 
 let SelectableList = makeSelectable(List)
 
@@ -38,7 +35,6 @@ export default class CurrentLocation extends React.Component {
     this.longitude = 0.0
     localStorage.setItem(['Current-Location-lat'], this.state.lat)
     localStorage.setItem(['Current-Location-long'], this.state.long)
-
   }
 
   componentWillUpdate () {
@@ -116,11 +112,11 @@ export default class CurrentLocation extends React.Component {
     .catch(err => { console.log(`${err}`) })
   }
 
-     // Google Api function
+  // Google Api function
   initMap () {
     let map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 33.975374099999996, lng: -118.39200809999998},
-      zoom: 10
+      zoom: 11
     })
     let infoWindow = new google.maps.InfoWindow({map: map})
 
@@ -175,7 +171,6 @@ export default class CurrentLocation extends React.Component {
     setTimeout(this.initMap.bind(this), 500)
     return (
       <div>
-        {console.log(`List: `, this.state.list)}
         <div id='selector'>
           <GridList style={gridList} cols={2.2}>
             {choices.map((e, i) => (
