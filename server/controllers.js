@@ -9,7 +9,6 @@ module.exports = {
   users: {
     get: (req, res) => {
       models.users.get(req.query, res)
-
     },
     post: (req, res) => {
       models.users.post(req.body, res)
