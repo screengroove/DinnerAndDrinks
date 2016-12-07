@@ -90,7 +90,6 @@ export default class CurrentLocation extends React.Component {
     this.postId()
     axios.get('/api/yelp/business')
       .then(resp => {
-        console.log(resp)
         this.setState({ reviews: resp.data.reviews })
       }).catch(err => {
         console.log(`${err}`)
@@ -175,7 +174,7 @@ export default class CurrentLocation extends React.Component {
         <div id='selector'>
           <GridList style={gridList} cols={2.2}>
             {choices.map((e, i) => (
-              <GridTile onClick={this.selector.bind(this, [e])} className='tile' title={e.name} titleStyle={gridColor} titleBackground='linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)' >
+              <GridTile onClick={this.selector.bind(this, [e.name])} className='tile' title={e.name} titleStyle={gridColor} titleBackground='linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)' >
                 <img src={e.url} />
               </GridTile>
           ))}
