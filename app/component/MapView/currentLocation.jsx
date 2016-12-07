@@ -23,6 +23,14 @@ const style = {
   marginRight: 20
 }
 
+const fonts = {
+  'font-size': '14px'
+}
+
+const subheader = {
+  'font-size': '24px'
+}
+
 const gambler = {
   height: '400px',
   width: '400px',
@@ -158,7 +166,6 @@ export default class CurrentLocation extends React.Component {
         let geocoder = new google.maps.Geocoder()
         geocoder.geocode({'latLng': pos}, (results, status) => {
           localStorage.setItem(['Current-Location-city'], results[0].formatted_address.split(', ')[1])
-           // address => string=> results[0].formatted_address
         })
 
         infoWindow.setPosition(pos)
@@ -238,15 +245,15 @@ export default class CurrentLocation extends React.Component {
         </div>
         <div id="spaceholder"></div>
         <div id='reviews-list'>
-          <Subheader>Details</Subheader>
+          <Subheader style={subheader}>Details</Subheader>
           <Card style={gambler}>
             <CardMedia overlay={<CardTitle title={(!this.state.showing ? '' : this.state.reviews.name)} />}>
               <img src={(!this.state.showing ? '' : this.state.reviews.image_url)} />
             </CardMedia>
-            <CardText>
-              {(!this.state.showing ? '' : this.state.reviews.reviews[0].excerpt)} <br /> <br />
+            <CardText style={fonts}>
+              {(!this.state.showing ? '' : 'Review: ' + this.state.reviews.reviews[0].excerpt)} <br /> <br />
               {(!this.state.showing ? '' : 'Rating: ' + this.state.reviews.rating)} <br />
-             {(!this.state.showing ? '' : 'Phone Number: ' + this.state.reviews.display_phone)} <br />
+              {(!this.state.showing ? '' : 'Phone Number: ' + this.state.reviews.display_phone)} <br />
             </CardText>
           </Card>
         </div>
