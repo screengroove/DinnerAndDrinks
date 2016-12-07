@@ -1,21 +1,27 @@
 import React from 'react'
 import axios from 'axios'
 import RaisedButton from 'material-ui/RaisedButton'
-
 import injectTapEventPlugin from 'react-tap-event-plugin'
-injectTapEventPlugin()
+import TextField from 'material-ui/TextField'
 
+import Slider from 'material-ui/Slider'
+
+injectTapEventPlugin();
 export default class HotspotForm extends React.Component {
 
   constructor (props) {
     super(props)
-
-
-    this.state = {}
-
+    this.state = {
+      rating: 2.5
+    }
 
     this.submitHotspotForm = this.submitHotspotForm.bind(this)
+    this.handleSlider = this.handleSlider.bind(this)
   }
+
+  handleSlider (event, value) {
+      this.setState({rating: value});
+  };
 
   submitHotspotForm () {
     let name = document.getElementById('hotspotLocationName').value
@@ -25,9 +31,11 @@ export default class HotspotForm extends React.Component {
     let location = {
       name: name,
       address: address,
-      description: description
+      description: description,
+      rating: this.state.rating,
+      user: localStorage['User-Name']
     }
-    if (!address) {
+    if (!address){
       alert('Please enter a valid address')
       return
     }
@@ -46,11 +54,47 @@ export default class HotspotForm extends React.Component {
 
   render () {
     return (
-      <div id='hotspots-form'>
-        <input placeholder='name' id='hotspotLocationName' />
-        <input placeholder='address' id='hotspotAddress' />
-        <textarea placeholder='description' id='hotspotDescription' />
-        <RaisedButton onClick={this.submitHotspotForm}>Submit Form</RaisedButton>
+
+      <div id='hotspot-form-foundation'>
+        <h2>Submit A Hotspot</h2>
+        <div id='hotspots-form'>
+          <TextField
+          id="hotspotLocationName"
+          floatingLabelText="Location Name" />
+        </div>
+
+        <div>
+          <TextField
+          id="hotspotAddress"
+          floatingLabelText="Address" />
+        </div>
+
+        <div>
+          <TextField
+          id="hotspotDescription"
+          floatingLabelText="Description"
+          multiLine={true}
+          rows={2} />
+        </div>
+
+
+        <div>
+
+          <Slider
+            min={0}
+            max={5}
+            step={.1}
+            defaultValue={2.5}
+            value={this.state.rating}
+            onChange={this.handleSlider} />
+
+          <h3>Rating: {this.state.rating}</h3>
+
+        </div>
+
+
+
+        <RaisedButton primary={true} fullWidth={true} onClick={this.submitHotspotForm}>Send it up</RaisedButton>
       </div>
     )
   }

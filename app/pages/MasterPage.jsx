@@ -29,7 +29,9 @@ export default class MasterPage extends React.Component {
           <MenuItem onClick={this.handleToggle} ><Link to='/'>Home</Link></MenuItem>
           <MenuItem onClick={this.handleToggle} ><Link to='/signup'>Sign Up/Login</Link></MenuItem>
           <MenuItem onClick={this.handleToggle} ><Link to='/favorites'>Favorites</Link></MenuItem>
-          <MenuItem onClick={this.clearLocalStorage} ><Link to='/'>Logout</Link></MenuItem>
+          <MenuItem onClick={this.handleToggle} ><Link to='/hotspots'>Hotspots</Link></MenuItem>
+          <MenuItem onClick={this.clearLocalStorage}><Link to='/'>Logout</Link></MenuItem>
+
         </Drawer>
         {this.props.children}
       </div>
