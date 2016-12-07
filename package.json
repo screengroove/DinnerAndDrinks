@@ -4,12 +4,14 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "nodemon ./server/server.js",
-    "build": "webpack -w",
-    "test": "standard --fix"
+    "start": "node ./server/server.js",
+    "build": "webpack -p"
+  },
+  "engines": {
+    "node": "7.0.0"
   },
   "keywords": [],
-  "author": "The R3bellion",
+  "author": "Layne Faler <laynefaler>",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.18.2",
@@ -33,16 +35,26 @@
     "auth0-js": "^7.5.0",
     "auth0-lock": "^10.7.2",
     "axios": "^0.15.3",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
+    "css-loader": "^0.26.0",
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
+    "extract-text-webpack-plugin": "^1.0.1",
     "material-ui": "^0.16.4",
+    "mongoose": "^4.7.1",
     "morgan": "^1.7.0",
+    "node-sass": "^3.13.0",
     "oauth": "^0.9.14",
     "passport": "^0.3.2",
     "passport-auth0": "^0.5.2",
@@ -57,7 +69,10 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "request": "^2.79.0",
+    "sass-loader": "^4.0.2",
     "socket.io": "^1.7.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
     "yelp": "^1.0.1"
   },
   "standard": {
