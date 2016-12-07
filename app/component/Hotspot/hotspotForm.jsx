@@ -27,13 +27,13 @@ export default class HotspotForm extends React.Component {
     let name = document.getElementById('hotspotLocationName').value
     let address = document.getElementById('hotspotAddress').value
     let description = document.getElementById('hotspotDescription').value
-
+    let user = localStorage['User-Name']
     let location = {
       name: name,
       address: address,
       description: description,
       rating: this.state.rating,
-      user: localStorage['User-Name']
+      user: user
     }
     if (!address){
       alert('Please enter a valid address')
@@ -56,7 +56,7 @@ export default class HotspotForm extends React.Component {
     return (
 
       <div id='hotspot-form-foundation'>
-        <h2>Submit A Hotspot</h2>
+        <h2 id="form-title">Submit A Hotspot</h2>
         <div id='hotspots-form'>
           <TextField
           id="hotspotLocationName"
@@ -78,7 +78,7 @@ export default class HotspotForm extends React.Component {
         </div>
 
 
-        <div>
+        <div id="rater">
 
           <Slider
             min={0}
@@ -93,8 +93,9 @@ export default class HotspotForm extends React.Component {
         </div>
 
 
-
-        <RaisedButton primary={true} fullWidth={true} onClick={this.submitHotspotForm}>Send it up</RaisedButton>
+        <div id="submitHotspotButton">
+          <RaisedButton primary={true} fullWidth={true} onClick={this.submitHotspotForm}>Send it up</RaisedButton>
+        </div>
       </div>
     )
   }
