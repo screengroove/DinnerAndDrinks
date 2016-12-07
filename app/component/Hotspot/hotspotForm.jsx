@@ -10,9 +10,7 @@ export default class HotspotForm extends React.Component {
   constructor (props) {
     super(props)
 
-
     this.state = {}
-
 
     this.submitHotspotForm = this.submitHotspotForm.bind(this)
   }
@@ -41,7 +39,7 @@ export default class HotspotForm extends React.Component {
       .catch((error) => {
         console.log('Error in axios hotspot form post: ', error)
       })
-      console.log(`Hit me`)
+    console.log(`Hit me`)
   }
 
   render () {

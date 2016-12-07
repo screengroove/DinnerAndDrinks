@@ -235,15 +235,15 @@ export default class CurrentLocation extends React.Component {
                 onClick={this.getId.bind(this, [i])}
                 primaryText={e.name}
                 rightIcon={<FloatingActionButton onClick={this.saveFavorite.bind(this, [i])} mini secondary style={style}>
-                                      <ContentAdd />
-                                    </FloatingActionButton>}
+                  <ContentAdd />
+                </FloatingActionButton>}
                 secondaryText={e.display_phone + ' || Rating: ' + e.rating}
                 leftAvatar={<Avatar src={e.image_url} />}
             />
           ))}
           </SelectableList>
         </div>
-        <div id="spaceholder"></div>
+        <div id='spaceholder' />
         <div id='reviews-list'>
           <Subheader style={subheader}>Details</Subheader>
           <Card style={gambler}>

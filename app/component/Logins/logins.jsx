@@ -3,6 +3,8 @@ import axios from 'axios'
 import { Router, Route, Link, browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import {orange500, blue500, blue800} from 'material-ui/styles/colors'
+import Button from 'react-bootstrap/lib/Button'
+import Modal from 'react-bootstrap/lib/Modal'
 
 export default class Login extends React.Component {
 
@@ -53,18 +55,18 @@ export default class Login extends React.Component {
     }
     return (
       <div id='login'>
+        <p className='login'>Login</p><br /><br />
         <TextField
           floatingLabelText='Email Address' id='email'
           floatingLabelStyle={styles.floatingLabelStyle}
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
         /><br />
-
         <TextField
           floatingLabelText='Password' type='password' id='password'
           floatingLabelStyle={styles.floatingLabelStyle}
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
         /><br />
-        <button onClick={this.submitLoginForm}>Login</button><br /><br />
+        <button className='btn btn-primary' onClick={this.submitLoginForm}>Login</button><br /><br />
       </div>
     )
   }
