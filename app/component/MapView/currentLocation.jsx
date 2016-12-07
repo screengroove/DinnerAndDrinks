@@ -6,6 +6,7 @@ import Avatar from 'material-ui/Avatar'
 import {GridList, GridTile} from 'material-ui/GridList'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card'
 
 let choices = [
   {name: 'Coffee', url: 'https://genesistransformation.files.wordpress.com/2014/11/coffee.jpg'},
@@ -22,6 +23,10 @@ const style = {
   marginRight: 20
 }
 
+const gambler = {
+  height: '400px'
+}
+
 let gridColor = {color: 'rgb(0, 188, 212)'}
 let gridList = { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' }
 
@@ -36,7 +41,9 @@ export default class CurrentLocation extends React.Component {
       list: [],
       reviews: [],
       id: '',
-      term: ''
+      term: '',
+      index: 0,
+      showing: false
     }
 
     this.latitude = 0.0
@@ -104,7 +111,8 @@ export default class CurrentLocation extends React.Component {
     this.postId()
     axios.get('/api/yelp/business')
       .then(resp => {
-        this.setState({ reviews: resp.data.reviews })
+        this.setState({ reviews: resp.data })
+        this.setState({showing: true})
       }).catch(err => {
         console.log(`${err}`)
       })
@@ -183,6 +191,7 @@ export default class CurrentLocation extends React.Component {
 
   getId (index) {
     this.setState({id: this.state.list[index].id})
+    this.setState({index: index})
     this.getReviews()
   }
 
@@ -226,11 +235,16 @@ export default class CurrentLocation extends React.Component {
           </SelectableList>
         </div>
         <div id='reviews-list'>
-        {console.log(` asdfasdfasdfasdfasdf `,this.state.reviews)}
           <Subheader>Details</Subheader>
-          <List>
-            <ListItem />
-          </List>
+          <Card>
+            <CardMedia overlay={<CardTitle title={(!this.state.showing ? '' : this.state.reviews.name)} />}>
+              <img src={(!this.state.showing ? '' : this.state.reviews.image_url)} />
+            </CardMedia>
+            <CardTitle title={(!this.state.showing ? '' : this.state.reviews.name)} />
+            <CardText>
+              {(!this.state.showing ? '' : this.state.reviews.reviews.excerpt)}
+            </CardText>
+          </Card>
         </div>
       </div>
     )
