@@ -14,10 +14,19 @@
     left: 0;
  
 }
-#signup-p {
-    p {
-        font-family: 'Roboto', sans-serif;
-        font-size: 24;
-    }
-    
+.signup-p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24;
+}
+.modal-container {
+  position: relative;
+  margin: 0 auto;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+  margin: 0 auto;
+}
+.modal-signup {
+  position: relative;
+  margin-top: 300px;
 }

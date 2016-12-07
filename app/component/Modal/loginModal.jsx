@@ -1,20 +1,25 @@
 import React from 'react'
-import {Button, Modal} from 'react-bootstrap/lib'
+import Button from 'react-bootstrap/lib/Button'
+import Modal from 'react-bootstrap/lib/Modal'
 
 export default class LoginModal extends React.Component {
-  getInitialState () {
-    return { show: false }
+  constructor (props) {
+    super(props)
+    this.state = {
+      show: true
+    }
+    this.close = this.close.bind(this)
   }
-
+  close () {
+    this.setState({ show: false})
+  }
   render () {
-    let close = () => this.setState({ show: false})
-
     return (
       <div className='modal-container' style={{height: 200}}>
 
         <Modal
           show={this.state.show}
-          onHide={close}
+          onHide={this.close}
           container={this}
           aria-labelledby='contained-modal-title'
         >
@@ -25,7 +30,7 @@ export default class LoginModal extends React.Component {
             Feel free to login.
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={close}>Close</Button>
+            <Button onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>

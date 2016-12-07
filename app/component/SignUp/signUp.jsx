@@ -3,18 +3,27 @@ import axios from 'axios'
 import TextField from 'material-ui/TextField'
 import {orange500, blue800, blue900} from 'material-ui/styles/colors'
 import { Router, Route, Link, browserHistory } from 'react-router'
-// import {Button, Modal} from 'react-bootstrap/lib'
-// import LoginModal from '/Users/JP/HR/Recommendator/app/component/Logins/loginModal.jsx'
+import Button from 'react-bootstrap/lib/Button'
+import Modal from 'react-bootstrap/lib/Modal'
 
 export default class SignUp extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      errorMessage: ''
-    }
-  }
+      errorMessage: '',
+      show: false
 
+    }
+    this.close = this.close.bind(this)
+    this.open = this.open.bind(this)
+  }
+  open () {
+    this.setState({show: true})
+  }
+  close () {
+    this.setState({show: false})
+  }
   validatePassword () {
     let password = document.getElementById('password').value
     let confirmPassword = document.getElementById('confirmPassword').value
@@ -30,9 +39,7 @@ export default class SignUp extends React.Component {
     let firstName = document.getElementById('firstName').value
     let password = document.getElementById('password').value
     let confirmPassword = document.getElementById('confirmPassword').value
-
     let signup = {
-
       firstName: firstName,
       email: email,
       password: password,
@@ -46,7 +53,6 @@ export default class SignUp extends React.Component {
         document.querySelector('#email').value = ''
         document.querySelector('#password').value = ''
         document.querySelector('#confirmPassword').value = ''
-        alert('Thank you for signing up with us! Feel free to login.')
       })
       .catch((error) => {
         console.log('Error in axios hotspot from POST: ', error)
@@ -96,14 +102,29 @@ export default class SignUp extends React.Component {
          /><br />
         <p id='errorMessage'>{this.state.errorMessage}</p><br />
 
-        <button type='submit' className='button' onClick={this.submitSignupForm}>Sign Up</button>
+        <button type='submit' className='btn btn-primary' onClick={this.submitSignupForm && this.open}>Sign Up</button>
+        <Modal className='modal-signup'
+          show={this.state.show}
+          onHide={this.close}
+          container={this}
+          aria-labelledby='contained-modal-title'
+            >
+          <Modal.Header closeButton>
+            <Modal.Title id='contained-modal-title'>Thank you for signing up!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+                Feel free to login.
+              </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.close}>Close</Button>
+          </Modal.Footer>
+        </Modal>
         <br />
         Already Have an Account?
         <Link to='/login'> Login</Link>
         <br />
         Or go
         <Link to='/'> home.</Link>
-
       </div>
     )
   }
