@@ -1,9 +1,9 @@
 // call model functions in controller functions
 const yelp = require('../config').yelp
 const models = require('./models')
-
 let placeholder, placeholder2
-
+const request = require('request')
+const API_KEY = require('../config').googleMapsApiKey
 module.exports = {
     // Josh's endpoint is user
   users: {
@@ -39,15 +39,23 @@ module.exports = {
   },
   hotspots: {
     get: (req, res) => {
-      models.hotspots.get(req.body, res)
-
       console.log('These are the res: ', res.data)
       console.log('this is the req.body: ', req.body)
+      models.hotspots.get(req.body, res)
     },
     post: (req, res) => {
-      console.log('req.body in the server controller: ', req.body)
-      models.hotspots.post(req.body)
-      res.send(req.body)
+      req.body.lat=0
+      req.body.long=0
+      request.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + req.body.address + '&key=' + API_KEY, (error, response, body) => {
+        if (error) {
+          console.log(`There has been a grave error: ${error}`)
+        }
+        let coordinates = JSON.parse(body)
+        req.body.lat = coordinates.results[0].geometry.location.lat
+        req.body.long = coordinates.results[0].geometry.location.lng
+        models.hotspots.post(req.body)
+        res.send(req.body)
+      })
     }
   },
   yelp: {
