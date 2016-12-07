@@ -2,19 +2,18 @@
 // add to .gitignore on your own computer
 // when adding here talk to everyone so they can add
 // those keys and values too
-require('dotenv')
 const Yelp = require('yelp')
 const yelp = new Yelp({
-  consumer_key: process.env.consumer_key,
-  consumer_secret: process.env.consumer_secret,
-  token: process.env.token,
-  token_secret: process.env.token_secret
+  consumer_key: '9JsyXXhj9pxI0wRtxIdb9Q',
+  consumer_secret: '0D3FHzK5wuysal4WYZY3CeYEdR8',
+  token: 'ivBw983_ASe9DysxtuqI7cxlrGBFOI4m',
+  token_secret: 'k6QLpFpCtW0r3j_DsqJKEgqmI-Q'
 })
 module.exports = {
-  googleMapsApiKey: process.env.googleMapsApiKey,
+  googleMapsApiKey: 'AIzaSyB92DEsCCYUsGL5O8ULNESPb12Cg2bVOSA',
   yelp: yelp,
   'database': {
-    'test': process.env.test,
-    'mongo': process.env.mongo
+    'test': 'mongodb://localhost:27017/test',
+    'mongo': 'mongodb://rebels:sleber@ds119618.mlab.com:19618/recommendatordb'
   }
 }
