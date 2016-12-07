@@ -1,6 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 import { Router, Route, Link, browserHistory } from 'react-router'
+import TextField from 'material-ui/TextField'
+import {orange500, blue500, blue800} from 'material-ui/styles/colors'
+
+
 
 export default class Login extends React.Component {
 
@@ -40,10 +44,38 @@ export default class Login extends React.Component {
   }
 
   render () {
+    const styles = {
+      errorStyle: {
+        color: orange500
+      },
+      underlineStyle: {
+        borderColor: orange500
+      },
+      floatingLabelStyle: {
+
+        color: blue500
+      },
+      floatingLabelFocusStyle: {
+        color: blue800
+
+      }
+    }
     return (
-      <div>
-        <input placeholder='Email' id='email' /><br />
-        <input placeholder='Password' type='password' id='password' /><br />
+      <div id="login">
+        <TextField
+          floatingLabelText='Email Address' type='email' id='email' required
+          floatingLabelStyle={styles.floatingLabelStyle}
+          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+
+        /><br/>
+
+        <TextField
+          floatingLabelText='Password' type='password' id='password' required
+          floatingLabelStyle={styles.floatingLabelStyle}
+          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+
+        /><br />
+
         <button onClick={this.submitLoginForm}>Submit Form</button><br /><br />
         <button onClick={this.clearLocalStorage}>Logout</button><br />
 
