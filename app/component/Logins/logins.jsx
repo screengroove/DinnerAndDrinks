@@ -4,7 +4,6 @@ import { Router, Route, Link, browserHistory } from 'react-router'
 import TextField from 'material-ui/TextField'
 import {orange500, blue500, blue800} from 'material-ui/styles/colors'
 
-
 export default class Login extends React.Component {
 
   constructor (props) {
@@ -31,11 +30,11 @@ export default class Login extends React.Component {
         browserHistory.push('/')
       })
       .catch((error) => {
-        console.log('Error in axios hotspot from get login: ', error)
+        alert('Are you sure you entered that correctly? Please try again.')
       })
   }
-  
-render () {
+
+  render () {
     const styles = {
       errorStyle: {
         color: orange500
@@ -65,8 +64,8 @@ render () {
           floatingLabelStyle={styles.floatingLabelStyle}
           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
         /><br />
-        <button onClick={this.submitLoginForm}>Submit</button><br /><br />
-    </div>
+        <button onClick={this.submitLoginForm}>Login</button><br /><br />
+      </div>
     )
   }
 }

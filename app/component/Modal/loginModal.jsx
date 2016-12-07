@@ -11,7 +11,6 @@ export default class LoginModal extends React.Component {
 
     return (
       <div className='modal-container' style={{height: 200}}>
-        
 
         <Modal
           show={this.state.show}
