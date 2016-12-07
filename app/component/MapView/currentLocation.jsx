@@ -230,13 +230,11 @@ export default class CurrentLocation extends React.Component {
           </SelectableList>
         </div>
         <div id='reviews-list'>
+        {console.log(` asdfasdfasdfasdfasdf `,this.state.reviews)}
           <Subheader>Details</Subheader>
           <List>
-            <ListItem />
-            <ListItem />
-            <ListItem />
-            <ListItem />
-            <ListItem />
+            <ListItem 
+            />
           </List>
         </div>
       </div>
