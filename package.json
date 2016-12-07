@@ -9,7 +9,7 @@
     "test": "standard --fix"
   },
   "keywords": [],
-  "author": "The R3bellion",
+  "author": "Layne Faler <laynefaler>",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.18.2",
