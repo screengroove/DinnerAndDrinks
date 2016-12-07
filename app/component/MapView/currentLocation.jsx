@@ -24,7 +24,9 @@ const style = {
 }
 
 const gambler = {
-  height: '400px'
+  height: '400px',
+  width: '400px',
+  margin: '0 auto'
 }
 
 let gridColor = {color: 'rgb(0, 188, 212)'}
@@ -226,23 +228,25 @@ export default class CurrentLocation extends React.Component {
                 onClick={this.getId.bind(this, [i])}
                 primaryText={e.name}
                 rightIcon={<FloatingActionButton onClick={this.saveFavorite.bind(this, [i])} mini secondary style={style}>
-                  <ContentAdd />
-                </FloatingActionButton>}
+                                      <ContentAdd />
+                                    </FloatingActionButton>}
                 secondaryText={e.display_phone + ' || Rating: ' + e.rating}
                 leftAvatar={<Avatar src={e.image_url} />}
             />
-        ))}
+          ))}
           </SelectableList>
         </div>
+        <div id="spaceholder"></div>
         <div id='reviews-list'>
           <Subheader>Details</Subheader>
-          <Card>
+          <Card style={gambler}>
             <CardMedia overlay={<CardTitle title={(!this.state.showing ? '' : this.state.reviews.name)} />}>
               <img src={(!this.state.showing ? '' : this.state.reviews.image_url)} />
             </CardMedia>
-            <CardTitle title={(!this.state.showing ? '' : this.state.reviews.name)} />
             <CardText>
-              {(!this.state.showing ? '' : this.state.reviews.reviews.excerpt)}
+              {(!this.state.showing ? '' : this.state.reviews.reviews[0].excerpt)} <br /> <br />
+              {(!this.state.showing ? '' : 'Rating: ' + this.state.reviews.rating)} <br />
+             {(!this.state.showing ? '' : 'Phone Number: ' + this.state.reviews.display_phone)} <br />
             </CardText>
           </Card>
         </div>
