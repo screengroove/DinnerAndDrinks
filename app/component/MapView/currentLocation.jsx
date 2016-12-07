@@ -211,6 +211,10 @@ export default class CurrentLocation extends React.Component {
           <Subheader>Details</Subheader>
           <List>
             <ListItem />
+            <ListItem />
+            <ListItem />
+            <ListItem />
+            <ListItem />
           </List>
         </div>
       </div>
@@ -220,7 +224,5 @@ export default class CurrentLocation extends React.Component {
 }
 
 /**
- * 
- * 
- * 
+
  */

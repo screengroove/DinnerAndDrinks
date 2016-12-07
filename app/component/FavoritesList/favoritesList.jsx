@@ -3,7 +3,6 @@ import axios from 'axios'
 import {List, ListItem, makeSelectable} from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
 import ContentRemove from 'material-ui/svg-icons/content/remove'
 
 const style = {
@@ -32,19 +31,19 @@ export default class FavoritesList extends React.Component {
   }
 
   deleteFavorite (index) {
-    axios({
-      method: 'DELETE',
-      url: '/api/favorites',
-      data: {
-        deleteMe: this.state.list[index]._id
-      }
-    })
-        .then((resp) => {
-          console.log(`Successful delete`)
-        })
-        .catch((err) => {
-          console.log(`Error in deleting favorite: ${err}`)
-        })
+      axios({
+        method: 'DELETE',
+        url: '/api/favorites',
+        data: {
+          deleteMe: this.state.list[index]._id
+        }
+      })
+      .then((resp) => {
+        console.log(`Successful delete`)
+      })
+      .catch((err) => {
+        console.log(`Error in deleting favorite: ${err}`)
+      })
     let copy = this.state.list.slice()
     copy.splice(index, 1)
     this.setState({list: copy})
