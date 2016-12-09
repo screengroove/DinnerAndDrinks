@@ -4,6 +4,8 @@ const models = require('./models')
 let placeholder, placeholder2
 const request = require('request')
 const API_KEY = require('../config').googleMapsApiKey
+console.log("GOOGLE KEYS", API_KEY )
+
 module.exports = {
     // Josh's endpoint is user
   users: {
