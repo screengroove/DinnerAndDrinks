@@ -1,0 +1,63 @@
+
+
+.hide-mobile{
+  display: none ;
+
+  @include breakpoint(med) {
+    display: inline-block;
+  }
+
+}
+.is-flexy{
+	display: flex;
+}
+
+
+
+.mt-30 {
+	margin-top: 30px;
+}
+.mt-50 {
+	margin-top: 50px;
+}
+.mb-30{
+	margin-bottom: 30px;
+	@include breakpoint(sm) {
+	  margin-bottom: 30px;
+	}
+}
+.mb-75{
+	margin-bottom: 40px;
+	@include breakpoint(sm) {
+	  margin-bottom: 58px;
+	}
+}
+.mb-100{
+	margin-bottom: 50px;
+	@include breakpoint(sm) {
+	  margin-bottom: 100px;
+	}
+}
+.ps-15{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.no-margin{
+	margin: 0 !important;
+}
+.center{
+	margin: 0 auto;
+}
+.text-center{
+	text-align: center;
+}
+
+
+
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
