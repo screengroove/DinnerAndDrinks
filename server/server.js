@@ -35,7 +35,7 @@ app.use(cors({ origin: '*' }))
 app.use(morgan('dev'))
 app.use(parser.urlencoded({extended: true}))
 app.use(parser.json())
-app.use(express.static('public'))
+app.use(express.static('./client/public'))
 
 app.use(cookieParser()) // read cookies (needed for auth)
 
