@@ -14,8 +14,8 @@ router.post('/favorites', controllers.favorites.post)
 router.delete('/favorites', controllers.favorites.delete)
 
 // comments
-router.get('/comments', controllers.comments.get)
-router.post('/comments', controllers.comments.post)
+// router.get('/comments', controllers.comments.get)
+// router.post('/comments', controllers.comments.post)
 
 // hotspots
 router.get('/hotspots', controllers.hotspots.get)

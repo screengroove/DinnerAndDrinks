@@ -1,0 +1,19 @@
+
+
+body{
+  font-family: 'Roboto', sans-serif;
+  color: $gray-dk;
+}
+
+p {
+  font-size: rem-calc(15);
+  font-weight: 300;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-style: normal;
+  font-family: 'Cousine', monospace;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+}
+

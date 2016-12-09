@@ -1,0 +1,32 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:3001/",
+  "devDependencies": {
+    "react-scripts": "0.8.3",
+    "concurrently": "^3.1.0",
+    "node-sass": "^3.11.2",
+    "postcss-cli": "^2.6.0"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "classnames": "^2.2.5",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.4.0",
+    "react-router-redux": "^4.0.7",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "watch": "concurrently --names 'webpack, node-sass' --prefix name 'npm run start' 'npm run styles:watch'",
+    "styles": "node-sass -o ./src/styles  ./src/styles",
+    "styles:watch": "node-sass  -w ./src/styles/main.scss -o ./src/styles/"
+  }
+}
