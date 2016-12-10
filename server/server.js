@@ -1,73 +1,35 @@
 const express = require('express')
 const app = express()
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
-const parser = require('body-parser')
 const morgan = require('morgan')
-const routes = require('./routes')
-const mongoose = require('mongoose')
-const cors = require('cors')
-const config = require('../config')
-const passport = require('passport')
-const flash = require('connect-flash')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
+const path = require('path')
+const bodyParser = require('body-parser')
+const emailCtrl = require('./controllers/email.js')
+const db = require('./db/db.js')
 
-// port settings
-let port = process.env.PORT || 3000
+//require controllers and db
 
-// web socket protocol on localhost on port 3000
-server.listen(port, () => {
-  console.log(`Listen to http://localhost:${port}`)
+
+// CONFIG (USE) ============================
+app.use( morgan('dev') );
+app.use( bodyParser.json() );
+app.use(bodyParser.urlencoded({ extended: true }));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use('/',express.static('../client/public'));
+} 
+
+// LISTEN (SET) =============================
+app.set('port', (process.env.PORT || 3001));
+app.listen(app.get('port'), function(){
+  console.log('API Server started: http://localhost:' + app.get('port') + '/');
 })
 
-// Custom Middleware for Allow HTTP Access
-let allowDomain = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-  res.header('Access-Control-Allow-Headers', 'Content-Type')
-  next()
-}
 
-// Middleware
-// Body Parser, Morgan, and Public Compiled folder
-app.use(cors({ origin: '*' }))
-app.use(morgan('dev'))
-app.use(parser.urlencoded({extended: true}))
-app.use(parser.json())
-app.use(express.static('./client/public/index.html'))
+// ROUTING (GET) =============================
+app.get('/api/emails', emailCtrl.get)
+app.post('/api/emails', emailCtrl.post)
 
-app.use(cookieParser()) // read cookies (needed for auth)
-
-// required for passport
-app.use(session({ secret: 'secret' })) // session secret
-app.use(passport.initialize())
-app.use(passport.session()) // persistent login sessions
-app.use(flash()) // use connect-flash for flash messages stored in session
-
-// web socket protocol on localhost on port 3000
-server.listen(port, () => {
-  console.log(`Listen to http://localhost:${port}`)
+app.get('*', (req, res) => {
+  res.sendfile('./client/public/index.html');
 })
 
-// database connection
-mongoose.connect('mongodb://jackie:password@ds127978.mlab.com:27978/recommendator')
-const db = mongoose.connection
-db.once('open', () => {
-  console.log('connected to database')
-})
-
-// Render the index.html
-// app.get('/', (req, res) => { res.sendFile('index.html') })
-
-app.use('/api', routes) // when you add api routes in routes.js
-
-// Web socket on connection
-io.on('connection', (socket) => {
-  io.emit('this', { will: 'be received by everyone' })
-
-    // disconnect the websocket when user leaves
-  socket.on('disconnect', () => {
-    io.emit('user disconnected')
-  })
-})
