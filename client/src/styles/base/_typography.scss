@@ -1,7 +1,8 @@
 
 
 body{
-  font-family: 'Roboto', sans-serif;
+font-family: 'Source Sans Pro', sans-serif;
+font-weight: 300;
   color: $gray-dk;
 }
 
@@ -12,8 +13,7 @@ p {
 
 h1,h2,h3,h4,h5,h6 {
   font-style: normal;
-  font-family: 'Cousine', monospace;
-  font-weight: 700;
+  font-family: 'Abel', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
