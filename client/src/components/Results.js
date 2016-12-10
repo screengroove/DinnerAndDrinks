@@ -10,8 +10,9 @@ class Results  extends Component{
       			address: "400 South Main Street, Los Angeles, CA 90013",
       			stars: "3.5",
       			price: "$$",
-      			image1: "https://s3-media1.fl.yelpcdn.com/bphoto/CAfX7rN54iY4sZPWN0ATOw/o.jpg"
-      	
+      			image1: "https://s3-media1.fl.yelpcdn.com/bphoto/CAfX7rN54iY4sZPWN0ATOw/o.jpg",
+      			coordinates: {longitude: "",
+      						 latitude: ""}
       		},
       		distance: "0.4 mile",
       		secondLocation: {
@@ -20,7 +21,9 @@ class Results  extends Component{
       			address: "448 Hill Street, Los Angeles, CA 90013",
       			stars: "4",
       			price: "$$$",
-      			image1: "https://s3-media2.fl.yelpcdn.com/bphoto/8rTQD0D8lvgCsGFazFy_wg/o.jpg"
+      			image1: "https://s3-media2.fl.yelpcdn.com/bphoto/8rTQD0D8lvgCsGFazFy_wg/o.jpg",
+      			coordinates: {longitude: "",
+      						 latitude: ""}
       		},
       		value: ""
 
@@ -35,6 +38,7 @@ class Results  extends Component{
     handleSubmit(event) {
     	alert('An email was submitted: ' + this.state.value)
     	event.preventDefault()
+    	//axios post 
   	}
   render () {
   	var first = this.state.firstLocation

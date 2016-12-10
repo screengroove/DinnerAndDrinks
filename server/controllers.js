@@ -6,6 +6,7 @@ const request = require('request')
 const API_KEY = require('../config').googleMapsApiKey
 console.log("GOOGLE KEYS", API_KEY )
 
+
 module.exports = {
     // Josh's endpoint is user
   users: {
@@ -108,6 +109,15 @@ module.exports = {
     post: (req, res) => {
             /* can look something like this
                 models.user.post() */
+    }
+  },
+  emails: {
+    get: (req, res) => {
+      models.email.get(req, res)
+    },
+    post: (req, res) => {
+      models.email.post(req.body, res)
+      res.send(req.body)
     }
   }
 

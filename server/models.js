@@ -2,6 +2,7 @@
 const Hotspot = require('../database/db').Hotspot
 const User = require('../database/db').User
 const Favorites = require('../database/db').Favorites
+const Email = require('../database/db').Email
 
 module.exports = {
   users: {
@@ -79,6 +80,49 @@ module.exports = {
         }
       })
     }
-  }
+  },
+  email: {
+    get: function(req,req){
+      Email.find(function(err,email){
+        if(err){
+          return handleError(err)
+        }
+        if(email){
+          res.json(email)
+        }
+      })
+    },
+    // post: function(req,res){
+    //   var email = new Email({
+    //     email: req.body.email,
+    //     firstLocation: req.body.firstLocation,
+    //     secondLocation: req.body.secondLocation
+    //   })
+    //   email.save(function(err){
+    //     if(err){
+    //       throw(err)
+    //     } else {
+    //       console.log("this fires after post")
+    //     }
+    //   }).then(function(arg){
+    //     res.send("posted to db")
+    //   })
+    //   //call to mandrill
+    // }
+      post: (req, res) => {
+      Email
+        .create({
+          email: req.email,
+          firstLocation: req.firstLocation,
+          secondLocation: req.secondLocation
+        }, (err, user) => {
+          if (err) {
+            console.log('ERROR in MODEL POST: ', err)
+          } else {
+
+          }
+        })
+    }
+}
 
 }
