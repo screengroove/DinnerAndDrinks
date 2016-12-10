@@ -16,6 +16,7 @@ var yelp = new Yelp({
 });
 
 
+
 module.exports = {
     // Josh's endpoint is user
   users: {
@@ -127,6 +128,15 @@ module.exports = {
     post: (req, res) => {
             /* can look something like this
                 models.user.post() */
+    }
+  },
+  contacts: {
+    get: (req, res) => {
+      models.contact.get(req, res)
+    },
+    post: (req, res) => {
+      models.contact.post(req.body, res)
+      res.send(req.body)
     }
   }
 

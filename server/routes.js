@@ -31,5 +31,9 @@ router.post('/yelp/search', controllers.yelp.postSearch)
 router.get('/yelp/business', controllers.yelp.getBusiness)
 router.post('/yelp/business', controllers.yelp.postBusiness)
 
+//emails
+router.get('/contacts', controllers.contacts.get)
+router.post('/contacts', controllers.contacts.post)
+
 // export router for server.js
 module.exports = router
