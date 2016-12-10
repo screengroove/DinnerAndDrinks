@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 class Results  extends Component{
   constructor(props){
@@ -34,11 +35,22 @@ class Results  extends Component{
 	}	
 	handleChange(event){
     	this.setState({value: event.target.value})
+    	//need to check if valid phone number
     }
     handleSubmit(event) {
-    	alert('An email was submitted: ' + this.state.value)
+    	alert('A text has been sent to ' + this.state.value)
     	event.preventDefault()
-    	//axios post 
+    	axios.post('/api/contacts', {
+    		phone:this.state.value,
+		    firstLocation: this.state.firstLocation.address,
+		    secondLocation: this.state.secondLocation.address
+		  })
+		  .then(function (response) {
+		    console.log(response);
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  })
   	}
   render () {
   	var first = this.state.firstLocation

@@ -43,8 +43,8 @@ const hotspotSchema = new Schema({
   image: String,
   user: String
 }, {collection: 'hotspotSchema'})
-const emailSchema = new Schema({
-  email: String,
+const contactSchema = new Schema({
+  phone: String,
   firstLocation: String,
   secondLocation: String,
   date: {type: Date, default: Date.now}
@@ -56,12 +56,12 @@ let User = mongoose.model('User', userSchema)
 let Hotspot = mongoose.model('Hotspot', hotspotSchema)
 let Comment = mongoose.model('Review', commentSchema)
 let Favorites = mongoose.model('Favorites', favoriteSchema)
-let Email = mongoose.model('Email', emailSchema)
+let Contact = mongoose.model('Contact', contactSchema)
 // Exports here
 module.exports = {
   User: User,
   Hotspot: Hotspot,
   Comment: Comment,
   Favorites: Favorites,
-  Email: Email
+  Contact: Contact
 }

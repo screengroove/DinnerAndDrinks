@@ -2,7 +2,7 @@
 const Hotspot = require('../database/db').Hotspot
 const User = require('../database/db').User
 const Favorites = require('../database/db').Favorites
-const Email = require('../database/db').Email
+const Contact = require('../database/db').Contact
 
 module.exports = {
   users: {
@@ -81,38 +81,21 @@ module.exports = {
       })
     }
   },
-  email: {
+  contact: {
     get: function(req,req){
-      Email.find(function(err,email){
+      Contact.find(function(err,contact){
         if(err){
           return handleError(err)
         }
-        if(email){
-          res.json(email)
+        if(contact){
+          res.json(contact)
         }
       })
     },
-    // post: function(req,res){
-    //   var email = new Email({
-    //     email: req.body.email,
-    //     firstLocation: req.body.firstLocation,
-    //     secondLocation: req.body.secondLocation
-    //   })
-    //   email.save(function(err){
-    //     if(err){
-    //       throw(err)
-    //     } else {
-    //       console.log("this fires after post")
-    //     }
-    //   }).then(function(arg){
-    //     res.send("posted to db")
-    //   })
-    //   //call to mandrill
-    // }
       post: (req, res) => {
-      Email
+      Contact
         .create({
-          email: req.email,
+          phone: req.phone,
           firstLocation: req.firstLocation,
           secondLocation: req.secondLocation
         }, (err, user) => {
@@ -122,6 +105,8 @@ module.exports = {
 
           }
         })
+        //make twilio call
+        
     }
 }
 

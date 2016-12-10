@@ -111,12 +111,12 @@ module.exports = {
                 models.user.post() */
     }
   },
-  emails: {
+  contacts: {
     get: (req, res) => {
-      models.email.get(req, res)
+      models.contact.get(req, res)
     },
     post: (req, res) => {
-      models.email.post(req.body, res)
+      models.contact.post(req.body, res)
       res.send(req.body)
     }
   }
