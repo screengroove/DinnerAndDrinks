@@ -8,10 +8,9 @@ const routes = require('./routes');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-
 app.use('/', express.static(path.join(__dirname, '../client/public')));
-
 app.use('/api', routes);
+//morgan
 
 var port = 3001;
 
