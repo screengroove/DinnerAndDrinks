@@ -35,7 +35,7 @@ app.use(cors({ origin: '*' }))
 app.use(morgan('dev'))
 app.use(parser.urlencoded({extended: true}))
 app.use(parser.json())
-app.use(express.static('./client/public'))
+app.use(express.static('./client/public/index.html'))
 
 app.use(cookieParser()) // read cookies (needed for auth)
 
@@ -58,7 +58,7 @@ db.once('open', () => {
 })
 
 // Render the index.html
-app.get('/', (req, res) => { res.sendFile('index.html') })
+// app.get('/', (req, res) => { res.sendFile('index.html') })
 
 app.use('/api', routes) // when you add api routes in routes.js
 
