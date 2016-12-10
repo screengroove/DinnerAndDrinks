@@ -1,7 +1,8 @@
 // REDUCER
+import { pizza } from '../data/yelp.js'
 
 const initialState = {
-  yelp: '',
+  yelp: pizza,
   
 }
 
