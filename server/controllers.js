@@ -1,10 +1,20 @@
 // call model functions in controller functions
-const yelp = require('../config').yelp
+//const yelp = require('../config').yelp
 const models = require('./models')
 let placeholder, placeholder2
 const request = require('request')
 const API_KEY = require('../config').googleMapsApiKey
 console.log("GOOGLE KEYS", API_KEY )
+const Yelp = require('yelp')
+const helperFunc = require('./helperFunc.js');
+
+var yelp = new Yelp({
+  consumer_key: 'dKI5eBNcR0yw6GYTnzx30A',
+  consumer_secret: 'wLrdy1eKIxtqeUIan1-_zhzMJuQ',
+  token: 'bJ-D11P4YJT0Q9NbYemqt0_pQZkpKclB',
+  token_secret: 'qsxw0l9wRWmlPkn5w8b6xPmNKLU'
+});
+
 
 module.exports = {
     // Josh's endpoint is user
@@ -80,12 +90,21 @@ module.exports = {
       })
     },
     getSearch: (req, res) => {
+      console.log(req.query);
       yelp.search({
-        location: placeholder.location,
-        term: placeholder.term
+        location: req.query.near,
+        term: req.query.find
       })
       .then(resp => {
+
+
+        var results = helperFunc.sortYelpResultsByRating(resp.businesses)
+        resp.businesses = results
+
         res.send(resp)
+
+
+
       }).catch(err => { console.log(`getSearch Yelp error: `, err) })
     },
     postBusiness: (req, res) => {
