@@ -2,6 +2,7 @@
 const Hotspot = require('../database/db').Hotspot
 const User = require('../database/db').User
 const Favorites = require('../database/db').Favorites
+const Contact = require('../database/db').Contact
 
 module.exports = {
   users: {
@@ -79,6 +80,34 @@ module.exports = {
         }
       })
     }
-  }
+  },
+  contact: {
+    get: function(req,req){
+      Contact.find(function(err,contact){
+        if(err){
+          return handleError(err)
+        }
+        if(contact){
+          res.json(contact)
+        }
+      })
+    },
+      post: (req, res) => {
+      Contact
+        .create({
+          phone: req.phone,
+          firstLocation: req.firstLocation,
+          secondLocation: req.secondLocation
+        }, (err, user) => {
+          if (err) {
+            console.log('ERROR in MODEL POST: ', err)
+          } else {
+
+          }
+        })
+        //make twilio call
+        
+    }
+}
 
 }
