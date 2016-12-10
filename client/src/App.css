@@ -14,11 +14,36 @@ main{
   height: 100vh;
   width: 100%;
 }
+.test{
+  height: 100vh;
+  width: 100%;
+
+}
 
 .pin {
   height: 30px;
   width: 30px;
 
+}
+aside{
+  position: fixed;
+  top: 10px ; left: 10px;
+  height: 100vh;
+  width: 400px;
+  background-color: red;
+  z-index: 1;
+}
+
+.map-wrap{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0 ; left: 0;
+}
+.map-view{
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 

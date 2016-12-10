@@ -5,12 +5,15 @@ body {
 }
 
 main{
-	height: 100%;
-	width: 100%;
-	display: flex;
+
 }
 
 #root {
+	height: 100vh;
+	width: 100%;
+}
+
+.full-screen{
 	height: 100vh;
 	width: 100%;
 }

@@ -1,0 +1,9 @@
+.list-card {
+  padding: 2rem 0;
+  margin-bottom: 1rem; }
+
+.card-photo {
+  height: 200px;
+  width: 100%;
+  background-size: cover;
+  background-position: center center; }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
 import App   from '../components/App';
 import Home   from '../components/Home';
-import Maps   from '../components/Map/Map';
+import Maps   from '../components/Listings';
 import Results   from '../components/Results';
 
 import { Provider } from 'react-redux';
