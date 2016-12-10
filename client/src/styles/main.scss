@@ -22,8 +22,12 @@ $icon-font-path: '/fonts/';
 // ----------------------------------------------------------------------
   // Modules
 // ----------------------------------------------------------------------
+@import "modules/buttons";
 @import "modules/forms";
-
+@import "modules/sidebar";
+@import "modules/map";
+@import "modules/markers";
+@import "modules/card";
 
 // ----------------------------------------------------------------------
   // Ionicons
