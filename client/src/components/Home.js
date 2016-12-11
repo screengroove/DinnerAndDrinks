@@ -33,7 +33,7 @@ class Home extends Component{
     event.preventDefault();
     var find = this.state.find
     var near = this.state.near
-    axios.get('/api/yelp/search', {
+    axios.get('/api/yelp/searchbars', {
       params: {
         find: find,
         near: near

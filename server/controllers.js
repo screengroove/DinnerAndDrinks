@@ -6,7 +6,8 @@ const request = require('request')
 const API_KEY = require('../config').googleMapsApiKey
 console.log("GOOGLE KEYS", API_KEY )
 const Yelp = require('yelp')
-const helperFunc = require('./helperFunc.js');
+const helperFunc = require('./helperFunc.js')
+const YelpFusion = require('yelp-fusion')
 
 var yelp = new Yelp({
   consumer_key: 'dKI5eBNcR0yw6GYTnzx30A',
@@ -15,60 +16,19 @@ var yelp = new Yelp({
   token_secret: 'qsxw0l9wRWmlPkn5w8b6xPmNKLU'
 });
 
+var token;
+YelpFusion.accessToken('1Qd6z3rZis1wTI0urgRGzQ', '6EVEVoMiJDp9lwSlvBW5FZwp69oQWsBidx7TRb0YC5Rq6FHvRsfdjFO9rqGHiktR')
+  .then(response => {
+    token = response.jsonBody.access_token;
+    console.log('yelp access token: ', token);
+
+  }).catch(e => {
+    console.log(e);
+  });
 
 
 module.exports = {
-    // Josh's endpoint is user
-  users: {
-    get: (req, res) => {
-      models.users.get(req.query, res)
-    },
-    post: (req, res) => {
-      models.users.post(req.body, res)
-      res.send(req.body)
-    }
-  },
-  favorites: {
-    get: (req, res) => {
-      models.favorites.get(req.body, res)
-    },
-    post: (req, res) => {
-      models.favorites.post(req.body)
-      res.send(req.body)
-    },
-    delete: (req, res) => {
-      models.favorites.delete(req.body, res)
-    }
-  },
-  comments: {
-    get: (req, res) => {
-            /* can look something like this
-                models.user.get() */
-    },
-    post: (req, res) => {
-            /* can look something like this
-                models.user.post() */
-    }
-  },
-  hotspots: {
-    get: (req, res) => {
-      models.hotspots.get(req.body, res)
-    },
-    post: (req, res) => {
-      req.body.lat = 0
-      req.body.long = 0
-      request.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + req.body.address + '&key=' + API_KEY, (error, response, body) => {
-        if (error) {
-          console.log(`There has been a grave error: ${error}`)
-        }
-        let coordinates = JSON.parse(body)
-        req.body.lat = coordinates.results[0].geometry.location.lat
-        req.body.long = coordinates.results[0].geometry.location.lng
-        models.hotspots.post(req.body)
-        res.send(req.body)
-      })
-    }
-  },
+
   yelp: {
     getPhoneSearch: (req, res) => {
       yelp.phoneSearch({ phone: '' })
@@ -91,22 +51,38 @@ module.exports = {
       })
     },
     getSearch: (req, res) => {
-      console.log(req.query);
+      //console.log(req.query);
       yelp.search({
         location: req.query.near,
         term: req.query.find
       })
       .then(resp => {
-
-
+        //sort by rating and return top 10
         var results = helperFunc.sortYelpResultsByRating(resp.businesses)
+        var arr = [];
+        //var results2 = helperFunc.findBarsNearby()
         resp.businesses = results
-
+        console.log(resp);
         res.send(resp)
 
-
-
       }).catch(err => { console.log(`getSearch Yelp error: `, err) })
+    },
+    getBars: (req, res) => {
+
+      YelpFusion.client(token).search({
+          term: 'bars',
+          latitude: 34.1446518,
+          longitude: -118.1354532,
+          radius: 800
+        })
+        .then(response2 => {
+          //var pics = response2.jsonBody.photos;
+          var orderedBars = helperFunc.sortYelpResultsByRating(response2.jsonBody.businesses)
+          console.log(orderedBars)
+          res.send(orderedBars)
+        }).catch(e => {
+          console.log(e);
+      });
     },
     postBusiness: (req, res) => {
       placeholder2 = {
@@ -120,16 +96,6 @@ module.exports = {
       }).catch(err => { console.log(`getBusiness Yelp error: `, err) })
     }
   },
-  maps: {
-    get: (req, res) => {
-            /* can look something like this
-                models.user.post() */
-    },
-    post: (req, res) => {
-            /* can look something like this
-                models.user.post() */
-    }
-  },
   contacts: {
     get: (req, res) => {
       models.contact.get(req, res)
@@ -140,4 +106,26 @@ module.exports = {
     }
   }
 
+
+
 }
+
+// YelpFusion.accessToken('1Qd6z3rZis1wTI0urgRGzQ', '6EVEVoMiJDp9lwSlvBW5FZwp69oQWsBidx7TRb0YC5Rq6FHvRsfdjFO9rqGHiktR')
+// .then(response => {
+//   const client = YelpFusion.client(response.jsonBody.access_token);
+//   client.search({
+//     term: 'bars',
+//     latitude: 34.1446518,
+//     longitude: -118.1354532,
+//     radius: 800
+//   })
+//   .then(response2 => {
+//     //var pics = response2.jsonBody.photos;
+//     var orderedBars = helperFunc.sortYelpResultsByRating(response2.jsonBody.businesses)
+//     console.log(orderedBars)
+//   }).catch(e => {
+//     console.log(e);
+//   });
+// }).catch(e => {
+//   console.log(e);
+// });
