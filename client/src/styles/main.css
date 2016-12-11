@@ -182,9 +182,10 @@ aside {
   background-position: center center; }
 
 .addy {
-  padding: .5rem 1rem; }
-  .addy span {
-    display: block; }
+  padding: .5rem 1rem; 
+}
+.addy span {
+    display: block; 
   height: 100%; }
 
 main {
