@@ -88,6 +88,7 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
   width: 100%;
+<<<<<<< HEAD
   height: 100vh; }
 
 #root {
@@ -184,3 +185,10 @@ aside {
   padding: .5rem 1rem; }
   .addy span {
     display: block; }
+  height: 100%; }
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex; }
+
