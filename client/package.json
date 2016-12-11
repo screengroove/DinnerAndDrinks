@@ -21,6 +21,8 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "velocity-animate": "^1.2.3",
+    "velocity-react": "^1.1.11",
     "yelp": "^1.0.1"
   },
   "scripts": {
