@@ -40,8 +40,20 @@ class Results  extends Component{
     handleSubmit(event) {
     	alert('A text has been sent to ' + this.state.value)
     	event.preventDefault()
+    	var phone = this.state.value
+    	var cleannumber = '+1';
+    	for(var i = 0; i < phone.length; i++){
+    		console.log(phone[i])
+    		if(phone[i] === "1" || phone[i] === "2" || phone[i] === "3"  
+    			|| phone[i] === "4" || phone[i] === "5" || phone[i] === "6" 
+    			|| phone[i] === "7" || phone[i] === "8" || phone[i] === "9"
+    			|| phone[i] === "0"){
+    			cleannumber+= phone[i]
+    		}
+    	}
+    	console.log("cleannumber in handleSubmit", cleannumber)
     	axios.post('/api/contacts', {
-    		phone:this.state.value,
+    		phone: cleannumber,
 		    firstLocation: this.state.firstLocation.address,
 		    secondLocation: this.state.secondLocation.address
 		  })
