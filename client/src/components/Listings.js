@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import *  as actionCreators from '../actions/actionCreators.js';
 import Map from './Map/Map';
 import Sidebar from './Map/Sidebar';
+import Header from './Map/Header';
 
 class Listings  extends Component{
   render () {
     return (
       <div className="full-screen">
-      		<Sidebar/>
-      		<Map/>
+      		<Header {...this.props}/>
+      		<Sidebar {...this.props}/>
+      		<Map  {...this.props}/>
       </div>
       		
      
     )
   }
 }
-export default Listings
+function mapStateToProps(state) {
+  return {
+    yelp: state.yelp,
+    selections: state.selections
+  }
+}
+
+function mapDispachToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+ export default connect( mapStateToProps , mapDispachToProps)(Listings);

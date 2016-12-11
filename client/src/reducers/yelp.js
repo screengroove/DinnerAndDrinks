@@ -1,8 +1,11 @@
 // REDUCER
 import { pizza } from '../data/yelp.js'
+import { bars } from '../data/bars.js'
 
 const initialState = {
-  restaurants: pizza
+  restaurants: pizza,
+  bars: bars,
+  listings: pizza
   
 }
 
