@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
 import App   from '../components/App';
 import Home   from '../components/Home';
-import Maps   from '../components/Listings';
+import Listings   from '../components/Listings';
 import Results   from '../components/Results';
 
 import { Provider } from 'react-redux';
@@ -15,7 +15,7 @@ const routes = (
 		<Route path='/' component={App} />  
 			<IndexRedirect to="/home"/>
 			<Route path='home' component={Home} />
-			<Route path='map' component={Maps} />
+			<Route path='map' component={Listings} />
 			<Route path='results' component={Results} />
 		<Route/>
 	  </Router>

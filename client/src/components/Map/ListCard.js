@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 
 class ListCard  extends Component{
+	constructor(){
+		super();
+		this.state = {
+			cardSelected: false
+		}
+	}
+
+chooseDinnerSpot(){
+	this.props.handler(this.props.deets)	
+	console.log("YOYO", this.props.deets )
+	this.setState({
+		cardSelected: !this.state.cardSelected
+	})
+}
+
   render () {
   	const {deets} = this.props;
   	const bgImage = {
@@ -19,7 +34,7 @@ class ListCard  extends Component{
       		<span>{deets.location.display_address[1]}</span>
       		<span>{deets.location.display_address[2]}</span>
       	</div>
-      	<button className="btn-select">Select</button>
+      	<button className="btn-select" onClick={this.chooseDinnerSpot.bind(this)}>Select</button>
       </div>
     )
   }
