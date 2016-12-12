@@ -52,34 +52,51 @@ module.exports = {
     },
     getSearch: (req, res) => {
       //console.log(req.query);
-      yelp.search({
-        location: req.query.near,
-        term: req.query.find
-      })
+      // yelp.search({
+      //   location: req.query.near,
+      //   term: req.query.find
+      // }).then(response => )
+      YelpFusion.client(token).search({
+          term: req.query.find,
+          //categories: 'bars',
+          location: req.query.near,
+          price: req.query.price
+        })
       .then(resp => {
         //sort by rating and return top 10
-        var results = helperFunc.sortYelpResultsByRating(resp.businesses)
-        var arr = [];
-        //var results2 = helperFunc.findBarsNearby()
-        resp.businesses = results
-        console.log(resp);
-        res.send(resp)
+        var results = helperFunc.sortYelpResultsByRating(resp.jsonBody.businesses)
+        yelp.search({
+          location: req.query.near,
+          term: req.query.find,
+        }).then(response => {
+
+          response.businesses = results
+          res.send(response)
+          //console.log(resp)
+        })
+
+        //
+
+
 
       }).catch(err => { console.log(`getSearch Yelp error: `, err) })
     },
     getBars: (req, res) => {
-
       YelpFusion.client(token).search({
           term: 'bars',
-          latitude: 34.1446518,
-          longitude: -118.1354532,
+          categories: 'bars',
+          price: req.query.price,
+          latitude: req.query.lat,
+          longitude: req.query.lon,
           radius: 800
         })
         .then(response2 => {
           //var pics = response2.jsonBody.photos;
+          //console.log(req.query)
           var orderedBars = helperFunc.sortYelpResultsByRating(response2.jsonBody.businesses)
-          console.log(orderedBars)
-          res.send(orderedBars)
+          var sortedByDistance = helperFunc.sortYelpResultsByDistance(orderedBars)
+          //console.log(sortedByDistance)
+          res.send(sortedByDistance)
         }).catch(e => {
           console.log(e);
       });
@@ -91,9 +108,16 @@ module.exports = {
       res.json(placeholder2)
     },
     getBusiness: (req, res) => {
-      yelp.business(placeholder2.id).then(resp => {
-        res.send(resp)
-      }).catch(err => { console.log(`getBusiness Yelp error: `, err) })
+      YelpFusion.client(token).business(
+        req.query.id
+      )
+      .then(response => {
+        //console.log(req.query);
+        res.send(response.jsonBody.photos);
+
+      }).catch(e => {
+        //console.log(e);
+      });
     }
   },
   contacts: {
