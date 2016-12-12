@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import *  as actionCreators from '../actions/actionCreators.js';
 
 class Home extends Component{
   constructor(props){
@@ -14,13 +16,6 @@ class Home extends Component{
     this.onSubmitForm = this.onSubmitForm.bind(this)
   }
 
-  // componentWillMount(){
-  //   axios.get('/api/yelp/search')
-  //   .then(response =>{
-  //     console.log(response);
-  //   })
-  // }
-
   onFindChange(event){
     this.setState({ find: event.target.value })
   }
@@ -29,22 +24,29 @@ class Home extends Component{
     this.setState({ near: event.target.value })
   }
 
+  // onSubmitForm(event){
+  //   event.preventDefault();
+  //   var find = this.state.find
+  //   var near = this.state.near
+  //   axios.get('/api/yelp/searchbars', {
+  //     params: {
+  //       find: find,
+  //       near: near
+  //     }
+
+  //   })
+  //   .then(response =>{
+  //     console.log(response);
+  //   })
+
+  //   this.setState({find: '', near: ''})
+  // }
+
   onSubmitForm(event){
+      var find = this.state.find
+      var near = this.state.near
     event.preventDefault();
-    var find = this.state.find
-    var near = this.state.near
-    axios.get('/api/yelp/searchbars', {
-      params: {
-        find: find,
-        near: near
-      }
-
-    })
-    .then(response =>{
-      console.log(response);
-    })
-
-    this.setState({find: '', near: ''})
+    this.props.getDinnerListings(find, near)
   }
 
   render () {
@@ -68,4 +70,13 @@ class Home extends Component{
     )
   }
 }
-export default Home
+function mapStateToProps(state) {
+  return {
+    yelp: state.yelp,
+    selections: state.selections
+  }
+}
+function mapDispachToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+ export default connect(mapStateToProps,mapDispachToProps)(Home);
