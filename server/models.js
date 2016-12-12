@@ -105,8 +105,23 @@ module.exports = {
 
           }
         })
-        //make twilio call
-        
+      var accountSid = 'ACc478af3f86c6c513367dad1db638766b'
+      var authToken = 'e16a7e463895481d3c6a660b4b4ccc28'
+ 
+      //require the Twilio module and create a REST client 
+      var client = require('twilio')(accountSid, authToken)
+      var message = "Dinner: " + req.firstLocation + " and Drinks:" + req.secondLocation
+      client.sendMessage({ 
+          to: req.phone, 
+          from: "+14243296340", 
+          body: message
+      })
+      .then(function(message){
+          console.log(message.sid)
+      })
+      .catch(function(err){
+        console.log(err)
+      })   
     }
 }
 
