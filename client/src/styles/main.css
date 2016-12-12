@@ -216,3 +216,6 @@ aside {
   opacity: 0.01;
   transition: opacity 300ms ease-in; }
 
+.center {
+  text-align: center;
+}
