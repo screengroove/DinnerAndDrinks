@@ -5,10 +5,13 @@
   line-height: 40px;
   position: absolute;
   bottom: 10px; right: 10px;
-  background-color: $green;
+  background-color: $blue-dk;
   color: $white;
   font-size: .8rem;
   font-weight: 300;
+  &.is-selected{
+    background-color: $green;
+  }
 }
 
 

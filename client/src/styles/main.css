@@ -66,9 +66,6 @@ button {
 img {
   max-width: 100%; }
 
-body {
-  background-image: url("/static/media/Hexagon-2.a931ef84.jpg"); }
-
 ::-webkit-scrollbar {
   opacity: 0; }
 
@@ -105,10 +102,12 @@ body {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background-color: #009d7e;
+  background-color: #0d4063;
   color: #FFFFFF;
   font-size: .8rem;
   font-weight: 300; }
+  .btn-select.is-selected {
+    background-color: #009d7e; }
 
 .btn-round {
   width: 250px;
@@ -192,10 +191,28 @@ aside {
       line-height: 40px; }
 
 .card-photo {
+  position: relative;
   height: 200px;
   width: 100%;
   background-size: cover;
   background-position: center center; }
+  .card-photo .overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgba(33, 33, 35, 0.8);
+    color: #FFFFFF;
+    font-style: italic;
+    opacity: 0;
+    transition: all .3s ease; }
+  .card-photo:hover .overlay {
+    opacity: 1; }
 
 .addy {
   padding: .5rem 1rem; }

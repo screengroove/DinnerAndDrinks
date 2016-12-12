@@ -3,19 +3,18 @@ import { pizza } from '../data/yelp.js'
 import { bars } from '../data/bars.js'
 
 const initialState = {
-  restaurants: pizza,
-  bars: bars,
-  listings: pizza
+  listings: ["a","b"]
   
 }
 
 function yelp(state = initialState , action) {
-  switch(action.type){
-    case 'FOOD_LISTINGS':
+  switch(action.type){    
+    case 'YELP_LISTINGS':
+      console.log("REDUCER", action.payload )
         return Object.assign( { }, state, {
-            restaurants: action.payload
+            listings: action.payload.businesses,
+            region: action.payload.region
         });
-
     default:
       return state;
   }
