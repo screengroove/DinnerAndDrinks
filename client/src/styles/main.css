@@ -184,3 +184,7 @@ aside {
   padding: .5rem 1rem; }
   .addy span {
     display: block; }
+
+.center {
+  text-align: center;
+}

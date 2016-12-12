@@ -10,6 +10,15 @@ var yelp = new Yelp({
   token_secret: 'qsxw0l9wRWmlPkn5w8b6xPmNKLU'
 });
 
+// var token;
+// YelpFusion.accessToken('1Qd6z3rZis1wTI0urgRGzQ', '6EVEVoMiJDp9lwSlvBW5FZwp69oQWsBidx7TRb0YC5Rq6FHvRsfdjFO9rqGHiktR')
+//   .then(response => {
+//     token = response.jsonBody.access_token;
+//     console.log('yelp access token: ', token);
+//
+//   }).catch(e => {
+//     console.log(e);
+//   });
 
 module.exports.sortYelpResultsByRating = function(array){
   array.sort(function(a, b){
@@ -24,20 +33,20 @@ module.exports.sortYelpResultsByRating = function(array){
   return array.splice(array.length - 10);
 };
 
-module.exports.findBarsNearby = function(){
-    yelp.search({
-      location: 'santa monica',
-      term: 'bars'
-    })
-    .then(response =>{
-      console.log("bar search.........",response);
-    })
-    .catch(err => {
-      console.log("something", err)
-    })
+module.exports.sortYelpResultsByDistance = function(array){
+  array.sort(function(a, b){
+    if(a.distance > b.distance){
+      return 1;
+    }
+    if(a.distance < b.distance){
+      return -1;
+    }
+    return 0;
+  });
+  return array;
 };
 
-module.exports.getBusinessInfo = function(restId){
+module.exports.removeRestFromBars = function(array){
       //console.log('yelp access token: ', response.jsonBody.access_token);
-      
+
 }
