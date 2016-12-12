@@ -20,13 +20,34 @@
 			line-height: 40px;
 		}
 	}
-}
+}//list-card
 
 .card-photo{
+	position: relative;
 	height: 200px;
 	width: 100%;
 	background-size: cover;
 	background-position: center center;
+	.overlay{
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0 ; left: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 1rem;
+		background-color: rgba($black, 0.8);
+		color: $white;
+		font-style: italic;
+		opacity: 0;
+		transition: all .3s ease;
+	}
+	&:hover{
+		.overlay{
+			opacity: 1;
+		}
+	}
 }
 
 .addy{

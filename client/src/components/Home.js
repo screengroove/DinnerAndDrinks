@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 var Slider = require('react-rangeslider')
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import *  as actionCreators from '../actions/actionCreators.js';
+
 
 class Home extends Component{
   constructor(props){
@@ -24,6 +28,7 @@ class Home extends Component{
   onNearChange(event){
     this.setState({ near: event.target.value })
   }
+
 
   onPriceChange(event){
     this.setState({ price: event.target.value })
@@ -89,6 +94,13 @@ class Home extends Component{
 
     this.setState({find: '', near: '', price: ''})
   }
+  
+  // onSubmitForm(event){
+  //     var find = this.state.find
+  //     var near = this.state.near
+  //   event.preventDefault();
+  //   this.props.getDinnerListings(find, near)
+  // }
 
   render () {
 
@@ -130,4 +142,13 @@ class Home extends Component{
     )
   }
 }
-export default Home
+function mapStateToProps(state) {
+  return {
+    yelp: state.yelp,
+    selections: state.selections
+  }
+}
+function mapDispachToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+ export default connect(mapStateToProps,mapDispachToProps)(Home);

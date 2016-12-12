@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import GoogleMap from 'google-map-react';
-
-
 import Sidebar from './Sidebar';
 import Marker from './Marker';
 
-import { pizza } from '../../data/yelp';
-import { bars } from '../../data/bars';
 
 class Map  extends Component{
   // static defaultProps = {
@@ -24,19 +20,20 @@ class Map  extends Component{
     }
 
   render () {
-    const {yelp} = this.props
-    const Markers = yelp.listings.businesses.map( (item, i) =>{   
-        
-        return <Marker key={i} lat={ item.location.coordinate.latitude} lng={item.location.coordinate.longitude} text={i}/>
+    const { yelp } = this.props;
+    const mapCenter = {lat:yelp.region.center.latitude , lng: yelp.region.center.longitude}
+    const Markers = yelp.listings.map( (item, i) =>{   
+        console.log("MARKER ITEMS", item )
+          
+        return <Marker key={i} lat={ item.location.coordinate.latitude } lng={item.location.coordinate.longitude} text={i}/>
     })
 
     return (
 
         <GoogleMap
                 apiKey='AIzaSyAtXmlxbzavjc-4wM8KAlMLvIpCOiv-yc4'
-                defaultCenter={this.state.center}
+                defaultCenter={mapCenter}
                 defaultZoom={this.state.zoom}>
-
                        {Markers}
         </GoogleMap>
     

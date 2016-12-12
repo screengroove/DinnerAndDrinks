@@ -7,6 +7,11 @@ import Sidebar from './Map/Sidebar';
 import Header from './Map/Header';
 
 class Listings  extends Component{
+
+  // componentWillMount(){
+  //   this.props.getListings('bars', 'santa monica')
+  // }
+
   render () {
     return (
       <div className="full-screen">
@@ -14,8 +19,6 @@ class Listings  extends Component{
       		<Sidebar {...this.props}/>
       		<Map  {...this.props}/>
       </div>
-      		
-     
     )
   }
 }

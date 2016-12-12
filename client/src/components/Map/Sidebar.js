@@ -12,7 +12,8 @@ class Sidebar  extends Component{
   render () {
   	const { yelp } = this.props;
 
-  	const ListItems  = yelp.listings.businesses.map( (item, i) =>{
+  	const ListItems  = yelp.listings.map( (item, i) =>{
+        console.log("ITEMS", item.location )        
           return <ListCard deets={item} key={i} id={i} handler={this.handleSelectClick.bind(this)} />
   	} )
 
