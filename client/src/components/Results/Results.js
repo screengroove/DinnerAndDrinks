@@ -10,7 +10,8 @@ class Results  extends Component{
       			name: "Ledlow",
       			reviews: "338",
       			address: "400 South Main Street",
-      			citystate: "Los Angeles, CA",
+      			city: "Los Angeles",
+            state: "CA",
       			zip: "90013",
       			stars: "3.5",
       			price: "$$",
@@ -46,28 +47,28 @@ class Results  extends Component{
 		var first = this.state.firstLocation
 	  var distance = this.state.distance
 	  var second = this.state.secondLocation
-	  var firstCleanCityState = ""
+	  var firstCleanCity = ""
     var secondCleanCityState = ""
     var firstCleanName=""
     var secondCleanName=""
     var firstNameArr= first.name.split('')
     var secondNameArr=second.name.split('')
-	 	var citystateArr = first.citystate.split('')
+	 	var cityArr = first.city.split('')
     var citystateArr2 = second.citystate.split('')
-	 	console.log('citystateArr', citystateArr);
-	  for(var j = 0; j<citystateArr.length; j++){
+	 	console.log('cityArr', cityArr);
+	  for(var j = 0; j<cityArr.length; j++){
 	  		console.log("hey line 48")
-	  		if(citystateArr[j] === ' '){
-	  			citystateArr[j] = ''
+	  		if(cityArr[j] === ' '){
+	  			cityArr[j] = ''
 	  		} 
-	  		else if(citystateArr[j] === ','){
-	  			citystateArr[j] = '+'
-	  			firstCleanCityState += citystateArr[j]
+	  		else if(cityArr[j] === ','){
+	  			cityArr[j] = '+'
+	  			firstCleanCity+= cityArr[j]
 	  		}else {
-	  		firstCleanCityState += citystateArr[j]
+	  		firstCleanCity += cityArr[j]
 	  		}
-	  	if(firstCleanCityState.length > 0)
-	  		console.log("firstCleanCityState", firstCleanCityState)
+	  	if(firstCleanCity.length > 0)
+	  		console.log("firstCleanCity", firstCleanCity)
 	}
    for(var h = 0; h<citystateArr2.length; h++){
         if(citystateArr2[h] === ' '){
@@ -102,7 +103,7 @@ class Results  extends Component{
         secondCleanName += secondNameArr[l]
         }
   }
-  var sourced = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyANStO9s7YVwIP9ven5W1U9IhgYhFTR4yU&origin=" + firstCleanName + "," + firstCleanCityState + "&destination=" + secondCleanName + "," + secondCleanCityState + "&mode=walking&avoid=tolls|highways"
+  var sourced = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyANStO9s7YVwIP9ven5W1U9IhgYhFTR4yU&origin=" + firstCleanName + "," + firstCleanCity + "+" + first.city + "&destination=" + secondCleanName + "," + secondCleanCityState + "&mode=walking&avoid=tolls|highways"
   this.setState({source: sourced})
 }
 	handleChange(event){
@@ -160,7 +161,7 @@ class Results  extends Component{
       			<div className="restaurantName"> {first.name} {first.price}</div>
       			<div className="address">
 	      			<div> {first.address} </div>
-	      			<div> {first.citystate}</div>
+	      			<div> {first.city}, {first.state}</div>
 	      			<div> {first.zip}</div>
 	      		</div>
       			<div>{first.reviews} Reviews</div>
@@ -206,62 +207,3 @@ class Results  extends Component{
   }
 }
 export default Results
-
-// https://www.google.com/maps/embed/v1/directions
-//   ?key=YOUR_API_KEY
-//   &origin=Oslo+Norway
-//   &destination=Telemark+Norway
-//   &avoid=tolls|highways
-
-  // initMap () {
-  //   let map = new google.maps.Map(document.getElementById('map'), {
-  //     center: {lat: 33.975374099999996, lng: -118.39200809999998},
-  //     zoom: 11
-  //   })
-  //   let infoWindow = new google.maps.InfoWindow({map: map})
-
-  //       // Try HTML5 geolocation.
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       let pos = {
-  //         lat: position.coords.latitude,
-  //         lng: position.coords.longitude
-  //       }
-
-  //       localStorage.setItem(['Current-Location-lat'], pos.lat)
-  //       localStorage.setItem(['Current-Location-long'], pos.lng)
-
-  //       let geocoder = new google.maps.Geocoder()
-  //       geocoder.geocode({'latLng': pos}, (results, status) => {
-  //         localStorage.setItem(['Current-Location-city'], results[0].formatted_address.split(', ')[1])
-  //       })
-
-  //       infoWindow.setPosition(pos)
-  //       infoWindow.setContent('Location found.')
-  //       map.setCenter(pos)
-  //     }, () => {
-  //       handleLocationError(true, infoWindow, map.getCenter())
-  //     })
-
-  //     this.state.list.map((e, i) => {
-  //       let marker = new google.maps.Marker({
-  //         position: { lat: e.location.coordinate.latitude, lng: e.location.coordinate.longitude },
-  //         map: map,
-  //         title: e.name
-  //       })
-  //       return marker
-  //     })
-  //     this.state.hotspots.map((e, i) => {
-  //       console.log(e)
-  //       let marker = new google.maps.Marker({
-  //         position: { lat: e.lat, lng: e.long },
-  //         map: map,
-  //         title: e.name
-  //       })
-  //       return marker
-  //     })
-  //   } else {
-  //     // Browser doesn't support Geolocation
-  //     handleLocationError(false, infoWindow, map.getCenter())
-  //   }
-  // }
