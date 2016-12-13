@@ -85,9 +85,9 @@ module.exports = {
       YelpFusion.client(token).search({
           term: 'bars',
           categories: 'bars',
-          price: req.query.price,
-          latitude: req.query.lat,
-          longitude: req.query.lon,
+          price: 2,
+          latitude: 34.031052,
+          longitude: -118.4773043,
           radius: 800
         })
         .then(response2 => {

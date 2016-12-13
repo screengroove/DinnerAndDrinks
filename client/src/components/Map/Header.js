@@ -6,7 +6,7 @@ class Header  extends Component{
     return (
       <header className="map-header">
       	<div className="step">
-      		Step 1 {this.props.selections.dinnerChoice}
+      		Step 1 {this.props.selections.dinnerVenue}
       	</div>
       	<div className="step">
       		Step 2: Select Bar
