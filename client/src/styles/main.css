@@ -263,8 +263,20 @@ img {
   margin-bottom: 15px; }
 
 .twilioButton {
+<<<<<<< 5ed42cf0a2c08f04382186448f013ee71cf207fd
   margin-left: 10px;
   border-radius: 5px; }
+=======
+  background-color: #95DFFA;
+  margin-left: 240px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 6px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px; }
+>>>>>>> [fix] unstaged file
 
 .example-enter {
   opacity: 0.01; }
@@ -279,6 +291,7 @@ img {
 .example-leave.example-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in; }
+<<<<<<< 5ed42cf0a2c08f04382186448f013ee71cf207fd
 
 .loader {
   width: 100%;
@@ -303,3 +316,5 @@ img {
     background-color: rgba(22, 134, 176, 0.8);
     opacity: 1;
     z-index: 100; }
+=======
+>>>>>>> [fix] unstaged file
