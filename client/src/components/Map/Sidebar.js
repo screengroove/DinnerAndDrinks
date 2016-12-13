@@ -1,37 +1,27 @@
 import React, { Component } from 'react';
 import ListCard from './ListCard';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import *  as actionCreators from '../../actions/actionCreators.js';
+
 
 
 class Sidebar  extends Component{
 
+  handleSelectClick(stuff){
+    this.props.setDinnerChoice(stuff)
+  }
+
   render () {
   	const { yelp } = this.props;
 
-  	const ListItems  = yelp.restaurants.businesses.map( (item, i) =>{
-  		console.log("ITEMS", item );
-          return <ListCard deets={item} key={i} id={i} />
+  	const ListItems  = yelp.listings.businesses.map( (item, i) =>{
+          return <ListCard deets={item} key={i} id={i} handler={this.handleSelectClick.bind(this)} />
   	} )
 
     return (
       <aside>
         {ListItems}
-      	
-
       </aside>
     )
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    yelp: state.yelp
-  }
-}
-
-function mapDispachToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
-}
- export default connect( mapStateToProps , mapDispachToProps)(Sidebar);
+export default Sidebar;
