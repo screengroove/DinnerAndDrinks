@@ -39,7 +39,7 @@ export function getBarListings(find, near, price) {
         });
     })
      .then(function(){
-      browserHistory.push('/map')
+      browserHistory.push('/results')
      })
     //return response.data
   }
@@ -80,7 +80,7 @@ export function setDrinksChoice(choice) {
 		  type: 'DRINKS_CHOICE',
 		  payload: choice
 		});
-		//browserHistory.push('/results')
+		browserHistory.push('/results')
 	}
 }
 
