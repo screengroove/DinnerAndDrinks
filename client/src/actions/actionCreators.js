@@ -22,25 +22,25 @@ export function getDinnerListings(find, near, price) {
   }
 }
 
-export function getBarListings(lat, lng) {  
-   return function(dispatch) {
-   getBARS(lat, lng)
-     .then(function (response) {
-        console.log("API RESPONSE", response);
-         dispatch({
-          type: 'YELP_LISTINGS',
-          payload: response.data.businesses
-        });
-    })
-     .then(function(){
-     		console.log("Transition to Loading")
-     		dispatch({
-                  type: 'IS_LOADING',
-            });
-     })
-    //return response.data
-  }
-}
+// export function getBarListings(lat, lng, price) {  
+//   console.log("IN getBarListings " )
+   
+//    return function(dispatch) {
+//   //getRESTAURANTS(find, near, price)  
+//      .then(function (response) {
+//         console.log("ACTION BARS", response);
+//          dispatch({
+//           type: 'YELP_LISTINGS',
+//           payload: response
+//         });
+//     })
+//      .then(function(){
+//      		console.log("Transition to Loading")
+
+//      })
+//     //return response.data
+//   }
+// }
 
 export function setDinnerChoice(choice) { 
 	return function(dispatch) {

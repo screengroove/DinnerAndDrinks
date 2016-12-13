@@ -10,19 +10,24 @@ class ListCard  extends Component{
 	}
 
 chooseDinnerSpot(){
-	this.props.handler(this.props.deets)	
-	console.log("YOYO", this.props.deets )
-	this.setState({
-		cardSelected: !this.state.cardSelected
-	})
+      let lat = this.props.deets.coordinates.latitude;
+      let near = this.props.deets.location.city;
+      let price = this.props.deets.price.length;
+    this.props.fetchBarsNearby('bars', near, 2)
+
+  this.props.handler(this.props.deets)
+  console.log("YOYO", this.props.deets )
+  this.setState({
+    cardSelected: !this.state.cardSelected
+  })
 }
 
   render () {
   	const {deets} = this.props;
-    console.log("DEETS PHOTOS", this.props.deets.photos )
+
       
   	const cardBG =this.props.deets.photos
-                                                                                ? this.props.deets.photos[1]
+                                                                                ? this.props.deets.photos[0]
                                                                                 : 'http://www.jqueryscript.net/images/Minimal-jQuery-Loading-Overlay-Spinner-Plugin-Easy-Overlay.jpg'
 
     //console.log("INSIDE CARD PROPS", this.props.deets.photos[0])
@@ -44,11 +49,10 @@ chooseDinnerSpot(){
       		<div className="price"></div>
       	</div>
       	<div className="addy">
-
       		<span>{deets.location.address1}</span>
       		<span>{deets.location.city}</span>
       		<span>{deets.location.zip_code}</span>
-        
+     
       	</div>
       	<button className={btnStyle} onClick={this.chooseDinnerSpot.bind(this)}>Select</button>
       </div>

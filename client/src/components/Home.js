@@ -15,7 +15,8 @@ class Home extends Component{
       this.state = {
         find: '',
         near: '',
-        price: ''
+        price: '',
+        loading: false
       }
       this.onFindChange = this.onFindChange.bind(this)
       this.onNearChange = this.onNearChange.bind(this)
@@ -59,7 +60,7 @@ class Home extends Component{
       price = '1,2';
     }
     this.props.getDinnerListings(find, near, price)
-    this.setState({find: '', near: '', price: ''})
+    this.setState({find: '', near: '', price: '', loading: true})
   }
 
   // onSubmitForm(event){
@@ -106,7 +107,7 @@ class Home extends Component{
             <input type="submit" value="Submit" className="btn-round" />
           </form>
           <Link to="/map"  className="btn-admin">MAP</Link>
-          <Loader loading={this.props.yelp.loading}/>
+          <Loader loading={this.state.loading}/>
       </div>
     )
   }

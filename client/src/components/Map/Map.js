@@ -20,11 +20,14 @@ class Map  extends Component{
     }
 
   render () {
+    this.props.selections.dinnerData ? this.props.selections.dinnerData.test = 'red':  null;
+    const allMarkers = this.props.selections.dinnerData === undefined ? this.props.yelp.listings : [...this.props.yelp.listings, this.props.selections.dinnerData];
+    console.log("ALL MARKERS",allMarkers )
+      
     const { yelp } = this.props;
     const mapCenter = {lat:yelp.region.center.latitude , lng: yelp.region.center.longitude}
-    const Markers = yelp.listings.map( (item, i) =>{   
-        console.log("MARKER ITEMS", item )
-        return <Marker key={i} lat={ item.coordinates.latitude } lng={item.coordinates.longitude} text={i}/>
+    const Markers = allMarkers.map( (item, i) =>{   
+        return <Marker key={i} lat={ item.coordinates.latitude } lng={item.coordinates.longitude} text={i +1} test={item.test}/>
     })
 
     return (
