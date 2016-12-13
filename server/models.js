@@ -96,6 +96,7 @@ module.exports = {
       Contact
         .create({
           phone: req.phone,
+          name: req.name,
           firstLocation: req.firstLocation,
           secondLocation: req.secondLocation
         }, (err, user) => {
@@ -110,7 +111,7 @@ module.exports = {
  
       //require the Twilio module and create a REST client 
       var client = require('twilio')(accountSid, authToken)
-      var message = "Dinner: " + req.firstLocation + " and Drinks:" + req.secondLocation
+      var message = "Want to go to dinner at " + req.firstLocation + " and then get drinks at " + req.secondLocation + " ? " + "Sent by your friend " + req.name + " via Twilio"
       client.sendMessage({ 
           to: req.phone, 
           from: "+14243296340", 

@@ -45,6 +45,7 @@ const hotspotSchema = new Schema({
 }, {collection: 'hotspotSchema'})
 const contactSchema = new Schema({
   phone: String,
+  name: String,
   firstLocation: String,
   secondLocation: String,
   date: {type: Date, default: Date.now}
