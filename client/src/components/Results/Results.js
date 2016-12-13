@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import *  as actionCreators from '../actions/actionCreators.js';
+import *  as actionCreators from '../../actions/actionCreators.js';
 import axios from 'axios'
 import GoogleMap from 'google-map-react'
 
@@ -223,4 +223,4 @@ function mapDispachToProps(dispatch) {
 }
  
 export default connect( mapStateToProps , mapDispachToProps)(Results);
-export default Results
+
