@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-
 import '../styles/main.css';
-import loader_bg from '../assets/loader_bg.jpg';
-console.log(loader_bg )
+import eat from '../assets/eat_icon.svg';
+console.log(eat )
 
 
 
@@ -18,7 +17,7 @@ class App extends Component {
     return (
       <div className="App">
        {children}
-       {loader_bg}
+
       </div>
     );
   }

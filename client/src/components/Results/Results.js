@@ -158,7 +158,7 @@ class Results  extends Component{
       	<div className="selections">
       		<div className="carousel"> 
       				<h3 className="selectionH"> First Dinner </h3>
-      				<img src={first.image1} alt="Ledlow Pic" height="300"></img>	
+      				<img className="img" src={first.image1} alt="Ledlow Pic" height="300"></img>	
       		</div>
       		<div className="location">
       			<div className="restaurantName"> {first.name} {first.price}</div>
@@ -173,7 +173,7 @@ class Results  extends Component{
       		</div>
       		<div className="carousel"> 
       			<h3 className="selectionH"> Then Drinks</h3>
-      				<img src={second.image1} alt="Perch Pic" height="300"></img>
+      				<img className="img" src={second.image1} alt="Perch Pic" height="300"></img>
       		</div>
       		<div className="location">
       			<div className="restaurantName"> {second.name} {first.price}</div>
