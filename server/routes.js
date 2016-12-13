@@ -5,7 +5,7 @@ const controllers = require('./controllers')
 
 // yelp
 router.get('/yelp/search', controllers.yelp.getSearch)
-router.post('/yelp/search', controllers.yelp.postSearch)
+router.get('yelp/autocomplete', controllers.yelp.autocompleteSearch)
 router.get('/yelp/searchbars', controllers.yelp.getBars)
 router.get('/yelp/business', controllers.yelp.getBusiness)
 

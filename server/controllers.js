@@ -40,22 +40,19 @@ module.exports = {
         .then(console.log)
         .catch((err) => { console.log(`postPhoneSearch error: `, err) })
     },
-    postSearch: (req, res) => {
-      placeholder = {
-        term: req.body.term,
-        location: req.body.location
-      }
-      res.json({
-        location: req.body.location,
-        term: req.body.term
+    autocompleteSearch: (req, res) => {
+      YelpFusion.client(token).autocomplete({
+        text:req.query.text,
+        location: req.query.location
+      }).then(response => {
+        console.log(response.jsonBody.terms);
+        console.log(req);
+      }).catch(e => {
+        console.log(e)
       })
     },
     getSearch: (req, res) => {
-      //console.log(req.query);
-      // yelp.search({
-      //   location: req.query.near,
-      //   term: req.query.find
-      // }).then(response => )
+
       YelpFusion.client(token).search({
           term: req.query.find,
           //categories: 'bars',
@@ -74,11 +71,6 @@ module.exports = {
           res.send(response)
           //console.log(resp)
         })
-
-        //
-
-
-
       }).catch(err => { console.log(`getSearch Yelp error: `, err) })
     },
     getBars: (req, res) => {
