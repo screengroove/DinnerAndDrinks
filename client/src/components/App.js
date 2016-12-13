@@ -5,6 +5,8 @@ import loader_bg from '../assets/loader_bg.jpg';
 console.log(loader_bg )
 
 
+
+
 class App extends Component {
   render() {
     let children = null;
