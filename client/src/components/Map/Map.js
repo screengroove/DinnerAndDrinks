@@ -24,8 +24,7 @@ class Map  extends Component{
     const mapCenter = {lat:yelp.region.center.latitude , lng: yelp.region.center.longitude}
     const Markers = yelp.listings.map( (item, i) =>{   
         console.log("MARKER ITEMS", item )
-          
-        return <Marker key={i} lat={ item.location.coordinate.latitude } lng={item.location.coordinate.longitude} text={i}/>
+        return <Marker key={i} lat={ item.coordinates.latitude } lng={item.coordinates.longitude} text={i}/>
     })
 
     return (

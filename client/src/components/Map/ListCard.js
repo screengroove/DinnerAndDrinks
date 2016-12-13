@@ -19,9 +19,14 @@ chooseDinnerSpot(){
 
   render () {
   	const {deets} = this.props;
-  	const bgImage = {
-  		backgroundImage: `url('http://svcdn.simpleviewinc.com/v3/cache/chicago/DDAE812259830DDF584DFC2E8B3DA1CE.jpg')`
-  	}
+    console.log("DEETS PHOTOS", this.props.deets.photos )
+      
+  	const cardBG =this.props.deets.photos
+                                                                                ? this.props.deets.photos[1]
+                                                                                : 'http://www.jqueryscript.net/images/Minimal-jQuery-Loading-Overlay-Spinner-Plugin-Easy-Overlay.jpg'
+
+    //console.log("INSIDE CARD PROPS", this.props.deets.photos[0])
+      
     const btnStyle = classNames({
       "btn-select": true,
       "is-selected":  this.state.cardSelected
@@ -29,7 +34,7 @@ chooseDinnerSpot(){
     return (
       <div className="list-card">
       	<h2><span>{this.props.id + 1}</span> {deets.name}</h2>
-      	<div className="card-photo"  style={bgImage}>
+      	<div className="card-photo"  style={{backgroundImage:  'url(' + cardBG + ')' }}>
           <div className="overlay">
               <p>{deets.snippet_text}</p>
           </div>
@@ -39,11 +44,11 @@ chooseDinnerSpot(){
       		<div className="price"></div>
       	</div>
       	<div className="addy">
-      {/* JSX Comment 
-      		<span>{deets.location.display_address[0]}</span>
-      		<span>{deets.location.display_address[1]}</span>
-      		<span>{deets.location.display_address[2]}</span>
-          */}
+
+      		<span>{deets.location.address1}</span>
+      		<span>{deets.location.city}</span>
+      		<span>{deets.location.zip_code}</span>
+        
       	</div>
       	<button className={btnStyle} onClick={this.chooseDinnerSpot.bind(this)}>Select</button>
       </div>

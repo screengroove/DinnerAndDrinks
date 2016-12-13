@@ -4,19 +4,19 @@ import  {getRESTAURANTS, getBARS} from '../helpers/http.js';
 
 
 
-export function getDinnerListings(find, near) {  
+export function getDinnerListings(find, near, price) {  
    return function(dispatch) {
-   getRESTAURANTS(find, near)
+    type: 'IS_LOADING'
+    getRESTAURANTS(find, near, price)  
      .then(function (response) {
         console.log("API RESPONSE", response);
          dispatch({
           type: 'YELP_LISTINGS',
-          payload: response.data
+          payload: response
         });
     })
      .then(function(){
-     		console.log("Transition to ROUTE")
-     		browserHistory.push('/map')
+      browserHistory.push('/map')
      })
     //return response.data
   }
@@ -33,8 +33,10 @@ export function getBarListings(lat, lng) {
         });
     })
      .then(function(){
-     		console.log("Transition to ROUTE")
-     		//browserHistory.push('/map')
+     		console.log("Transition to Loading")
+     		dispatch({
+                  type: 'IS_LOADING',
+            });
      })
     //return response.data
   }
