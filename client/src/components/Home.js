@@ -6,30 +6,26 @@ var Slider = require('react-rangeslider')
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import *  as actionCreators from '../actions/actionCreators.js';
+import Slider from 'react-rangeslider'
 
 
 class Home extends Component{
   constructor(props){
       super(props)
 
-      this.state = {
-        find: '',
-        near: '',
-        price: '',
-        loading: false
-      }
-      this.onFindChange = this.onFindChange.bind(this)
-      this.onNearChange = this.onNearChange.bind(this)
-      this.onPriceChange = this.onPriceChange.bind(this)
-      this.onSubmitForm = this.onSubmitForm.bind(this)
+    this.state = {
+      find: '',
+      near: '',
+      price: 3,
+      priceRender: "$$$",
+      inputFindValid: true,
+      inputNearValid: true
+    }
+    this.onFindChange = this.onFindChange.bind(this)
+    this.onNearChange = this.onNearChange.bind(this)
+    this.onPriceChange = this.onPriceChange.bind(this)
+    this.onSubmitForm = this.onSubmitForm.bind(this)
   }
-
-  componentWillMount(){
-    console.log("HOME COMPONENT WILL MOUNT" )
-      
-    //this.props.getDinnerListings('pizza', 'santa monica', 2)
-  }
-
 
   onFindChange(event){
     this.setState({ find: event.target.value })
@@ -39,9 +35,19 @@ class Home extends Component{
     this.setState({ near: event.target.value })
   }
 
-
-  onPriceChange(event){
-    this.setState({ price: event.target.value })
+  onPriceChange(value){
+    var dollars;
+    if(value === 1){
+      dollars = '$'
+    }else if(value === 2){
+      dollars = '$$'
+    }else if(value === 3){
+      dollars = '$$$'
+    }else if(value === 4){
+      dollars = '$$$$'
+    }
+    this.setState({ priceRender: dollars })
+    this.setState({ price: value })
   }
 
   onSubmitForm(event){
@@ -53,61 +59,72 @@ class Home extends Component{
     if(price === '' || price === undefined || price == 4){
       price = '1,2,3,4';
     }else if(price == 3){
-
       price = '1,2,3';
-      console.log(price);
     }else if(price == 2){
       price = '1,2';
     }
+
     this.props.getDinnerListings(find, near, price)
     this.setState({find: '', near: '', price: '', loading: true})
+
+    if(find === undefined || find === ''){
+      this.setState({ inputFindValid: false });
+    }
+    if(near === undefined || near === ''){
+      this.setState({ inputNearValid: false });
+    }
   }
 
-  // onSubmitForm(event){
-  //     var find = this.state.find
-  //     var near = this.state.near
-  //   event.preventDefault();
-  //   this.props.getDinnerListings(find, near)
-  // }
-
   render () {
-
+    var errorFindStyle = this.state.inputFindValid ? { opacity: 0 } : { opacity: 1 };
+    var errorNearStyle = this.state.inputNearValid ? { opacity: 0 } : { opacity: 1 };
     return (
       <div className="center">
-      		<h1>Dinner & Drinks</h1>
+
+        <div className="hero">
+          <h1 >Dinner & Drinks</h1>
+          <div className="description">
+            <h4>The easy way to plan your night out</h4>
+
+          </div>
           <form onSubmit={this.onSubmitForm} >
-            <label >
+            <div>
 
-              <input type="text" placeholder="Find" value={this.state.find} onChange={this.onFindChange}/>
-            </label>
+              <label >
+                <div className="hidden" style={ errorFindStyle }>required</div>
+                Find:
+                <input className="formInput" type="text" value={this.state.find} onChange={this.onFindChange}/>
+              </label>
+            </div>
 
-            <label>
+            <div>
 
-              <input type="text" placeholder="Near" value={this.state.near} onChange={this.onNearChange} />
-            </label>
+              <label>
+                <div className="hidden" style={ errorNearStyle }>required</div>
+                Near:
+                <input className="formInput" type="text" value={this.state.near} onChange={this.onNearChange} />
+              </label>
+            </div>
 
-            <label>
+            <div>
+              <h3 className="center">Price: {this.state.priceRender}
+              </h3>
 
-              <input type="text" placeholder="price" value={this.state.price} onChange={this.onPriceChange} />
-            </label>
+              <Slider
+                value={this.state.price}
+                orientation="horizontal"
+                onChange={ this.onPriceChange }
+                min={1}
+                max={4}
+              />
+            </div>
 
-
-            {/* <div className="panel-body">
-                        <h3>Current Volume: { this.props.app.volume }</h3>
-                        <Slider
-                            value={ this.props.app.volume }
-                            orientation="horizontal"
-                            step={ 1 }
-                            min={ 0 }
-                            max={ 31 }
-                            onChange={ this.handleChange }
-                          />
-            </div> */}
-
-            <input type="submit" value="Submit" className="btn-round" />
+            <input type="submit" value="Submit" id="btn-round2" />
           </form>
+
           <Link to="/map"  className="btn-admin">MAP</Link>
           <Loader loading={this.state.loading}/>
+        </div>
       </div>
     )
   }
