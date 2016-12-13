@@ -153,7 +153,7 @@ class Results  extends Component{
   	
     return (
       <div>	
-      	<h1 className="header1">Your Night Out</h1>
+      	<h1 className="headerOne">Your Night Out</h1>
       	<div className="selections">
       		<div className="carousel"> 
       				<h3 className="selectionH"> First Dinner </h3>
