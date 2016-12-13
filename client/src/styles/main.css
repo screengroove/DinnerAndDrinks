@@ -66,9 +66,8 @@ button {
 img {
   max-width: 100%; }
 
-/*::-webkit-scrollbar {
-  opacity: 0;
-}*/
+::-webkit-scrollbar {
+  opacity: 0; }
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
@@ -101,12 +100,16 @@ body {
   height: 40px;
   line-height: 40px;
   position: absolute;
-  bottom: 10px;
+  bottom: 35px;
   right: 10px;
-  background-color: #0d4063;
+  background-color: #009d7e;
+  border-radius: 3px;
   color: #FFFFFF;
   font-size: .8rem;
-  font-weight: 300; }
+  font-weight: 300;
+  transition: all .2s ease; }
+  .btn-select:hover {
+    background-color: #00846a; }
   .btn-select.is-selected {
     background-color: #009d7e; }
 
@@ -169,13 +172,29 @@ aside {
   margin-right: 2rem; }
 
 .pin {
+  position: relative;
   height: auto;
-  width: 40px; }
+  width: 50px; }
   .pin > img {
     max-width: 100%;
     float: none;
     padding-bottom: 0;
     margin: 0; }
+  .pin .key {
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    top: 9px;
+    left: 13px;
+    background-color: #FFFFFF;
+    border-radius: 50%; }
+    .pin .key span {
+      position: absolute;
+      top: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .95rem;
+      font-weight: 400; }
 
 .list-card {
   position: relative;
@@ -191,7 +210,8 @@ aside {
       height: 40px;
       width: 40px;
       border-radius: 50%;
-      background-color: #212123;
+      background-color: #0d4063;
+      margin-right: .25rem;
       color: #FFFFFF;
       text-align: center;
       line-height: 40px; }
@@ -219,6 +239,14 @@ aside {
     transition: all .3s ease; }
   .card-photo:hover .overlay {
     opacity: 1; }
+
+.card-symbols {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed #eceff2; }
 
 .addy {
   padding: .5rem 1rem; }
@@ -349,14 +377,20 @@ iframe {
   justify-content: center;
   align-items: center;
   background-color: rgba(33, 33, 35, 0);
+  background-image: url("/static/media/loader_bg.5f184725.jpg");
+  background-size: cover;
+  background-position: center center;
   opacity: 0;
   transition: all .3s ease; }
   .loader p {
-    color: #212123;
+    color: #FFFFFF;
+    font-family: 'Abel', sans-serif;
     font-size: 1.25rem;
-    margin-bottom: 2rem; }
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    text-transform: uppercase; }
   .loader img {
-    width: 200px; }
+    width: 150px; }
   .loader.is-loading {
     position: fixed;
     background-color: rgba(22, 134, 176, 0.8);

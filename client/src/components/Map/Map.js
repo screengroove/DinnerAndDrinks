@@ -27,7 +27,10 @@ class Map  extends Component{
     const { yelp } = this.props;
     const mapCenter = {lat:yelp.region.center.latitude , lng: yelp.region.center.longitude}
     const Markers = allMarkers.map( (item, i) =>{   
-        return <Marker key={i} lat={ item.coordinates.latitude } lng={item.coordinates.longitude} text={i +1} test={item.test}/>
+        return <Marker key={i} lat={ item.coordinates.latitude } 
+                                    lng={item.coordinates.longitude} 
+                                    text={i +1} test={item.test}
+                                    motion={this.props.ui.loading}/>
     })
 
     return (

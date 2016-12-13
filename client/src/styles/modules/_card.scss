@@ -14,7 +14,8 @@
 			height: 40px;
 			width: 40px;
 			border-radius: 50%;
-			background-color: $black;
+			background-color: $blue-dk;
+			margin-right: .25rem;
 			color: $white;
 			text-align: center;
 			line-height: 40px;
@@ -48,6 +49,15 @@
 			opacity: 1;
 		}
 	}
+}
+
+.card-symbols{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem 1rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px dashed $gray-lt;
 }
 
 .addy{

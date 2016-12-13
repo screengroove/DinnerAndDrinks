@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 import '../styles/main.css';
+import loader_bg from '../assets/loader_bg.jpg';
+console.log(loader_bg )
+
+
+
 
 class App extends Component {
   render() {
@@ -13,6 +18,7 @@ class App extends Component {
     return (
       <div className="App">
        {children}
+       {loader_bg}
       </div>
     );
   }
