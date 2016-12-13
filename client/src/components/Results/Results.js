@@ -47,17 +47,16 @@ class Results  extends Component{
 	}
 	componentDidMount() {
 		console.log('in componentDidMount')
-		var first = this.state.firstLocation
-	  var distance = this.state.distance
-	  var second = this.state.secondLocation
+		var first = this.props.selections.dinnerData
+	  var second = this.props.selections.drinksData
 	  var firstCleanCity = ""
     var secondCleanCityState = ""
     var firstCleanName=""
     var secondCleanName=""
     var firstNameArr= first.name.split('')
     var secondNameArr=second.name.split('')
-	 	var cityArr = first.city.split('')
-    var citystateArr2 = second.citystate.split('')
+	 	var cityArr = first.location.city.split('')
+    var citystateArr2 = second.location.city.split('')
 	 	console.log('cityArr', cityArr);
 	  for(var j = 0; j<cityArr.length; j++){
 	  		console.log("hey line 48")
@@ -106,7 +105,7 @@ class Results  extends Component{
         secondCleanName += secondNameArr[l]
         }
   }
-  var sourced = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyANStO9s7YVwIP9ven5W1U9IhgYhFTR4yU&origin=" + firstCleanName + "," + firstCleanCity + "+" + first.city + "&destination=" + secondCleanName + "," + secondCleanCityState + "&mode=walking&avoid=tolls|highways"
+  var sourced = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyANStO9s7YVwIP9ven5W1U9IhgYhFTR4yU&origin=" + firstCleanName + "," + firstCleanCity + "+" + first.location.state + "&destination=" + secondCleanName + "," + secondCleanCityState + "+" + second.location.state + "&mode=walking&avoid=tolls|highways"
   this.setState({source: sourced})
 }
 	handleChange(event){
@@ -131,11 +130,12 @@ class Results  extends Component{
     		}
     	}
     	console.log("cleannumber in handleSubmit", cleannumber)
+      console.log("drink data", this.props.selections.drinkData)
     	axios.post('/api/contacts', {
     		phone: cleannumber,
         name: name,
-		    firstLocation: this.state.firstLocation.name,
-		    secondLocation: this.state.secondLocation.name
+		    firstLocation: this.props.selections.dinnerData.name,
+		    secondLocation: this.props.selections.drinksData.name
 		  })
 		  .then(function (response) {
 		    console.log(response);
@@ -147,43 +147,42 @@ class Results  extends Component{
   	}
   
   render () {
-  	var first = this.state.firstLocation
-  	var distance = this.state.distance
-  	var second = this.state.secondLocation
+  	var first = this.props.selections.dinnerData
+  	var second = this.props.selections.drinksData
     var usesource = this.state.source
   	
     return (
       <div>	
-      	<h1 className="header1">Your Night Out</h1>
+      	<h1 className="headerOne">Your Night Out</h1>
       	<div className="selections">
       		<div className="carousel"> 
       				<h3 className="selectionH"> First Dinner </h3>
-      				<img src={first.image1} alt="Ledlow Pic" height="300"></img>	
+      				<img className="dinImage" src={this.props.selections.dinnerData.image_url} alt="Ledlow Pic" height="300"></img>	
       		</div>
       		<div className="location">
       			<div className="restaurantName"> {first.name} {first.price}</div>
       			<div className="address">
-	      			<div> {first.address} </div>
-	      			<div> {first.city}, {first.state}</div>
-	      			<div> {first.zip}</div>
+	      			<div> {first.location.address1} </div>
+	      			<div> {first.location.city}, {first.location.state}</div>
+	      			<div> {first.location.zip}</div>
 	      		</div>
-      			<div>{first.reviews} Reviews</div>
-      			<div>{first.stars} Stars</div>
+      			<div>{first.review_count} Reviews</div>
+      			<div>{first.rating} Stars</div>
       			
       		</div>
       		<div className="carousel"> 
       			<h3 className="selectionH"> Then Drinks</h3>
-      				<img src={second.image1} alt="Perch Pic" height="300"></img>
+      				<img className="drinkImage" src={second.image_url} alt="Perch Pic" ></img>
       		</div>
       		<div className="location">
-      			<div className="restaurantName"> {second.name} {first.price}</div>
+      			<div className="restaurantName"> {second.name} {second.price}</div>
       			<div className="address">
-	      			<div> {second.address} </div>
-	      			<div> {second.citystate}</div>
-	      			<div> {second.zip}</div>
+	      			<div> {second.location.address1} </div>
+	      			<div> {second.location.city}, {second.location.state}</div>
+	      			<div> {second.location.zip}</div>
 	      		</div>
-      			<div>{second.reviews} Reviews</div>
-      			<div>{second.stars} Stars</div>
+      			<div>{second.review_count} Reviews</div>
+      			<div>{second.rating} Stars</div>
       		</div>
       	</div>
       		<div className="mapForm">
@@ -198,11 +197,11 @@ class Results  extends Component{
       			</form>
       			<h3 className="header3">So How Close Is The Bar?</h3>
       			<iframe
-  					width="600"
-  					height="450"
-  					frameBorder="0" style={{border:0}}
-  					src={usesource} allowFullScreen>
-				</iframe>
+  					 width="600"
+  					 height="450"
+  					 frameBorder="0" style={{border:0}}
+  					 src={usesource} allowFullScreen>
+				    </iframe>
 
       		</div>
       </div>

@@ -10,22 +10,25 @@
 }
 .selections{
 	position: absolute;
-	margin-top: 75px;
+	margin-top: 60px;
 	margin-left: 100px;
 	width: 580px;
 }
 img{
 	float: left;
-	padding-bottom: 20pt;
+	padding-top: 30pt;
+	padding-left: 30pt;
 	margin-right: 30px;
-
-
+	width: 35%;
+	height: 35%;
 }
 .location{
 	text-align: left;
 	background-color: #E9E8DC;
-	padding-top: 60pt;
-	padding-bottom: 23pt;
+	padding-top: 30pt;
+	padding-bottom: 80pt;
+	padding-right: 40pt;
+	padding-left: 250pt;
 	margin-bottom: 50px;
 	
 }
@@ -44,9 +47,10 @@ img{
 	border-top-left-radius: 15px;
 	border-top-right-radius: 15px;
 }
-.header1{
+.headerOne{
 	background-color: #F56B66;
 	margin-right: -30px;
+	margin-left: -30px;
 	padding-left: 110px;
 	padding-top: 10pt;
 	padding-bottom: 10pt;
@@ -103,3 +107,4 @@ iframe{
     display: inline-block;
     font-size: 16px;
 }
+
