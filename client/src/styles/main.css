@@ -219,6 +219,48 @@ aside {
   .addy span {
     display: block; }
 
+.mapForm {
+  float: right;
+  position: relative;
+  margin-right: 300px;
+  margin-top: 100px; }
+
+.selections {
+  position: absolute;
+  margin-left: 150px;
+  width: 410px; }
+
+img {
+  float: left;
+  padding-bottom: 20pt;
+  margin: 10px; }
+
+.location {
+  text-align: left;
+  background-color: gray;
+  padding-top: 10pt;
+  padding-bottom: 25pt; }
+
+.selectionH {
+  background-color: red;
+  padding-right: 20pt;
+  text-align: right;
+  margin-bottom: -5px;
+  padding-top: 4pt;
+  padding-bottom: 7pt; }
+
+.subhead {
+  width: 300px;
+  margin-bottom: 20px; }
+
+.address {
+  margin-top: 15px;
+  margin-bottom: 15px; }
+
+.twilioButton {
+  margin-left: 10px;
+  border-radius: 5px; }
+
 .example-enter {
   opacity: 0.01; }
 
@@ -232,7 +274,3 @@ aside {
 .example-leave.example-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in; }
-
-.center {
-  text-align: center;
-}
