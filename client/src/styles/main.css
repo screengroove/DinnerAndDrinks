@@ -66,9 +66,8 @@ button {
 img {
   max-width: 100%; }
 
-/*::-webkit-scrollbar {
-  opacity: 0;
-}*/
+::-webkit-scrollbar {
+  opacity: 0; }
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
