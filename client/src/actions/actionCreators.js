@@ -6,6 +6,29 @@ import  {getRESTAURANTS, getBARS} from '../helpers/http.js';
 
 export function getDinnerListings(find, near, price) {  
    return function(dispatch) {
+    dispatch({
+     type: 'IS_LOADING',
+   });
+    getRESTAURANTS(find, near, price)  
+     .then(function (response) {
+        console.log("API RESPONSE", response);
+         dispatch({
+          type: 'YELP_LISTINGS',
+          payload: response
+        });
+    })
+     .then(function(){
+       dispatch({
+        type: 'IS_LOADED',
+      });
+      browserHistory.push('/map')
+     })
+    //return response.data
+  }
+}
+
+export function getBarListings(find, near, price) {  
+   return function(dispatch) {
     type: 'IS_LOADING'
     getRESTAURANTS(find, near, price)  
      .then(function (response) {
@@ -57,7 +80,7 @@ export function setDrinksChoice(choice) {
 		  type: 'DRINKS_CHOICE',
 		  payload: choice
 		});
-		browserHistory.push('/results')
+		//browserHistory.push('/results')
 	}
 }
 

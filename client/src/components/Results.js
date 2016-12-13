@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import *  as actionCreators from '../actions/actionCreators.js';
 import axios from 'axios'
 
 class Results  extends Component{
@@ -118,7 +121,18 @@ class Results  extends Component{
     )
   }
 }
-export default Results
+function mapStateToProps(state) {
+  return {
+    yelp: state.yelp,
+    selections: state.selections,
+    ui: state.ui
+  }
+}
+
+function mapDispachToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+ export default connect( mapStateToProps , mapDispachToProps)(Results);
 
 
 

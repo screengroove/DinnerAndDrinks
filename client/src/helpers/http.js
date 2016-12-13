@@ -46,8 +46,6 @@ function _getPHOTOS(resultArr) {
    // This is
     const apiCallMaker = function(venue) {
         let venueID = venue.id;
-        console.log("VENUE ID",venueID )
-            
         return axios.get('api/yelp/business', {
             params: {
                 id: venueID

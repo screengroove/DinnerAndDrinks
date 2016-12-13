@@ -16,14 +16,6 @@ function yelp(state = initialState , action) {
             listings: action.payload.businesses,
             region: action.payload.region
         });
-      case 'IS_LOADING':
-        return Object.assign( { }, state, {
-          loading: true
-        });
-      case 'IS_LOADED':
-        return Object.assign( { }, state, {
-          loading: false
-        });
     default:
       return state;
   }

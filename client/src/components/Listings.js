@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import *  as actionCreators from '../actions/actionCreators.js';
-import Loader from  'react-loader';
+import Loader from  './Loader.js';
 import Map from './Map/Map';
 import Sidebar from './Map/Sidebar';
 import Header from './Map/Header';
@@ -18,21 +18,22 @@ class Listings  extends Component{
 
 
   render () {
+    const {ui }= this.props
     return (
-      <Loader loaded={this.state.loaded}>
           <div className="full-screen">
           		<Header {...this.props}/>
           		<Sidebar {...this.props}/>
           		<Map  {...this.props}/>
-          </div>
-      </Loader>
+                    <Loader loading={ui.loading}/>
+            </div>
     )
   }
 }
 function mapStateToProps(state) {
   return {
     yelp: state.yelp,
-    selections: state.selections
+    selections: state.selections,
+    ui: state.ui
   }
 }
 

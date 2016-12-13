@@ -115,7 +115,8 @@ class Home extends Component{
 function mapStateToProps(state) {
   return {
     yelp: state.yelp,
-    selections: state.selections
+    selections: state.selections,
+    ui: state.ui
   }
 }
 function mapDispachToProps(dispatch) {

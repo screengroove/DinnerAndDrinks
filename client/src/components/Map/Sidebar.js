@@ -9,9 +9,12 @@ class Sidebar  extends Component{
     this.props.setDinnerChoice(stuff)
   }
 
-  fetchBarsNearby(find, near, price){
-   
+  fetchBarsNearby(find, near, price){  
     this.props.getDinnerListings(find, near, price)
+  }
+
+  chooseDrinksSpot(choice){
+    this.props.setDrinksChoice(choice)
   }
 
   render () {
@@ -19,7 +22,7 @@ class Sidebar  extends Component{
 
   	const ListItems  = yelp.listings.map( (item, i) =>{
         //console.log("CARD ITEMS", item )        
-          return <ListCard deets={ item } key={i} id={i} handler={this.handleSelectClick.bind(this)} fetchBarsNearby={this.fetchBarsNearby.bind(this)}  />
+          return <ListCard deets={ item }  key={i} id={i} {...this.props}/>
   	} )
 
     return (

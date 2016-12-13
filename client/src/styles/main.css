@@ -301,4 +301,5 @@ img {
   .loader.is-loading {
     position: fixed;
     background-color: rgba(22, 134, 176, 0.8);
-    opacity: 1; }
+    opacity: 1;
+    z-index: 100; }

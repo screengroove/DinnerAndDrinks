@@ -19,7 +19,8 @@ function selections(state = initialState , action) {
     case 'DRINKS_CHOICE' :
     console.log("DRINKS ACTION", action.payload )     
         return Object.assign( { }, state, {
-            drinks: action.payload
+            drinksData: action.payload,
+            drinksVenue: action.payload.name
         });
     default:
       return state;
