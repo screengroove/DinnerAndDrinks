@@ -4,41 +4,66 @@ import  {getRESTAURANTS, getBARS} from '../helpers/http.js';
 
 
 
-export function getDinnerListings(find, near) {  
+export function getDinnerListings(find, near, price) {  
    return function(dispatch) {
-   getRESTAURANTS(find, near)
+    dispatch({
+     type: 'IS_LOADING',
+   });
+    getRESTAURANTS(find, near, price)  
      .then(function (response) {
         console.log("API RESPONSE", response);
          dispatch({
           type: 'YELP_LISTINGS',
-          payload: response.data
+          payload: response
         });
     })
      .then(function(){
-     		console.log("Transition to ROUTE")
-     		browserHistory.push('/map')
+       dispatch({
+        type: 'IS_LOADED',
+      });
+      browserHistory.push('/map')
      })
     //return response.data
   }
 }
 
-export function getBarListings(lat, lng) {  
+export function getBarListings(find, near, price) {  
    return function(dispatch) {
-   getBARS(lat, lng)
+    type: 'IS_LOADING'
+    getRESTAURANTS(find, near, price)  
      .then(function (response) {
         console.log("API RESPONSE", response);
          dispatch({
           type: 'YELP_LISTINGS',
-          payload: response.data.businesses
+          payload: response
         });
     })
      .then(function(){
-     		console.log("Transition to ROUTE")
-     		//browserHistory.push('/map')
+      browserHistory.push('/map')
      })
     //return response.data
   }
 }
+
+// export function getBarListings(lat, lng, price) {  
+//   console.log("IN getBarListings " )
+   
+//    return function(dispatch) {
+//   //getRESTAURANTS(find, near, price)  
+//      .then(function (response) {
+//         console.log("ACTION BARS", response);
+//          dispatch({
+//           type: 'YELP_LISTINGS',
+//           payload: response
+//         });
+//     })
+//      .then(function(){
+//      		console.log("Transition to Loading")
+
+//      })
+//     //return response.data
+//   }
+// }
 
 export function setDinnerChoice(choice) { 
 	return function(dispatch) {
@@ -55,7 +80,7 @@ export function setDrinksChoice(choice) {
 		  type: 'DRINKS_CHOICE',
 		  payload: choice
 		});
-		browserHistory.push('/results')
+		//browserHistory.push('/results')
 	}
 }
 

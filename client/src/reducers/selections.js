@@ -9,16 +9,18 @@ const initialState = {
 
 function selections(state = initialState , action) {
   switch(action.type){
-    case 'DINNER_CHOICE':
+    case 'DINNER_CHOICE' :
     console.log("SELECTION ACTION", action.payload )     
         return Object.assign( { }, state, {
-            dinnerChoice: action.payload.name,
+            dinnerData: action.payload,
+            dinnerVenue: action.payload.name,
             dinnerSelected: true
         });
-    case 'DRINKS_CHOICE':
+    case 'DRINKS_CHOICE' :
     console.log("DRINKS ACTION", action.payload )     
         return Object.assign( { }, state, {
-            drinks: action.payload
+            drinksData: action.payload,
+            drinksVenue: action.payload.name
         });
     default:
       return state;
@@ -28,3 +30,4 @@ function selections(state = initialState , action) {
 
 
 export default selections;
+

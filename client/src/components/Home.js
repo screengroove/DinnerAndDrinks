@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router';
+import Loader from './Loader';
 var Slider = require('react-rangeslider')
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -8,18 +10,26 @@ import *  as actionCreators from '../actions/actionCreators.js';
 
 class Home extends Component{
   constructor(props){
-    super(props)
+      super(props)
 
-    this.state = {
-      find: '',
-      near: '',
-      price: ''
-    }
-    this.onFindChange = this.onFindChange.bind(this)
-    this.onNearChange = this.onNearChange.bind(this)
-    this.onPriceChange = this.onPriceChange.bind(this)
-    this.onSubmitForm = this.onSubmitForm.bind(this)
+      this.state = {
+        find: '',
+        near: '',
+        price: '',
+        loading: false
+      }
+      this.onFindChange = this.onFindChange.bind(this)
+      this.onNearChange = this.onNearChange.bind(this)
+      this.onPriceChange = this.onPriceChange.bind(this)
+      this.onSubmitForm = this.onSubmitForm.bind(this)
   }
+
+  componentWillMount(){
+    console.log("HOME COMPONENT WILL MOUNT" )
+      
+    //this.props.getDinnerListings('pizza', 'santa monica', 2)
+  }
+
 
   onFindChange(event){
     this.setState({ find: event.target.value })
@@ -49,52 +59,10 @@ class Home extends Component{
     }else if(price == 2){
       price = '1,2';
     }
-
-    axios.get('/api/yelp/search', {
-      params: {
-        find: find,
-        near: near,
-        price: price
-      }
-    })
-    .then(response =>{
-      response.data.businesses.forEach(function(restaurant){
-        var restId = restaurant.id
-        var coordinates = restaurant.coordinates;
-        // console.log(restaurant);
-        axios.get('api/yelp/searchbars', {
-          params: {
-            lon: coordinates.longitude,
-            lat: coordinates.latitude,
-            price: price
-          }
-        })
-        .then(response2 => {
-
-          restaurant.bars = response2;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-
-        axios.get('api/yelp/business', {
-          params: {
-            id: restId
-          }
-        })
-        .then(response3 => {
-          restaurant.photos = response3.data
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      })
-      console.log(response);
-    })
-
-    this.setState({find: '', near: '', price: ''})
+    this.props.getDinnerListings(find, near, price)
+    this.setState({find: '', near: '', price: '', loading: true})
   }
-  
+
   // onSubmitForm(event){
   //     var find = this.state.find
   //     var near = this.state.near
@@ -138,6 +106,8 @@ class Home extends Component{
 
             <input type="submit" value="Submit" className="btn-round" />
           </form>
+          <Link to="/map"  className="btn-admin">MAP</Link>
+          <Loader loading={this.state.loading}/>
       </div>
     )
   }
@@ -145,7 +115,8 @@ class Home extends Component{
 function mapStateToProps(state) {
   return {
     yelp: state.yelp,
-    selections: state.selections
+    selections: state.selections,
+    ui: state.ui
   }
 }
 function mapDispachToProps(dispatch) {
