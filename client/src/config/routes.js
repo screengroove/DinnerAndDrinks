@@ -3,7 +3,7 @@ import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
 import App   from '../components/App';
 import Home   from '../components/Home';
 import Maps   from '../components/Listings';
-import Results   from '../components/Results';
+import Results   from '../components/Results/Results';
 
 import { Provider } from 'react-redux';
 import  store, { history } from '../store/store.js';
