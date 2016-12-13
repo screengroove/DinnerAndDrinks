@@ -32,10 +32,12 @@ class Results  extends Component{
       						 latitude: ""}
       		},
       		value: "",
+          yourname: "",
           source: "",
 
     	}
     	this.handleChange = this.handleChange.bind(this)
+      this.handleNameChange = this.handleNameChange.bind(this)
     	this.handleSubmit = this.handleSubmit.bind(this)
     	
 	}
@@ -105,12 +107,15 @@ class Results  extends Component{
 }
 	handleChange(event){
     	this.setState({value: event.target.value})
-    	//need to check if valid phone number
     }
-    handleSubmit(event) {
+  handleNameChange(event){
+    this.setState({yourname: event.target.value})
+  }
+  handleSubmit(event) {
     	alert('A text has been sent to ' + this.state.value)
     	event.preventDefault()
     	var phone = this.state.value
+      var name = this.state.yourname
     	var cleannumber = '+1';
     	for(var i = 0; i < phone.length; i++){
     		console.log(phone[i])
@@ -124,8 +129,9 @@ class Results  extends Component{
     	console.log("cleannumber in handleSubmit", cleannumber)
     	axios.post('/api/contacts', {
     		phone: cleannumber,
-		    firstLocation: this.state.firstLocation.address,
-		    secondLocation: this.state.secondLocation.address
+        name: name,
+		    firstLocation: this.state.firstLocation.name,
+		    secondLocation: this.state.secondLocation.name
 		  })
 		  .then(function (response) {
 		    console.log(response);
@@ -133,7 +139,7 @@ class Results  extends Component{
 		  .catch(function (error) {
 		    console.log(error);
 		  })
-		this.setState({value: ""})
+		this.setState({value: "", yourname: ""})
   	}
   
   render () {
@@ -177,9 +183,12 @@ class Results  extends Component{
       		</div>
       	</div>
       		<div className="mapForm">
+            <h2> Step<span className="step3">3</span>Invite Your Friends</h2>
       			<form className="twilioForm" onSubmit={this.handleSubmit}>
-      				<h2> Step<span className="step3">3</span>Enter Your Mobile Number To Receive A Text With Your Itinerary </h2>
-      				<input className="twilioInput" type="text" value={this.state.value} name="value" onChange={this.handleChange}/>
+              <label> Friend's Mobile : </label> <input className="twilioInput" type="text" value={this.state.value} name="value" onChange={this.handleChange}/>
+              <br/>
+      				<label> Your Full Name : </label> <input className="twilioInput" type="text" value={this.state.yourname} name="yourname" onChange={this.handleNameChange}/>
+              <br/>
       				<button className="twilioButton" type="submit" value="Submit">Submit</button>
       				<div className="subhead"></div>
       			</form>
