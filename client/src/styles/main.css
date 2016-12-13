@@ -236,20 +236,25 @@ aside {
 
 .selections {
   position: absolute;
-  margin-top: 75px;
+  margin-top: 60px;
   margin-left: 100px;
   width: 580px; }
 
 img {
   float: left;
-  padding-bottom: 20pt;
-  margin-right: 30px; }
+  padding-top: 30pt;
+  padding-left: 30pt;
+  margin-right: 30px;
+  width: 35%;
+  height: 35%; }
 
 .location {
   text-align: left;
   background-color: #E9E8DC;
-  padding-top: 60pt;
-  padding-bottom: 23pt;
+  padding-top: 30pt;
+  padding-bottom: 80pt;
+  padding-right: 40pt;
+  padding-left: 250pt;
   margin-bottom: 50px; }
 
 .restaurantName {
