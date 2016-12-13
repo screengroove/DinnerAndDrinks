@@ -12,7 +12,9 @@ class Marker  extends Component{
     return (
       <div className="pin">
       		<img src={pinIcon} alt=""/>
-      		{this.props.text}
+      		<div className="key">
+      			<span>{this.props.text}</span>
+      		</div>      		
       </div>
     )
   }
