@@ -265,25 +265,20 @@ aside {
 
 .selections {
   position: absolute;
-  margin-top: 60px;
+  margin-top: 75px;
   margin-left: 100px;
   width: 580px; }
 
 img {
   float: left;
-  padding-top: 30pt;
-  padding-left: 30pt;
-  margin-right: 30px;
-  width: 35%;
-  height: 35%; }
+  padding-bottom: 20pt;
+  margin-right: 30px; }
 
 .location {
   text-align: left;
   background-color: #E9E8DC;
-  padding-top: 30pt;
-  padding-bottom: 80pt;
-  padding-right: 40pt;
-  padding-left: 250pt;
+  padding-top: 60pt;
+  padding-bottom: 23pt;
   margin-bottom: 50px; }
 
 .restaurantName {
@@ -518,4 +513,3 @@ input, .formInput {
 
 .description, h4 {
   margin: 2%; }
-
