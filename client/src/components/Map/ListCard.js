@@ -23,7 +23,7 @@ chooseDinnerSpot(){
 }
 
 chooseDrinkSpot(){
-  this.props.chooseDrinksSpot(this.props.deets)
+  this.props.setDrinksChoice(this.props.deets)
   console.log("CHOOSE DRINKS" )   
 }
 
