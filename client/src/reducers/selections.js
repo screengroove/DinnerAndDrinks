@@ -1,8 +1,8 @@
 // REDUCER
 
 const initialState = {
-  dinnerChoice: 'dinner default',
-  drinksChoice: 'drinks default',
+  dinnerVenue: 'Pick the Restaurant',
+  drinksVenue: 'Pick the Bar',
   dinnerSelected: false
   
 }
