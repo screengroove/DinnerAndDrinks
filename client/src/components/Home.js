@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router';
 import Loader from './Loader';
-var Slider = require('react-rangeslider')
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import *  as actionCreators from '../actions/actionCreators.js';
