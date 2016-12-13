@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import *  as actionCreators from '../actions/actionCreators.js';
 import axios from 'axios'
+import GoogleMap from 'google-map-react'
 
 class Results  extends Component{
   constructor(props){
@@ -33,13 +34,78 @@ class Results  extends Component{
       			coordinates: {longitude: "",
       						 latitude: ""}
       		},
-      		value: ""
+      		value: "",
+          source: "",
 
     	}
     	this.handleChange = this.handleChange.bind(this)
     	this.handleSubmit = this.handleSubmit.bind(this)
     	
-	}	
+	}
+	componentDidMount() {
+		console.log('in componentDidMount')
+		var first = this.state.firstLocation
+	  var distance = this.state.distance
+	  var second = this.state.secondLocation
+	  var firstCleanCityState = ""
+    var secondCleanCityState = ""
+    var firstCleanName=""
+    var secondCleanName=""
+    var firstNameArr= first.name.split('')
+    var secondNameArr=second.name.split('')
+	 	var citystateArr = first.citystate.split('')
+    var citystateArr2 = second.citystate.split('')
+	 	console.log('citystateArr', citystateArr);
+	  for(var j = 0; j<citystateArr.length; j++){
+	  		console.log("hey line 48")
+	  		if(citystateArr[j] === ' '){
+	  			citystateArr[j] = ''
+	  		} 
+	  		else if(citystateArr[j] === ','){
+	  			citystateArr[j] = '+'
+	  			firstCleanCityState += citystateArr[j]
+	  		}else {
+	  		firstCleanCityState += citystateArr[j]
+	  		}
+	  	if(firstCleanCityState.length > 0)
+	  		console.log("firstCleanCityState", firstCleanCityState)
+	}
+   for(var h = 0; h<citystateArr2.length; h++){
+        if(citystateArr2[h] === ' '){
+          citystateArr2[h] = ''
+        } 
+        else if(citystateArr2[h] === ','){
+          citystateArr2[h] = '+'
+          secondCleanCityState += citystateArr2[h]
+        }else {
+        secondCleanCityState += citystateArr2[h]
+        }
+  }
+   for(var k = 0; k<firstNameArr.length; k++){
+        if(firstNameArr[k] === ' '){
+          firstNameArr[k] = ''
+        } 
+        else if(citystateArr2[k] === ','){
+          firstNameArr[k] = '+'
+          firstCleanName += firstNameArr[k]
+        }else {
+        firstCleanName += firstNameArr[k]
+        }
+  }
+  for(var l = 0; l<secondNameArr.length; l++){
+        if(secondNameArr[l] === ' '){
+          secondNameArr[l] = ''
+        } 
+        else if(citystateArr2[l] === ','){
+          secondNameArr[l] = '+'
+          secondCleanName += secondNameArr[l]
+        }else {
+        secondCleanName += secondNameArr[l]
+        }
+  }
+  var sourced = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyANStO9s7YVwIP9ven5W1U9IhgYhFTR4yU&origin=" + firstCleanName + "," + firstCleanCityState + "&destination=" + secondCleanName + "," + secondCleanCityState + "&mode=walking&avoid=tolls|highways"
+  this.setState({source: sourced})
+}
 	handleChange(event){
     	this.setState({value: event.target.value})
     	//need to check if valid phone number
@@ -70,21 +136,25 @@ class Results  extends Component{
 		  .catch(function (error) {
 		    console.log(error);
 		  })
+		this.setState({value: ""})
   	}
+  
   render () {
   	var first = this.state.firstLocation
   	var distance = this.state.distance
   	var second = this.state.secondLocation
+    var usesource = this.state.source
+  	
     return (
       <div>	
+      	<h1 className="header1">Your Night Out</h1>
       	<div className="selections">
-      		<h1>Your Night Out</h1>
       		<div className="carousel"> 
       				<h3 className="selectionH"> First Dinner </h3>
-      				<img src={first.image1} alt="Ledlow Pic" height="200"></img>	
+      				<img src={first.image1} alt="Ledlow Pic" height="300"></img>	
       		</div>
       		<div className="location">
-      			<div> {first.name} {first.price}</div>
+      			<div className="restaurantName"> {first.name} {first.price}</div>
       			<div className="address">
 	      			<div> {first.address} </div>
 	      			<div> {first.citystate}</div>
@@ -96,10 +166,10 @@ class Results  extends Component{
       		</div>
       		<div className="carousel"> 
       			<h3 className="selectionH"> Then Drinks</h3>
-      				<img src={second.image1} alt="Perch Pic" height="200"></img>
+      				<img src={second.image1} alt="Perch Pic" height="300"></img>
       		</div>
       		<div className="location">
-      			<div> {second.name} {first.price}</div>
+      			<div className="restaurantName"> {second.name} {first.price}</div>
       			<div className="address">
 	      			<div> {second.address} </div>
 	      			<div> {second.citystate}</div>
@@ -110,12 +180,20 @@ class Results  extends Component{
       		</div>
       	</div>
       		<div className="mapForm">
-      			<h3>So How Close Is The Bar?</h3>
       			<form className="twilioForm" onSubmit={this.handleSubmit}>
-      				<div className="subhead"> Enter your mobile number to receive a text message with your itinerary </div>
-      				<input type="text" value={this.state.value} name="value" onChange={this.handleChange}/>
-      				<input className="twilioButton" type="submit" value="Submit" />
+      				<h2> Step<span className="step3">3</span>Enter Your Mobile Number To Receive A Text With Your Itinerary </h2>
+      				<input className="twilioInput" type="text" value={this.state.value} name="value" onChange={this.handleChange}/>
+      				<button className="twilioButton" type="submit" value="Submit">Submit</button>
+      				<div className="subhead"></div>
       			</form>
+      			<h3 className="header3">So How Close Is The Bar?</h3>
+      			<iframe
+  					width="600"
+  					height="450"
+  					frameBorder="0" style={{border:0}}
+  					src={usesource} allowFullScreen>
+				</iframe>
+
       		</div>
       </div>
     )
@@ -134,7 +212,11 @@ function mapDispachToProps(dispatch) {
 }
  export default connect( mapStateToProps , mapDispachToProps)(Results);
 
-
+// https://www.google.com/maps/embed/v1/directions
+//   ?key=YOUR_API_KEY
+//   &origin=Oslo+Norway
+//   &destination=Telemark+Norway
+//   &avoid=tolls|highways
 
   // initMap () {
   //   let map = new google.maps.Map(document.getElementById('map'), {
