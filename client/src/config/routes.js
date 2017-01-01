@@ -11,12 +11,12 @@ import  store, { history } from '../store/store.js';
 const routes = (
 <Provider store={store}>	
 	  <Router history={ history }>	     
-		<Route path='/' component={App} />  
+		<Route path='/' component={App} >  
 			<IndexRedirect to="/home"/>
 			<Route path='home' component={Home} />
 			<Route path='map' component={Listings} />
 			<Route path='results' component={Results} />
-		<Route/>
+		</Route>
 	  </Router>
   </Provider>
 )
