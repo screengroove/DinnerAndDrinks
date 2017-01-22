@@ -38,22 +38,23 @@
 }
 
 .btn-submit{
-  width: 100%;
+  width: 400px;
   height: 60px;
   line-height: 52px;
   margin-top: 2.2rem;
-  border: 3px solid $grayer;
+  border: 3px solid $gray-xlt;
   background-color: transparent;
-  color: $grayer;
+  color: $gray-xlt;
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   outline: none;
   transition: all .3s ease;
     &:hover{
-        background-color: $turq;
-        border-color: $turq;
-        color: $white;
+        background-color: $gray-xlt;
+        border-color: $gray-xlt;
+        color: $gray-dk;
+        cursor: pointer;
     }
 }
 

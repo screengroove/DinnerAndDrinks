@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import axios from 'axios';
 import { Link } from 'react-router';
 import Loader from './Loader';
@@ -19,20 +20,26 @@ class Home extends Component {
       price: 3,
       priceRender: '$$$',
       inputFindValid: true,
-      inputNearValid: true
+      inputNearValid: true,
+      focusLocation: false,
+      focusFind: false
     };
-    this.onFindChange = this.onFindChange.bind(this);
-    this.onNearChange = this.onNearChange.bind(this);
-    this.onPriceChange = this.onPriceChange.bind(this);
-    this.onSubmitForm = this.onSubmitForm.bind(this);
-  }
 
-  onFindChange (event) {
-    this.setState({ find: event.target.value });
   }
 
   onNearChange (event) {
-    this.setState({ near: event.target.value });
+    this.setState({ 
+      near: event.target.value,
+      focusLocation: event.target.value.length > 1 ? true : false 
+    });
+  }
+
+  onFindChange (event) {
+    this.setState({ 
+      find: event.target.value,
+      focusFind: event.target.value.length > 1 ? true : false
+    
+  });
   }
 
   onPriceChange (value) {
@@ -55,8 +62,9 @@ class Home extends Component {
     var find = this.state.find;
     var near = this.state.near;
     var price = this.state.price;
+    console.log("SUBMIT VALS", find, near )
 
-    if (price === '' || price === undefined || price == 4) {
+    if (price === '' || price === undefined || price === 4) {
       price = '1,2,3,4';
     } else if (price == 3) {
       price = '1,2,3';
@@ -75,9 +83,23 @@ class Home extends Component {
     }
   }
 
+  handleFocusLocation(e) {
+    this.setState({
+      focusLocation: this.state.near.length > 1 ? true : false
+    })
+  }
+
   render () {
     var errorFindStyle = this.state.inputFindValid ? { opacity: 0 } : { opacity: 1 };
     var errorNearStyle = this.state.inputNearValid ? { opacity: 0 } : { opacity: 1 };
+    const locationInput = classNames({
+      'input': true,
+      'input-filled': this.state.focusLocation
+    });
+    const findInput = classNames({
+      'input': true,
+      'input-filled': this.state.focusFind
+    });
     return (
       <div className='home-hero' style={{backgroundImage: `url(${party_pic})`}}>
         <div className='home-cols'>
@@ -85,11 +107,34 @@ class Home extends Component {
             <h1>Dinner & Drinks</h1>
           </div>
           <div className="right-col">
-            <form onSubmit={this.onSubmitForm} >
+            <form onSubmit={this.onSubmitForm.bind(this)} >
+              <span className={findInput}>
+                <input className="input_field"
+                  value={this.state.find}
+                  onChange={this.onFindChange.bind(this)}
+                  type="text"
+                  placeholder="Sushi, Tacos, Tapas, etc.." />
+                <label className="input_label">
+                  <span className="input_label-content">What are you in the mood for?</span>
+                </label>
+              </span>
+
+              <span className={locationInput}>
+                <input className="input_field" 
+                        value={this.state.near}
+                        onChange={this.onNearChange.bind(this)}
+                        type="text" 
+                        placeholder="Santa Monica, Los Feliz, etc.." />
+                <label className="input_label">
+                  <span className="input_label-content">Where do you wanna get down?</span>
+                </label>
+              </span>
+               <input type="submit" value="Submit" className="btn-submit" />
 
             </form>
           </div>
         </div>
+         <Loader loading={this.state.loading}/>
       </div>
     );
   }

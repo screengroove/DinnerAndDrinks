@@ -18,7 +18,8 @@ class Home extends Component{
       price: 3,
       priceRender: "$$$",
       inputFindValid: true,
-      inputNearValid: true
+      inputNearValid: true,
+      focusLocation: false
     }
     this.onFindChange = this.onFindChange.bind(this)
     this.onNearChange = this.onNearChange.bind(this)
@@ -74,6 +75,7 @@ class Home extends Component{
     }
   }
 
+
   render () {
     var errorFindStyle = this.state.inputFindValid ? { opacity: 0 } : { opacity: 1 };
     var errorNearStyle = this.state.inputNearValid ? { opacity: 0 } : { opacity: 1 };
@@ -118,7 +120,7 @@ class Home extends Component{
               />
             </div>
 
-            <input type="submit" value="Submit" id="btn-round2" />
+            <input type="submit" value="Submit" className="btn-submit" />
           </form>
 
           <Link to="/map"  className="btn-admin">MAP</Link>
